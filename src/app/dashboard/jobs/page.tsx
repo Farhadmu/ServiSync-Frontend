@@ -67,6 +67,7 @@ export default function TechnicianJobsPage() {
     },
     onSuccess: (_, vars) => {
       queryClient.invalidateQueries({ queryKey: ["technician-jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["technician"] });
       setRejectModalOpen(false);
       setRejectReason("");
       toast.success(
