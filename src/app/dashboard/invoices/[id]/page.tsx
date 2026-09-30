@@ -19,7 +19,9 @@ import {
   Receipt,
   AlertCircle,
   ExternalLink,
+  Printer,
 } from "lucide-react";
+import { triggerPrint } from "@/lib/export";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { Invoice } from "@/types";
@@ -108,12 +110,23 @@ export default function InvoiceDetailPage() {
         title={`Invoice ${invoice.invoiceNumber}`}
         description={`Issued on ${formatDate(invoice.createdAt)}`}
       >
-        <Badge
-          variant={isPaid ? "success" : "warning"}
-          className="text-xs px-2.5 py-1"
-        >
-          {isPaid ? "PAID & SETTLED" : "PAYMENT DUE"}
-        </Badge>
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => triggerPrint()}
+            className="h-8 text-xs font-semibold print:hidden"
+          >
+            <Printer className="mr-1.5 h-3.5 w-3.5" />
+            Print Receipt
+          </Button>
+          <Badge
+            variant={isPaid ? "success" : "warning"}
+            className="text-xs px-2.5 py-1"
+          >
+            {isPaid ? "PAID & SETTLED" : "PAYMENT DUE"}
+          </Badge>
+        </div>
       </PageHeader>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

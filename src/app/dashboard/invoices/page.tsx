@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ErrorPanel } from "@/components/ui/error-panel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { exportToCsv } from "@/lib/export";
 import {
   CreditCard,
   CheckCircle2,
@@ -18,6 +19,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Filter,
+  Download,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
@@ -60,22 +62,48 @@ export default function InvoicesPage() {
         }
       />
 
-      {/* Filter */}
-      <div className="flex items-center gap-2">
-        <Filter className="h-4 w-4 text-muted-foreground" />
-        <select
-          value={status}
-          onChange={(e) => {
-            setStatus(e.target.value);
-            setPage(1);
-          }}
-          className="h-9 rounded-md border border-input bg-card px-3 py-1 text-xs shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
-        >
-          <option value="">All Invoices</option>
-          <option value="PENDING">Pending Payment</option>
-          <option value="PAID">Paid & Settled</option>
-          <option value="CANCELLED">Cancelled</option>
-        </select>
+      {/* Filter and Export Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2">
+          <Filter className="h-4 w-4 text-muted-foreground" />
+          <select
+            value={status}
+            onChange={(e) => {
+              setStatus(e.target.value);
+              setPage(1);
+            }}
+            className="h-9 rounded-md border border-input bg-card px-3 py-1 text-xs shadow-sm focus:outline-none focus:ring-1 focus:ring-ring"
+          >
+            <option value="">All Invoices</option>
+            <option value="PENDING">Pending Payment</option>
+            <option value="PAID">Paid & Settled</option>
+            <option value="CANCELLED">Cancelled</option>
+          </select>
+        </div>
+
+        {invoices.length > 0 && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              exportToCsv(
+                "servisync_invoices",
+                invoices.map((inv) => ({
+                  InvoiceNumber: inv.invoiceNumber,
+                  TotalAmount: inv.totalAmount,
+                  DueAmount: inv.dueAmount,
+                  Status: inv.status,
+                  CreatedAt: inv.createdAt,
+                  PaidAt: inv.paidAt || "Pending",
+                }))
+              )
+            }
+            className="h-8 text-xs font-semibold"
+          >
+            <Download className="mr-1.5 h-3.5 w-3.5" />
+            Export CSV
+          </Button>
+        )}
       </div>
 
       {isLoading ? (
