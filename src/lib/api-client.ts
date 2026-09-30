@@ -1,7 +1,11 @@
 import { ApiResponse } from "@/types";
 
-export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "https://servisync-backend.onrender.com/api/v1";
+const rawBaseUrl =
+  process.env.NEXT_PUBLIC_API_URL || "https://servisync-backend-b1zb.onrender.com/api/v1";
+
+export const API_BASE_URL = rawBaseUrl.endsWith("/api/v1")
+  ? rawBaseUrl
+  : `${rawBaseUrl.replace(/\/+$/, "")}/api/v1`;
 
 export class ApiError extends Error {
   statusCode: number;
