@@ -206,6 +206,14 @@ export default function ServiceRequestsPage() {
                   </div>
 
                   <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+                    {role === "CUSTOMER" &&
+                      ["COMPLETED", "CANCELLED", "CLOSED"].includes(req.status) && (
+                        <Button asChild size="sm" variant="outline" className="text-xs gap-1 border-emerald-500/40 text-emerald-600 hover:bg-emerald-500/10">
+                          <Link href={`/dashboard/requests/${req.id}`}>
+                            Rebook
+                          </Link>
+                        </Button>
+                      )}
                     <Button asChild size="sm" variant="default" className="shadow-sm">
                       <Link href={`/dashboard/requests/${req.id}`}>
                         View Details

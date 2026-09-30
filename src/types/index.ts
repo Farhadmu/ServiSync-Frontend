@@ -56,9 +56,10 @@ export interface ServiceCategory {
   description?: string | null;
   icon?: string | null;
   isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   serviceTypes?: ServiceType[];
+  services?: any[];
 }
 
 export interface ServiceType {
@@ -84,6 +85,7 @@ export type ServiceRequestStatus =
   | 'IN_PROGRESS'
   | 'COMPLETED'
   | 'INVOICED'
+  | 'PAID'
   | 'CLOSED'
   | 'CANCELLED';
 
@@ -426,4 +428,166 @@ export interface FooterContent {
   address?: string;
   links?: FooterLink[];
 }
+
+// ──────────────────────────────────────────────────────────────────────
+// CUSTOMER EXPERIENCE ENHANCEMENTS
+// ──────────────────────────────────────────────────────────────────────
+
+export interface CustomerAddress {
+  id: string;
+  userId: string;
+  label: 'HOME' | 'OFFICE' | 'OTHER';
+  address: string;
+  city?: string | null;
+  area?: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type SupportTicketCategory =
+  | 'BOOKING_ISSUE'
+  | 'TECHNICIAN_ISSUE'
+  | 'BILLING_ISSUE'
+  | 'PAYMENT_ISSUE'
+  | 'OTHER';
+
+export type SupportTicketStatus =
+  | 'OPEN'
+  | 'IN_PROGRESS'
+  | 'WAITING_FOR_CUSTOMER'
+  | 'RESOLVED'
+  | 'CLOSED';
+
+export type SupportTicketPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
+
+export interface SupportTicketMessage {
+  id: string;
+  ticketId: string;
+  senderId: string;
+  message: string;
+  isStaffReply: boolean;
+  createdAt: string;
+  sender?: {
+    id: string;
+    name: string;
+    role: UserRole;
+    image?: string | null;
+  };
+}
+
+export interface SupportTicket {
+  id: string;
+  ticketNumber: string;
+  customerId: string;
+  serviceRequestId?: string | null;
+  category: SupportTicketCategory;
+  priority: SupportTicketPriority;
+  status: SupportTicketStatus;
+  subject: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  closedAt?: string | null;
+  customer?: { id: string; name: string; email: string; image?: string | null };
+  serviceRequest?: { id: string; title: string; status: ServiceRequestStatus; location?: string | null };
+  messages?: SupportTicketMessage[];
+  _count?: { messages: number };
+}
+
+export type QuoteStatus =
+  | 'DRAFT'
+  | 'PENDING'
+  | 'ACCEPTED'
+  | 'CHANGE_REQUESTED'
+  | 'REJECTED'
+  | 'EXPIRED';
+
+export interface QuoteItem {
+  description: string;
+  quantity: number;
+  unitPrice: number;
+  amount: number;
+}
+
+export interface ServiceQuote {
+  id: string;
+  serviceRequestId: string;
+  quoteNumber: string;
+  version: number;
+  status: QuoteStatus;
+  items?: QuoteItem[] | null;
+  subtotal: number | string;
+  taxAmount: number | string;
+  discountAmount: number | string;
+  totalAmount: number | string;
+  currency: string;
+  notes?: string | null;
+  expiresAt?: string | null;
+  customerResponseAt?: string | null;
+  customerComment?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  serviceRequest?: {
+    id: string;
+    title: string;
+    status: ServiceRequestStatus;
+    serviceType?: { name: string };
+  };
+}
+
+export interface AppointmentSlot {
+  id: string;
+  label: string;
+  startTime: string;
+  endTime: string;
+  available: boolean;
+  remainingSlots: number;
+  reason?: string;
+}
+
+export interface TimelineStage {
+  key: string;
+  label: string;
+  isCompleted: boolean;
+  isCurrent?: boolean;
+  timestamp?: string;
+  meta?: any;
+}
+
+export interface TimelineEvent {
+  id: string;
+  stage: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  actor?: string;
+  role?: string;
+}
+
+export interface PublicTechnicianProfile {
+  id: string;
+  userId: string;
+  name: string;
+  image?: string | null;
+  bio?: string | null;
+  experienceYears?: number;
+  skills: { id: string; name: string; proficiency: string }[];
+  stats: {
+    completedJobs: number;
+    totalReviews: number;
+    averageRating: number;
+  };
+  reviews: {
+    id: string;
+    rating: number;
+    comment?: string | null;
+    createdAt: string;
+    customerName: string;
+    customerImage?: string | null;
+  }[];
+}
+
 

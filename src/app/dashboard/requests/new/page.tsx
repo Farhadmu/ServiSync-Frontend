@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
-import { ServiceCategory, ServiceType } from "@/types";
+import { ServiceCategory, ServiceType, CustomerAddress, AppointmentSlot } from "@/types";
 import { formatCurrency } from "@/lib/utils";
 import { toast } from "sonner";
 import {
@@ -34,6 +34,11 @@ import {
   ShieldCheck,
   MapPin,
   Tag,
+  Calendar,
+  Home,
+  Building2,
+  Navigation,
+  Loader2,
 } from "lucide-react";
 
 const QUICK_ISSUES = [
@@ -45,17 +50,20 @@ const QUICK_ISSUES = [
   "Power outlet loose connection",
 ];
 
-const QUICK_ADDRESSES = [
-  "123 Main St, Apt 4B, Dhanmondi, Dhaka",
-  "Plot 15, Road 27, Gulshan-2, Dhaka",
-  "House 42, Sector 7, Uttara, Dhaka",
-];
-
 export default function NewServiceRequestPage() {
   const router = useRouter();
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
   const [selectedServiceType, setSelectedServiceType] = useState<ServiceType | null>(null);
   const [isEmergency, setIsEmergency] = useState(false);
+
+  // Address selection state
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
+  const [customAddressMode, setCustomAddressMode] = useState(false);
+
+  // Slot selection state
+  const tomorrowStr = new Date(Date.now() + 86400000).toISOString().split("T")[0];
+  const [selectedDate, setSelectedDate] = useState<string>(tomorrowStr);
+  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
 
   const {
     register,
@@ -97,6 +105,47 @@ export default function NewServiceRequestPage() {
 
   const availableTypes = categoryDetails?.serviceTypes || [];
 
+  // Fetch customer's saved addresses
+  const { data: savedAddresses = [] } = useQuery<CustomerAddress[]>({
+    queryKey: ["addresses"],
+    queryFn: async () => {
+      const res = await api.get<CustomerAddress[]>("/addresses");
+      return res.data || [];
+    },
+  });
+
+  // Preselect default address if available
+  useEffect(() => {
+    if (savedAddresses.length > 0 && !selectedAddressId && !watch("location")) {
+      const defaultAddr = savedAddresses.find((a) => a.isDefault) || savedAddresses[0];
+      setSelectedAddressId(defaultAddr.id);
+      setValue("location", defaultAddr.address, { shouldValidate: true });
+    }
+  }, [savedAddresses, selectedAddressId, setValue, watch]);
+
+  // Fetch available slots for selected date & service type
+  const { data: slotsData, isLoading: loadingSlots } = useQuery<{
+    date: string;
+    slots: AppointmentSlot[];
+  }>({
+    queryKey: ["available-slots", selectedDate, selectedServiceType?.id],
+    queryFn: async () => {
+      const res = await api.get<{ date: string; slots: AppointmentSlot[] }>(
+        "/service-requests/available-slots",
+        {
+          params: {
+            date: selectedDate,
+            serviceTypeId: selectedServiceType?.id || undefined,
+          },
+        }
+      );
+      return res.data;
+    },
+    enabled: !!selectedDate,
+  });
+
+  const slots = slotsData?.slots || [];
+
   const handleCategoryChange = (catId: string) => {
     setSelectedCategoryId(catId);
     setValue("categoryId", catId, { shouldValidate: true });
@@ -108,6 +157,18 @@ export default function NewServiceRequestPage() {
     setValue("serviceTypeId", typeId, { shouldValidate: true });
     const match = availableTypes.find((t) => t.id === typeId) || null;
     setSelectedServiceType(match);
+  };
+
+  const handleSelectSavedAddress = (addr: CustomerAddress) => {
+    setSelectedAddressId(addr.id);
+    setCustomAddressMode(false);
+    setValue("location", addr.address, { shouldValidate: true });
+  };
+
+  const handleSelectSlot = (slot: AppointmentSlot) => {
+    if (!slot.available) return;
+    setSelectedSlotId(slot.id);
+    setValue("preferredDateTime", slot.startTime, { shouldValidate: true });
   };
 
   const createMutation = useMutation({
@@ -145,6 +206,10 @@ export default function NewServiceRequestPage() {
   });
 
   const onSubmit = (data: ServiceRequestFormData) => {
+    if (!data.preferredDateTime) {
+      toast.error("Please select an available appointment slot");
+      return;
+    }
     createMutation.mutate(data);
   };
 
@@ -152,8 +217,19 @@ export default function NewServiceRequestPage() {
   const emergencySurcharge = isEmergency ? 25 : 0;
   const totalPrice = basePrice + emergencySurcharge;
 
+  const getAddressIcon = (lbl: string) => {
+    switch (lbl) {
+      case "HOME":
+        return <Home className="h-3.5 w-3.5" />;
+      case "OFFICE":
+        return <Building2 className="h-3.5 w-3.5" />;
+      default:
+        return <Navigation className="h-3.5 w-3.5" />;
+    }
+  };
+
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto pb-16">
       <div className="flex items-center gap-2">
         <Button asChild variant="ghost" size="sm">
           <Link href="/dashboard/requests">
@@ -163,8 +239,8 @@ export default function NewServiceRequestPage() {
       </div>
 
       <PageHeader
-        title="Book a Field Service Request"
-        description="Select a certified service category, schedule a specialist arrival window, and track diagnostic milestones in real-time."
+        title="Smart Service Booking"
+        description="Select a certified service specialization, choose from your saved addresses, and pick a guaranteed arrival slot."
       />
 
       {catError && (
@@ -178,7 +254,7 @@ export default function NewServiceRequestPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Form Fields */}
           <div className="lg:col-span-2 space-y-6">
-            {/* 1. Category Selection */}
+            {/* 1. Category & Service Type Selection */}
             <Card className="border border-border/80 shadow-sm">
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
@@ -187,7 +263,7 @@ export default function NewServiceRequestPage() {
                       <span className="flex h-6 w-6 rounded-full bg-primary/10 text-primary text-xs font-bold items-center justify-center">
                         1
                       </span>
-                      Select Service Category
+                      Service Category & Specialization
                     </CardTitle>
                     <CardDescription className="text-xs mt-0.5">
                       Choose the field specialization required for your property
@@ -348,7 +424,7 @@ export default function NewServiceRequestPage() {
                       Emergency / Rush Dispatch
                     </p>
                     <p className="text-[11px] text-muted-foreground">
-                      Prioritize technician allocation within a 2-hour emergency arrival window (+৳25 surcharge)
+                      Prioritize technician allocation within an emergency arrival window (+৳25 surcharge)
                     </p>
                   </div>
                   <Button
@@ -358,57 +434,192 @@ export default function NewServiceRequestPage() {
                     onClick={() => setIsEmergency(!isEmergency)}
                     className="h-8 text-xs font-semibold"
                   >
-                    {isEmergency ? "Emergency Active (+$25)" : "Standard Dispatch"}
+                    {isEmergency ? "Emergency Active (+৳25)" : "Standard Dispatch"}
                   </Button>
                 </div>
               </CardContent>
             </Card>
 
-            {/* 3. Location & Schedule */}
+            {/* 3. Saved Addresses Selection */}
             <Card className="border border-border/80 shadow-sm">
               <CardHeader className="pb-3">
-                <CardTitle className="text-base font-bold flex items-center gap-2">
-                  <span className="flex h-6 w-6 rounded-full bg-primary/10 text-primary text-xs font-bold items-center justify-center">
-                    3
-                  </span>
-                  Location & Arrival Window
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-base font-bold flex items-center gap-2">
+                    <span className="flex h-6 w-6 rounded-full bg-primary/10 text-primary text-xs font-bold items-center justify-center">
+                      3
+                    </span>
+                    Service Location
+                  </CardTitle>
+                  <Link
+                    href="/dashboard/addresses"
+                    className="text-xs text-primary hover:underline font-medium"
+                    target="_blank"
+                  >
+                    + Manage Addresses
+                  </Link>
+                </div>
+                <CardDescription className="text-xs">
+                  Select one of your saved locations or enter a new address
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="location" className="text-xs font-semibold">Service Location Address *</Label>
-                    <span className="text-[11px] text-muted-foreground">Autofill:</span>
+              <CardContent className="space-y-3">
+                {savedAddresses.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-xs font-semibold text-muted-foreground">
+                      Choose from Saved Addresses:
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {savedAddresses.map((addr) => {
+                        const isSelected = selectedAddressId === addr.id && !customAddressMode;
+                        return (
+                          <button
+                            key={addr.id}
+                            type="button"
+                            onClick={() => handleSelectSavedAddress(addr)}
+                            className={`p-3 rounded-xl border text-left transition-all ${
+                              isSelected
+                                ? "border-primary bg-primary/10 ring-2 ring-primary/20 shadow-sm"
+                                : "border-border/80 hover:border-primary/40 bg-card"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="flex items-center gap-1.5 text-xs font-bold capitalize text-foreground">
+                                {getAddressIcon(addr.label)}
+                                {addr.label.toLowerCase()}
+                              </span>
+                              {addr.isDefault && (
+                                <Badge variant="secondary" className="text-[10px] py-0 px-1.5">
+                                  Default
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground line-clamp-1">{addr.address}</p>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5 mb-1.5">
-                    {QUICK_ADDRESSES.map((addr) => (
+                )}
+
+                <div className="pt-2">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <Label htmlFor="location" className="text-xs font-semibold">
+                      Service Address *
+                    </Label>
+                    {savedAddresses.length > 0 && (
                       <button
-                        key={addr}
                         type="button"
-                        onClick={() => setValue("location", addr, { shouldValidate: true })}
-                        className="text-[10px] px-2 py-0.5 rounded bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors truncate max-w-[200px]"
-                        title={addr}
+                        onClick={() => {
+                          setCustomAddressMode(true);
+                          setSelectedAddressId(null);
+                          setValue("location", "");
+                        }}
+                        className="text-xs text-primary hover:underline"
                       >
-                        📍 {addr.split(",")[0]}
+                        Enter different address
                       </button>
-                    ))}
+                    )}
                   </div>
                   <Input
                     id="location"
-                    placeholder="e.g. 123 Main St, Apt 4B, Dhanmondi, Dhaka"
+                    placeholder="e.g. House 42, Road 11, Block D, Banani, Dhaka"
                     error={errors.location?.message}
                     {...register("location")}
                   />
                 </div>
+              </CardContent>
+            </Card>
 
+            {/* 4. Smart Appointment Slot Picker */}
+            <Card className="border border-border/80 shadow-sm">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base font-bold flex items-center gap-2">
+                  <span className="flex h-6 w-6 rounded-full bg-primary/10 text-primary text-xs font-bold items-center justify-center">
+                    4
+                  </span>
+                  Appointment Date & Verified Slots
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Available appointment slots are verified directly against technician schedules
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
                 <div className="space-y-1.5">
-                  <Label htmlFor="preferredDateTime" className="text-xs font-semibold">Preferred Date & Arrival Time *</Label>
+                  <Label htmlFor="preferredDate" className="text-xs font-semibold flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5 text-primary" />
+                    Select Preferred Date *
+                  </Label>
                   <Input
-                    id="preferredDateTime"
-                    type="datetime-local"
-                    error={errors.preferredDateTime?.message}
-                    {...register("preferredDateTime")}
+                    id="preferredDate"
+                    type="date"
+                    min={new Date().toISOString().split("T")[0]}
+                    value={selectedDate}
+                    onChange={(e) => {
+                      setSelectedDate(e.target.value);
+                      setSelectedSlotId(null);
+                      setValue("preferredDateTime", "");
+                    }}
+                    className="max-w-xs"
                   />
+                </div>
+
+                <div className="space-y-2 pt-1">
+                  <Label className="text-xs font-semibold">Available Arrival Slots *</Label>
+                  {loadingSlots ? (
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground p-4 bg-muted/40 rounded-lg">
+                      <Loader2 className="h-4 w-4 animate-spin text-primary" />
+                      Checking real-time technician capacity...
+                    </div>
+                  ) : slots.length === 0 ? (
+                    <p className="text-xs text-muted-foreground p-3 rounded-lg bg-muted">
+                      No slots available for this date. Please pick another date.
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      {slots.map((slot) => {
+                        const isSelected = selectedSlotId === slot.id;
+                        return (
+                          <button
+                            key={slot.id}
+                            type="button"
+                            disabled={!slot.available}
+                            onClick={() => handleSelectSlot(slot)}
+                            className={`p-3 rounded-xl border text-left transition-all ${
+                              isSelected
+                                ? "border-primary bg-primary/10 ring-2 ring-primary/20 shadow-sm"
+                                : slot.available
+                                ? "border-border hover:border-primary/40 bg-card hover:bg-muted/30"
+                                : "border-border/40 bg-muted/40 opacity-60 cursor-not-allowed"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="font-semibold text-xs text-foreground flex items-center gap-1.5">
+                                <Clock className="h-3.5 w-3.5 text-primary" />
+                                {slot.label}
+                              </span>
+                              {slot.available ? (
+                                <Badge className="text-[10px] bg-emerald-500/15 text-emerald-600 border-emerald-500/30">
+                                  {slot.remainingSlots} slots
+                                </Badge>
+                              ) : (
+                                <Badge variant="secondary" className="text-[10px]">
+                                  {slot.reason || "Full"}
+                                </Badge>
+                              )}
+                            </div>
+                            <p className="text-[11px] text-muted-foreground">
+                              {slot.available ? "Guaranteed arrival window" : "Unavailable"}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                  {errors.preferredDateTime && (
+                    <p className="text-xs text-destructive font-medium">
+                      {errors.preferredDateTime.message}
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -434,10 +645,10 @@ export default function NewServiceRequestPage() {
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm font-bold flex items-center gap-1.5">
                   <Sparkles className="h-4 w-4 text-primary" />
-                  Service Cost Estimate
+                  Service Booking Summary
                 </CardTitle>
                 <CardDescription className="text-xs">
-                  Official transparent pricing policy
+                  Review verified appointment and cost estimate
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 text-xs">
@@ -480,6 +691,20 @@ export default function NewServiceRequestPage() {
                         </span>
                       </div>
 
+                      {watch("preferredDateTime") && (
+                        <div className="p-2 rounded-lg bg-primary/10 border border-primary/20 text-primary">
+                          <p className="font-semibold text-[11px]">Selected Arrival Slot:</p>
+                          <p className="font-medium text-xs mt-0.5">
+                            {new Date(watch("preferredDateTime")!).toLocaleDateString("en-US", {
+                              weekday: "short",
+                              month: "short",
+                              day: "numeric",
+                            })}{" "}
+                            ({slots.find((s) => s.id === selectedSlotId)?.label || "Scheduled"})
+                          </p>
+                        </div>
+                      )}
+
                       <div className="pt-2 border-t border-border/80 flex items-center justify-between text-sm">
                         <span className="font-bold text-foreground">Estimated Total:</span>
                         <span className="font-extrabold text-primary text-base">
@@ -499,11 +724,11 @@ export default function NewServiceRequestPage() {
                         </li>
                         <li className="flex items-center gap-1.5">
                           <CheckCircle2 className="h-3 w-3 text-emerald-600 shrink-0" />
-                          <span>Digital work order and diagnostic report</span>
+                          <span>Formal quote provided prior to major repairs</span>
                         </li>
                         <li className="flex items-center gap-1.5">
                           <CheckCircle2 className="h-3 w-3 text-emerald-600 shrink-0" />
-                          <span>Secure Stripe test checkout on job completion</span>
+                          <span>Secure Stripe test checkout on completion</span>
                         </li>
                       </ul>
                     </div>

@@ -40,6 +40,8 @@ import {
   Loader2,
   Clock,
   Sliders,
+  MapPin,
+  HelpCircle,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
@@ -98,10 +100,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
   const navItemsByRole: Record<UserRole, NavItem[]> = {
     CUSTOMER: [
       { title: "Overview", href: "/dashboard", icon: LayoutDashboard },
-      { title: "My Requests", href: "/dashboard/requests", icon: ClipboardList },
-      { title: "New Service Request", href: "/dashboard/requests/new", icon: PlusCircle },
+      { title: "My Requests & History", href: "/dashboard/requests", icon: ClipboardList },
+      { title: "Book Service", href: "/dashboard/requests/new", icon: PlusCircle },
+      { title: "Saved Addresses", href: "/dashboard/addresses", icon: MapPin },
+      { title: "Support & Tickets", href: "/dashboard/support", icon: HelpCircle },
       { title: "Invoices & Payments", href: "/dashboard/invoices", icon: CreditCard },
-      { title: "Feedback", href: "/dashboard/feedback", icon: Star },
+      { title: "My Reviews", href: "/dashboard/feedback", icon: Star },
     ],
     TECHNICIAN: [
       { title: "Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -116,6 +120,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       { title: "Dispatch & Schedule", href: "/dashboard/dispatch", icon: Calendar },
       { title: "Work Orders", href: "/dashboard/work-orders", icon: Briefcase },
       { title: "Invoices", href: "/dashboard/invoices", icon: CreditCard },
+      { title: "Support Tickets", href: "/dashboard/support", icon: HelpCircle },
     ],
     ADMIN: [
       { title: "System Overview", href: "/dashboard", icon: LayoutDashboard },
@@ -124,6 +129,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       { title: "Website Content (CMS)", href: "/dashboard/admin/content", icon: FileText },
       { title: "All Work Orders", href: "/dashboard/work-orders", icon: Briefcase },
       { title: "Invoices & Revenue", href: "/dashboard/invoices", icon: CreditCard },
+      { title: "Support Tickets", href: "/dashboard/support", icon: HelpCircle },
       { title: "Audit Logs", href: "/dashboard/admin/audit-logs", icon: ShieldAlert },
     ],
   };

@@ -189,8 +189,8 @@ describe("Website CMS & Landing Page Architecture", () => {
       const activeCategories = mockCategories.filter((c) => c.isActive !== false);
       expect(activeCategories.length).toBe(1);
       expect(activeCategories[0].name).toBe("HVAC & Climate Control");
-      expect(activeCategories[0].services.length).toBe(1);
-      expect(activeCategories[0].services[0].basePrice).toBe(450);
+      expect(activeCategories[0].services?.length).toBe(1);
+      expect(activeCategories[0].services?.[0].basePrice).toBe(450);
     });
 
     it("verifies public fallback handles backend failure without crashing", () => {
