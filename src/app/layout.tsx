@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { BackendStatusBanner } from "@/components/common/backend-status-banner";
+import { SkipToContent } from "@/components/common/skip-to-content";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-background font-sans antialiased text-foreground flex flex-col">
         <Providers>
+          <SkipToContent />
           <BackendStatusBanner />
           {children}
         </Providers>
