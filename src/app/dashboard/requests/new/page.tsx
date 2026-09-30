@@ -116,12 +116,18 @@ export default function NewServiceRequestPage() {
         ? `[EMERGENCY PRIORITY] ${data.description || ""}`.trim()
         : data.description;
 
+      const preferredIso =
+        data.preferredDateTime && !isNaN(new Date(data.preferredDateTime).getTime())
+          ? new Date(data.preferredDateTime).toISOString()
+          : new Date(Date.now() + 86400000).toISOString();
+
       return api.post("/service-requests", {
+        categoryId: data.categoryId,
         serviceTypeId: data.serviceTypeId,
         title: data.title,
         description: payloadDescription,
         location: data.location,
-        preferredDateTime: new Date(data.preferredDateTime).toISOString(),
+        preferredDateTime: preferredIso,
       });
     },
     onSuccess: (res: any) => {
