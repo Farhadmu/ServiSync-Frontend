@@ -265,12 +265,18 @@ function TechnicianDashboardView() {
     queryKey: ["technician", "overview"],
     queryFn: async () => {
       const [jobsRes, profileRes] = await Promise.all([
-        api.get<any[]>("/technicians/me/jobs"),
-        api.get<any>("/technicians/me/profile"),
+        api.get<any[]>("/technicians/me/jobs").catch((err) => {
+          console.warn("Could not fetch jobs:", err);
+          return { data: [] };
+        }),
+        api.get<any>("/technicians/me/profile").catch((err) => {
+          console.warn("Could not fetch profile:", err);
+          return { data: null };
+        }),
       ]);
       return {
-        jobs: jobsRes.data || [],
-        profile: profileRes.data,
+        jobs: jobsRes?.data || [],
+        profile: profileRes?.data || null,
       };
     },
   });
@@ -447,7 +453,7 @@ function TechnicianDashboardView() {
               )}
 
               <Button asChild size="sm" variant="outline">
-                <Link href={`/dashboard/jobs/${activeJob.id}`}>View Job Details</Link>
+                <Link href={`/dashboard/work-orders/${activeJob.workOrder.id}`}>View Work Order</Link>
               </Button>
             </div>
           </CardContent>
@@ -481,7 +487,15 @@ function TechnicianDashboardView() {
                       {job.status}
                     </Badge>
                     <Button asChild size="sm" variant="outline">
-                      <Link href={`/dashboard/jobs/${job.id}`}>Open</Link>
+                      <Link
+                        href={
+                          job.workOrder
+                            ? `/dashboard/work-orders/${job.workOrder.id}`
+                            : `/dashboard/jobs`
+                        }
+                      >
+                        {job.workOrder ? "View Order" : "Review"}
+                      </Link>
                     </Button>
                   </div>
                 </CardContent>
