@@ -221,6 +221,22 @@ async function handleResponse<T>(response: Response): Promise<ApiResponse<T>> {
   return json as ApiResponse<T>;
 }
 
+export function formatApiError(err: unknown): string {
+  if (err instanceof ApiError) {
+    if (err.isBackendSuspendedOrCold) {
+      return "Backend service is currently suspended or spinning up on Render. Please try again shortly or configure local backend.";
+    }
+    if (err.isNetworkError) {
+      return "Network connection error. Please check your internet or backend status.";
+    }
+    return err.message;
+  }
+  if (err instanceof Error) {
+    return err.message;
+  }
+  return "An unexpected error occurred";
+}
+
 export const api = {
   get: <T>(endpoint: string, options?: RequestOptions) =>
     apiRequest<T>(endpoint, { ...options, method: "GET" }),
@@ -249,3 +265,4 @@ export const api = {
   delete: <T>(endpoint: string, options?: RequestOptions) =>
     apiRequest<T>(endpoint, { ...options, method: "DELETE" }),
 };
+
