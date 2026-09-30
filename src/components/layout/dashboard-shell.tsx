@@ -15,6 +15,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { CommandPalette } from "@/components/common/command-palette";
 import { Badge } from "@/components/ui/badge";
 import {
   Wrench,
@@ -251,7 +253,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2">
+            <CommandPalette />
+
+            {/* Theme Toggle Button */}
+            <ThemeToggle className="h-9 w-9 text-muted-foreground hover:text-foreground" />
+
             {/* Notifications Button */}
             <Link
               href="/dashboard/notifications"

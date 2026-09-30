@@ -102,7 +102,7 @@ export interface ServiceRequest {
   rejectionReason?: string | null;
   createdAt: string;
   updatedAt: string;
-  customer?: { id: string; name: string; email: string };
+  customer?: { id: string; name: string; email: string; phone?: string | null };
   serviceType?: ServiceType;
   assignments?: Assignment[];
 }

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuthStore } from "@/store/auth-store";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Wrench, Shield, ArrowRight, Menu, X, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 
@@ -48,6 +49,7 @@ export function PublicHeader() {
 
         {/* Auth CTAs */}
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle className="h-9 w-9" />
           {isAuthenticated && user ? (
             <Button asChild variant="default" size="sm" className="shadow-sm">
               <Link href="/dashboard">
