@@ -133,10 +133,38 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ### 5. Running Tests & Quality Checks
 ```bash
-npm run typecheck   # Strict TypeScript verification
-npm test            # Run Vitest test suite
-npm run build       # Build optimized production bundle
+npm run typecheck   # Strict TypeScript verification (0 errors)
+npm test            # Run Vitest unit & component test suite (21 tests across 4 suites)
+npm run test:e2e    # Run Playwright end-to-end smoke tests
+npm run build       # Build optimized Next.js 15 production bundle
 ```
+
+---
+
+## 📈 Git Commit Milestone Log (20 Incremental Commits)
+
+| # | Hash / Commit | Scope | Description |
+| :- | :--- | :--- | :--- |
+| 1 | `chore(init)` | Architecture | Bootstrap Next.js 15 App Router with Tailwind, TypeScript, and TanStack Query |
+| 2 | `feat(ui)` | Components | Implement accessible Radix and Tailwind design system primitives |
+| 3 | `feat(landing)` | Public | Build responsive landing page with workflow, features, and demo quick-access |
+| 4 | `feat(auth)` | Security | Add secure login and registration forms with evaluator demo autofill |
+| 5 | `feat(dashboard)` | Dashboard | Implement role-aware dashboard shell, navigation, and overview hubs |
+| 6 | `feat(requests)` | Customer | Implement service request creation, filtering, timeline, review, and cancel flows |
+| 7 | `feat(payments)` | Stripe/WorkOrders | Integrate real Stripe payment flow, work order transitions, and technician jobs |
+| 8 | `feat(admin)` | Administration | Add user management, category administration, audit logs, and feedback module |
+| 9 | `test(unit)` | QA | Add vitest test suite for form validations, utility formatters, and api client session state |
+| 10 | `docs` | Documentation | Add comprehensive README with API mapping and 5-10 minute evaluator walkthrough script |
+| 11 | `feat(seo)` | SEO | Add dynamic sitemap, robots.txt, and web app manifest |
+| 12 | `feat(notifications)` | UI/UX | Add global sonner toast provider and api mutation toast hooks |
+| 13 | `feat(ui)` | Resiliency | Add system health indicator and Render cold-start status banner |
+| 14 | `feat(accessibility)` | A11y | Add skip-to-content link, keyboard shortcuts, and semantic aria landmarks |
+| 15 | `feat(export)` | Utility | Add receipt printing and CSV data export utility for invoices and work orders |
+| 16 | `test(e2e)` | QA | Configure Playwright and add end-to-end smoke tests for critical user journeys |
+| 17 | `test(components)` | QA | Expand unit tests for UI primitives and dashboard status timeline |
+| 18 | `feat(security)` | Security | Configure production security headers, CSP, and Vercel edge deployment config |
+| 19 | `feat(error-handling)` | Resiliency | Enhance 404 not-found and global error recovery pages with diagnostic logs |
+| 20 | `docs(evaluator)` | Polish | Finalize deployment documentation, project presentation, and verification summary |
 
 ---
 
