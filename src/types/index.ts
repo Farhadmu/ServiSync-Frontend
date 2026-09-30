@@ -304,3 +304,126 @@ export interface AuthTokens {
     image?: string;
   };
 }
+
+// ──────────────────────────────────────────────────────────────────────
+// WEBSITE CONTENT (CMS)
+// ──────────────────────────────────────────────────────────────────────
+
+export interface WebsiteSection<T = any> {
+  id: string;
+  sectionKey: string;
+  title?: string | null;
+  subtitle?: string | null;
+  order: number;
+  isVisible: boolean;
+  isPublished: boolean;
+  content: T;
+  updatedBy?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface PublishedContentResponse {
+  sections: WebsiteSection[];
+  sectionMap: Record<string, WebsiteSection>;
+}
+
+export interface HeroMetric {
+  label: string;
+  value: string;
+  description: string;
+}
+
+export interface HeroContent {
+  badgeText?: string;
+  highlightedText?: string;
+  primaryCtaText?: string;
+  primaryCtaLink?: string;
+  secondaryCtaText?: string;
+  secondaryCtaLink?: string;
+  metrics?: HeroMetric[];
+}
+
+export interface FeatureItem {
+  icon: string;
+  title: string;
+  description: string;
+  tag?: string;
+}
+
+export interface FeaturesContent {
+  badge?: string;
+  items: FeatureItem[];
+}
+
+export interface WorkflowStep {
+  stepNumber: string;
+  title: string;
+  role: string;
+  description: string;
+  icon: string;
+}
+
+export interface WorkflowContent {
+  badge?: string;
+  steps: WorkflowStep[];
+}
+
+export interface RoleOverviewItem {
+  role: string;
+  tagline: string;
+  description?: string;
+  bullets: string[];
+}
+
+export interface RolesContent {
+  badge?: string;
+  roles: RoleOverviewItem[];
+}
+
+export interface ShowcaseTab {
+  id: string;
+  label: string;
+  heading: string;
+  description: string;
+  highlights: string[];
+}
+
+export interface ShowcaseContent {
+  badge?: string;
+  tabs: ShowcaseTab[];
+}
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+  category?: string;
+}
+
+export interface FaqContent {
+  badge?: string;
+  items: FaqItem[];
+}
+
+export interface CtaContent {
+  primaryButtonText?: string;
+  primaryButtonLink?: string;
+  secondaryButtonText?: string;
+  secondaryButtonLink?: string;
+}
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterContent {
+  companyName?: string;
+  tagline?: string;
+  copyright?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
+  links?: FooterLink[];
+}
+

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -50,12 +50,12 @@ function LoginForm() {
   });
 
   // Handle demo role autofill from URL or click
-  const autofillDemo = (email: string, pass: string, roleName: string) => {
+  const autofillDemo = useCallback((email: string, pass: string, roleName: string) => {
     setValue("email", email, { shouldValidate: true });
     setValue("password", pass, { shouldValidate: true });
     setErrorMessage(null);
     toast.info(`Filled credentials for ${roleName}`);
-  };
+  }, [setValue]);
 
   useEffect(() => {
     if (demoRoleParam) {
@@ -64,7 +64,7 @@ function LoginForm() {
         autofillDemo(match.email, match.pass, match.role);
       }
     }
-  }, [demoRoleParam]);
+  }, [demoRoleParam, autofillDemo]);
 
   const onSubmit = async (data: LoginFormData) => {
     setIsSubmitting(true);

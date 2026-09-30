@@ -24,6 +24,7 @@ import {
   Sun,
   LogOut,
   UserCheck,
+  FileText,
 } from "lucide-react";
 
 export function CommandPalette() {
@@ -62,6 +63,7 @@ export function CommandPalette() {
     { label: "Availability & Duty", href: "/dashboard/availability", icon: UserCheck, roles: ["TECHNICIAN"] },
     { label: "User Governance", href: "/dashboard/admin/users", icon: Users, roles: ["ADMIN"] },
     { label: "Service Categories Catalog", href: "/dashboard/admin/categories", icon: FolderTree, roles: ["ADMIN"] },
+    { label: "Website Content (CMS)", href: "/dashboard/admin/content", icon: FileText, roles: ["ADMIN"] },
     { label: "Security Audit Logs", href: "/dashboard/admin/audit-logs", icon: ShieldAlert, roles: ["ADMIN"] },
   ];
 
@@ -108,7 +110,7 @@ export function CommandPalette() {
             </p>
             {filteredItems.length === 0 ? (
               <p className="px-3 py-6 text-center text-xs text-muted-foreground">
-                No matching pages found for "{search}".
+                No matching pages found for &quot;{search}&quot;.
               </p>
             ) : (
               filteredItems.map((item) => {

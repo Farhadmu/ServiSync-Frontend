@@ -30,20 +30,23 @@ export function PublicHeader() {
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-          <a href="#features" className="hover:text-foreground transition-colors">
-            Features
-          </a>
-          <a href="#how-it-works" className="hover:text-foreground transition-colors">
-            How It Works
-          </a>
           <a href="#services" className="hover:text-foreground transition-colors">
             Services
+          </a>
+          <a href="#how-it-works" className="hover:text-foreground transition-colors">
+            Workflow
+          </a>
+          <a href="#features" className="hover:text-foreground transition-colors">
+            Features
           </a>
           <a href="#roles" className="hover:text-foreground transition-colors">
             Roles
           </a>
-          <a href="#demo-access" className="text-primary font-semibold hover:underline">
-            Demo Logins
+          <a href="#showcase" className="hover:text-foreground transition-colors">
+            Portals
+          </a>
+          <a href="#faq" className="hover:text-foreground transition-colors">
+            FAQ
           </a>
         </nav>
 
@@ -86,20 +89,6 @@ export function PublicHeader() {
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-border bg-background p-4 space-y-3 animate-in slide-in-from-top-2">
           <a
-            href="#features"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
-          >
-            Features
-          </a>
-          <a
-            href="#how-it-works"
-            onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
-          >
-            How It Works
-          </a>
-          <a
             href="#services"
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
@@ -107,11 +96,39 @@ export function PublicHeader() {
             Services
           </a>
           <a
+            href="#how-it-works"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+          >
+            Workflow
+          </a>
+          <a
+            href="#features"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+          >
+            Features
+          </a>
+          <a
             href="#roles"
             onClick={() => setMobileMenuOpen(false)}
             className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
           >
             Roles
+          </a>
+          <a
+            href="#showcase"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+          >
+            Portals
+          </a>
+          <a
+            href="#faq"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+          >
+            FAQ
           </a>
           <div className="pt-2 border-t border-border flex flex-col gap-2">
             {isAuthenticated ? (
