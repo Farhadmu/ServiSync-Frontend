@@ -58,8 +58,20 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       icon: "h-9 w-9",
     };
 
+    if (asChild) {
+      return (
+        <Slot
+          className={cn(baseClasses, variantClasses[variant], sizeClasses[size], className)}
+          ref={ref}
+          {...props}
+        >
+          {children}
+        </Slot>
+      );
+    }
+
     return (
-      <Comp
+      <button
         className={cn(baseClasses, variantClasses[variant], sizeClasses[size], className)}
         ref={ref}
         disabled={disabled || isLoading}
@@ -67,7 +79,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
         {children}
-      </Comp>
+      </button>
     );
   }
 );

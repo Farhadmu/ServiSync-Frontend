@@ -89,10 +89,10 @@ export default function AdminAuditLogsPage() {
             </table>
           </div>
 
-          {meta && meta.totalPages > 1 && (
+          {meta && (meta.totalPages ?? 1) > 1 && (
             <div className="flex items-center justify-between p-4 border-t border-border/60 text-xs text-muted-foreground">
               <span>
-                Page {meta.page} of {meta.totalPages} ({meta.total} logged events)
+                Page {meta.page} of {meta.totalPages ?? 1} ({meta.total} logged events)
               </span>
               <div className="flex items-center gap-2">
                 <Button
@@ -106,7 +106,7 @@ export default function AdminAuditLogsPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  disabled={page >= meta.totalPages}
+                  disabled={page >= (meta.totalPages ?? 1)}
                   onClick={() => setPage((p) => p + 1)}
                 >
                   Next <ChevronRight className="h-4 w-4 ml-1" />

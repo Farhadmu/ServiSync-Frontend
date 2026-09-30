@@ -128,10 +128,10 @@ export default function WorkOrdersPage() {
             );
           })}
 
-          {meta && meta.totalPages > 1 && (
+          {meta && (meta.totalPages ?? 1) > 1 && (
             <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs text-muted-foreground">
               <span>
-                Showing page {meta.page} of {meta.totalPages} ({meta.total} total items)
+                Showing page {meta.page} of {meta.totalPages ?? 1} ({meta.total} total items)
               </span>
               <div className="flex items-center gap-2">
                 <Button
@@ -145,7 +145,7 @@ export default function WorkOrdersPage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  disabled={page >= meta.totalPages}
+                  disabled={page >= (meta.totalPages ?? 1)}
                   onClick={() => setPage((p) => p + 1)}
                 >
                   Next <ChevronRight className="h-4 w-4 ml-1" />
