@@ -590,4 +590,57 @@ export interface PublicTechnicianProfile {
   }[];
 }
 
+export interface RecommendationBreakdown {
+  skillMatch: number;
+  customerRating: number;
+  workloadBalance: number;
+  experience: number;
+  total: number;
+}
+
+export interface CandidateTechnician {
+  technicianId: string;
+  userId: string;
+  name: string;
+  email: string;
+  image: string | null;
+  bio: string | null;
+  experienceYears: number;
+  hourlyRate: number;
+  matchedSkills: string[];
+  missingSkills: string[];
+  activeJobsCount: number;
+  averageRating: number;
+  totalReviews: number;
+  score: number;
+  scoreBreakdown: RecommendationBreakdown;
+  eligibilityReasons: string[];
+  isTopPick: boolean;
+}
+
+export interface IneligibleTechnician {
+  technicianId: string;
+  userId: string;
+  name: string;
+  email: string;
+  exclusionReasons: string[];
+}
+
+export interface RecommendationResult {
+  serviceRequestId: string;
+  serviceTypeName: string;
+  requiredSkills: string[];
+  appointmentWindow: {
+    startAt: string | null;
+    endAt: string | null;
+    durationMinutes: number;
+  };
+  recommended: CandidateTechnician[];
+  ineligible: IneligibleTechnician[];
+  totalEligible: number;
+  totalCandidates: number;
+  summary: string;
+}
+
+
 
