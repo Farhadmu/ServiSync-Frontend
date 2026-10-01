@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/providers";
-import { BackendStatusBanner } from "@/components/common/backend-status-banner";
 import { SkipToContent } from "@/components/common/skip-to-content";
 
 const inter = Inter({
@@ -40,7 +39,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased text-foreground flex flex-col">
         <Providers>
           <SkipToContent />
-          <BackendStatusBanner />
           {children}
         </Providers>
       </body>

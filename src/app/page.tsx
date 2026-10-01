@@ -236,34 +236,36 @@ export default function LandingPage() {
             aria-label="Introduction and Overview"
             className="relative overflow-hidden pt-12 pb-20 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32 border-b border-border/60"
           >
-            {/* ── Dual Mode Background Images ── */}
+            {/* ── Dual Mode Project-Related Background Images ── */}
             <div className="absolute inset-0 pointer-events-none select-none -z-20 overflow-hidden">
-              {/* Light Mode Hero Image */}
-              <div className="block dark:hidden relative w-full h-full opacity-40 transition-opacity duration-700">
+              {/* Light Mode Hero Image: Real certified technician servicing smart AC & electrical system */}
+              <div className="block dark:hidden relative w-full h-full opacity-90 transition-opacity duration-700">
                 <Image
                   src="/images/hero-light.jpg"
-                  alt="ServiSync Operations Ecosystem (Light Mode)"
+                  alt="ServiSync Field Service Operations - Certified Technician Servicing AC"
                   fill
                   priority
-                  className="object-cover object-right-top mix-blend-multiply"
+                  className="object-cover object-[75%_center] lg:object-right-center"
                 />
-                {/* Soft gradient masks for reading contrast */}
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/30" />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/40 to-background" />
+                {/* Targeted gradient mask: guarantees high contrast text on left, preserves clear image on right */}
+                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent sm:via-background/70 lg:w-3/5" />
+                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-background to-transparent" />
+                <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-background/60 to-transparent" />
               </div>
 
-              {/* Night / Dark Mode Hero Image */}
-              <div className="hidden dark:block relative w-full h-full opacity-45 transition-opacity duration-700">
+              {/* Night / Dark Mode Hero Image: Emergency night field service technician working on HVAC */}
+              <div className="hidden dark:block relative w-full h-full opacity-90 transition-opacity duration-700">
                 <Image
                   src="/images/hero-dark.jpg"
-                  alt="ServiSync Telemetry Operations (Night Mode)"
+                  alt="ServiSync Night Field Service Operations - HVAC & Diagnostic Telemetry"
                   fill
                   priority
-                  className="object-cover object-right-top"
+                  className="object-cover object-[75%_center] lg:object-right-center"
                 />
-                {/* Cybernetic ambient gradient masks */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/90 to-[#0b0f19]/40" />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0b0f19]/50 to-[#0b0f19]" />
+                {/* Cinematic night gradient mask: protects text while keeping neon lighting vibrant */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/85 to-transparent sm:via-[#0b0f19]/70 lg:w-3/5" />
+                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#0b0f19] to-transparent" />
+                <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-[#0b0f19]/60 to-transparent" />
               </div>
             </div>
 
