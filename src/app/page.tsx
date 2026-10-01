@@ -290,11 +290,31 @@ export default function LandingPage() {
                   {/* Main High-Impact Heading */}
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground leading-[1.12]">
                     Smartly Connecting{" "}
-                    <span className="bg-gradient-to-r from-primary via-indigo-500 to-purple-600 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-cyan-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
                       {heroContent.highlightedText || "Customers, Technicians,"}
                     </span>{" "}
                     and Service Operations.
                   </h1>
+
+                  {/* Colorful Field Trade Badges */}
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 border border-emerald-500/30 text-emerald-700 dark:text-emerald-300 backdrop-blur-sm shadow-sm">
+                      <Flame className="h-3.5 w-3.5 text-emerald-500" />
+                      AC & HVAC Cooling
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 backdrop-blur-sm shadow-sm">
+                      <Zap className="h-3.5 w-3.5 text-amber-500" />
+                      Electrical & Wiring
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/15 border border-cyan-500/30 text-cyan-700 dark:text-cyan-300 backdrop-blur-sm shadow-sm">
+                      <Droplets className="h-3.5 w-3.5 text-cyan-500" />
+                      Plumbing & Sanitary
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/15 border border-purple-500/30 text-purple-700 dark:text-purple-300 backdrop-blur-sm shadow-sm">
+                      <Shield className="h-3.5 w-3.5 text-purple-500" />
+                      Smart Home & Security
+                    </span>
+                  </div>
 
                   {/* Subtitle with High Readability */}
                   <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
@@ -307,7 +327,7 @@ export default function LandingPage() {
                     <Button
                       asChild
                       size="lg"
-                      className="w-full sm:w-auto shadow-xl shadow-primary/25 font-semibold h-12 px-7 bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300 hover:scale-[1.02] group"
+                      className="w-full sm:w-auto shadow-xl shadow-primary/25 font-semibold h-12 px-7 bg-gradient-to-r from-primary to-indigo-600 hover:from-primary/90 hover:to-indigo-600/90 text-primary-foreground transition-all duration-300 hover:scale-[1.02] group"
                     >
                       <Link href={heroContent.primaryCtaLink || "/register"}>
                         {heroContent.primaryCtaText || "Get Started as Customer"}
@@ -318,7 +338,7 @@ export default function LandingPage() {
                       asChild
                       variant="outline"
                       size="lg"
-                      className="w-full sm:w-auto h-12 px-6 backdrop-blur-md bg-background/60 hover:bg-background/90 border-border/80 hover:border-primary/40 transition-all font-semibold"
+                      className="w-full sm:w-auto h-12 px-6 backdrop-blur-md bg-background/70 hover:bg-background border-border/80 hover:border-primary/40 transition-all font-semibold"
                     >
                       <a href={heroContent.secondaryCtaLink || "#services"}>
                         {heroContent.secondaryCtaText || "Explore Service Catalog"}
@@ -328,17 +348,17 @@ export default function LandingPage() {
 
                   {/* Trust Highlights Strip */}
                   <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-1 text-xs text-muted-foreground font-medium">
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-semibold">
                       <ShieldCheck className="h-4 w-4 text-emerald-500" />
                       Strict RBAC Enforced
                     </span>
                     <span className="h-3 w-px bg-border" />
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 font-semibold">
                       <Zap className="h-4 w-4 text-amber-500" />
                       Sub-second Dispatch Latency
                     </span>
                     <span className="h-3 w-px bg-border" />
-                    <span className="flex items-center gap-1.5">
+                    <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 font-semibold">
                       <CreditCard className="h-4 w-4 text-indigo-500" />
                       PCI Compliant Stripe
                     </span>
@@ -347,18 +367,27 @@ export default function LandingPage() {
                   {/* Metrics Row */}
                   {heroContent.metrics && heroContent.metrics.length > 0 && (
                     <div className="pt-6 grid grid-cols-3 gap-4 border-t border-border/60 max-w-lg mx-auto lg:mx-0 text-left">
-                      {heroContent.metrics.map((m, idx) => (
-                        <div
-                          key={idx}
-                          className="p-3 rounded-xl bg-card/60 border border-border/40 backdrop-blur-sm hover:border-primary/30 transition-colors"
-                        >
-                          <p className="text-2xl font-black text-foreground font-mono">{m.value}</p>
-                          <p className="text-xs font-bold text-foreground mt-0.5">{m.label}</p>
-                          <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
-                            {m.description}
-                          </p>
-                        </div>
-                      ))}
+                      {heroContent.metrics.map((m, idx) => {
+                        const metricColors = [
+                          "border-blue-500/30 bg-blue-500/5 text-blue-600 dark:text-blue-400",
+                          "border-amber-500/30 bg-amber-500/5 text-amber-600 dark:text-amber-400",
+                          "border-emerald-500/30 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400",
+                        ];
+                        const colorClass = metricColors[idx % metricColors.length];
+
+                        return (
+                          <div
+                            key={idx}
+                            className={`p-3 rounded-2xl border ${colorClass} backdrop-blur-sm transition-all hover:scale-105`}
+                          >
+                            <p className="text-2xl font-black font-mono text-foreground">{m.value}</p>
+                            <p className="text-xs font-bold mt-0.5">{m.label}</p>
+                            <p className="text-[11px] text-muted-foreground leading-tight mt-0.5">
+                              {m.description}
+                            </p>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
@@ -618,37 +647,62 @@ export default function LandingPage() {
 
                   const isElectric = cat.name.toLowerCase().includes("electr");
                   const isPlumbing = cat.name.toLowerCase().includes("plumb");
+                  const isHvac = cat.name.toLowerCase().includes("ac") || cat.name.toLowerCase().includes("hvac") || cat.name.toLowerCase().includes("air") || cat.name.toLowerCase().includes("cool");
+
+                  const theme = isElectric
+                    ? {
+                        card: "border-amber-500/40 bg-gradient-to-b from-amber-500/10 via-card to-card hover:border-amber-500/80 hover:shadow-amber-500/10",
+                        iconBox: "bg-amber-500/15 text-amber-500 border-amber-500/30",
+                        badge: "border-amber-500/40 text-amber-700 dark:text-amber-300 bg-amber-500/10",
+                        label: "Power & Wiring Certified",
+                      }
+                    : isPlumbing
+                    ? {
+                        card: "border-cyan-500/40 bg-gradient-to-b from-cyan-500/10 via-card to-card hover:border-cyan-500/80 hover:shadow-cyan-500/10",
+                        iconBox: "bg-cyan-500/15 text-cyan-500 border-cyan-500/30",
+                        badge: "border-cyan-500/40 text-cyan-700 dark:text-cyan-300 bg-cyan-500/10",
+                        label: "Hydro & Sanitary Certified",
+                      }
+                    : isHvac
+                    ? {
+                        card: "border-emerald-500/40 bg-gradient-to-b from-emerald-500/10 via-card to-card hover:border-emerald-500/80 hover:shadow-emerald-500/10",
+                        iconBox: "bg-emerald-500/15 text-emerald-500 border-emerald-500/30",
+                        badge: "border-emerald-500/40 text-emerald-700 dark:text-emerald-300 bg-emerald-500/10",
+                        label: "HVAC & Refrigerant Certified",
+                      }
+                    : {
+                        card: "border-purple-500/40 bg-gradient-to-b from-purple-500/10 via-card to-card hover:border-purple-500/80 hover:shadow-purple-500/10",
+                        iconBox: "bg-purple-500/15 text-purple-500 border-purple-500/30",
+                        badge: "border-purple-500/40 text-purple-700 dark:text-purple-300 bg-purple-500/10",
+                        label: "Smart Systems Certified",
+                      };
 
                   return (
                     <Card
                       key={cat.id}
-                      className="group border border-border/80 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 bg-card/90 backdrop-blur-sm flex flex-col justify-between rounded-2xl overflow-hidden"
+                      className={`group border transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 backdrop-blur-sm flex flex-col justify-between rounded-2xl overflow-hidden ${theme.card}`}
                     >
                       <CardHeader className="pb-3 space-y-3">
                         <div className="flex items-center justify-between">
                           <span
-                            className={`p-3 rounded-2xl border transition-all duration-300 group-hover:scale-110 shadow-sm ${
-                              isElectric
-                                ? "bg-amber-500/10 text-amber-500 border-amber-500/20"
-                                : isPlumbing
-                                ? "bg-blue-500/10 text-blue-500 border-blue-500/20"
-                                : "bg-primary/10 text-primary border-primary/20"
-                            }`}
+                            className={`p-3 rounded-2xl border transition-all duration-300 group-hover:scale-110 shadow-sm ${theme.iconBox}`}
                           >
                             {isElectric ? (
                               <Zap className="h-6 w-6" />
                             ) : isPlumbing ? (
                               <Droplets className="h-6 w-6" />
+                            ) : isHvac ? (
+                              <Flame className="h-6 w-6" />
                             ) : (
                               <Wrench className="h-6 w-6" />
                             )}
                           </span>
                           <Badge
                             variant="outline"
-                            className="text-[11px] font-mono text-emerald-600 dark:text-emerald-400 border-emerald-500/30 bg-emerald-500/5"
+                            className={`text-[11px] font-semibold border ${theme.badge}`}
                           >
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse" />
-                            Active Catalog
+                            {theme.label}
                           </Badge>
                         </div>
                         <CardTitle className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
@@ -671,12 +725,12 @@ export default function LandingPage() {
                               {serviceTypes.slice(0, 3).map((st) => (
                                 <div
                                   key={st.id}
-                                  className="p-2.5 rounded-xl bg-muted/40 border border-border/60 flex items-center justify-between text-xs hover:bg-muted/70 transition-colors"
+                                  className="p-2.5 rounded-xl bg-card/60 border border-border/60 flex items-center justify-between text-xs hover:bg-card transition-colors"
                                 >
                                   <div>
                                     <p className="font-semibold text-foreground">{st.name}</p>
                                     <p className="text-[10px] text-muted-foreground flex items-center gap-1">
-                                      <Clock className="h-3 w-3" /> ~{st.durationMinutes || 60} mins
+                                      <Clock className="h-3 w-3 text-primary" /> ~{st.durationMinutes || 60} mins
                                     </p>
                                   </div>
                                   <span className="font-mono font-bold text-primary">
@@ -710,7 +764,7 @@ export default function LandingPage() {
                           <Button
                             asChild
                             size="sm"
-                            className="font-semibold shadow-sm rounded-xl group/btn"
+                            className="font-semibold shadow-md rounded-xl group/btn bg-gradient-to-r from-primary to-indigo-600 hover:from-primary/90 hover:to-indigo-600/90 text-primary-foreground"
                           >
                             <Link href="/dashboard/requests/new">
                               Book Service
@@ -756,48 +810,82 @@ export default function LandingPage() {
 
               {/* Connected Step Pipeline */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-                {(workflowContent.steps || []).map((step, idx) => (
-                  <Card
-                    key={idx}
-                    className="group border border-border/70 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 bg-card/80 backdrop-blur-md relative flex flex-col justify-between rounded-2xl overflow-hidden"
-                  >
-                    {/* Top Accent Gradient Border */}
-                    <div className="h-1 w-full bg-gradient-to-r from-primary/30 via-indigo-500 to-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                {(workflowContent.steps || []).map((step, idx) => {
+                  const stepThemes = [
+                    {
+                      card: "border-indigo-500/40 bg-gradient-to-b from-indigo-500/15 via-card to-card hover:border-indigo-500/80 shadow-indigo-500/5",
+                      topLine: "from-indigo-500 to-blue-500",
+                      badge: "border-indigo-500/30 text-indigo-700 dark:text-indigo-300 bg-indigo-500/10",
+                      icon: "bg-indigo-500/20 text-indigo-500 border-indigo-500/30",
+                      num: "text-indigo-500/40 group-hover:text-indigo-500",
+                    },
+                    {
+                      card: "border-amber-500/40 bg-gradient-to-b from-amber-500/15 via-card to-card hover:border-amber-500/80 shadow-amber-500/5",
+                      topLine: "from-amber-500 to-orange-500",
+                      badge: "border-amber-500/30 text-amber-700 dark:text-amber-300 bg-amber-500/10",
+                      icon: "bg-amber-500/20 text-amber-500 border-amber-500/30",
+                      num: "text-amber-500/40 group-hover:text-amber-500",
+                    },
+                    {
+                      card: "border-emerald-500/40 bg-gradient-to-b from-emerald-500/15 via-card to-card hover:border-emerald-500/80 shadow-emerald-500/5",
+                      topLine: "from-emerald-500 to-teal-500",
+                      badge: "border-emerald-500/30 text-emerald-700 dark:text-emerald-300 bg-emerald-500/10",
+                      icon: "bg-emerald-500/20 text-emerald-500 border-emerald-500/30",
+                      num: "text-emerald-500/40 group-hover:text-emerald-500",
+                    },
+                    {
+                      card: "border-purple-500/40 bg-gradient-to-b from-purple-500/15 via-card to-card hover:border-purple-500/80 shadow-purple-500/5",
+                      topLine: "from-purple-500 to-pink-500",
+                      badge: "border-purple-500/30 text-purple-700 dark:text-purple-300 bg-purple-500/10",
+                      icon: "bg-purple-500/20 text-purple-500 border-purple-500/30",
+                      num: "text-purple-500/40 group-hover:text-purple-500",
+                    },
+                  ];
+                  const st = stepThemes[idx % stepThemes.length];
 
-                    <CardContent className="p-6 space-y-4">
-                      <div className="flex items-center justify-between">
-                        <span className="text-3xl font-black text-primary/30 group-hover:text-primary font-mono transition-colors">
-                          {step.stepNumber}
-                        </span>
-                        <Badge
-                          variant="outline"
-                          className="text-[10px] font-semibold uppercase tracking-wider border-primary/20 bg-primary/5 text-primary"
-                        >
-                          {step.role}
-                        </Badge>
+                  return (
+                    <Card
+                      key={idx}
+                      className={`group border transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 backdrop-blur-md relative flex flex-col justify-between rounded-2xl overflow-hidden ${st.card}`}
+                    >
+                      {/* Top Accent Gradient Border */}
+                      <div className={`h-1.5 w-full bg-gradient-to-r ${st.topLine}`} />
+
+                      <CardContent className="p-6 space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className={`text-4xl font-black font-mono transition-colors ${st.num}`}>
+                            {step.stepNumber}
+                          </span>
+                          <Badge
+                            variant="outline"
+                            className={`text-[10px] font-bold uppercase tracking-wider ${st.badge}`}
+                          >
+                            {step.role}
+                          </Badge>
+                        </div>
+
+                        <div className={`p-3 rounded-2xl w-fit border transition-transform group-hover:scale-110 shadow-sm ${st.icon}`}>
+                          <DynamicIcon name={step.icon} className="h-6 w-6" />
+                        </div>
+
+                        <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
+                          {step.title}
+                        </h3>
+
+                        <p className="text-xs text-muted-foreground leading-relaxed">
+                          {step.description}
+                        </p>
+                      </CardContent>
+
+                      <div className="px-6 pb-5 pt-0">
+                        <div className="p-2.5 rounded-xl bg-card/60 border border-border/50 text-[10px] text-muted-foreground flex items-center gap-1.5">
+                          <Shield className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                          <span>Audited State Transition Logged</span>
+                        </div>
                       </div>
-
-                      <div className="p-3 rounded-2xl bg-primary/10 text-primary w-fit border border-primary/20 group-hover:scale-110 transition-transform">
-                        <DynamicIcon name={step.icon} className="h-6 w-6" />
-                      </div>
-
-                      <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-primary transition-colors">
-                        {step.title}
-                      </h3>
-
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {step.description}
-                      </p>
-                    </CardContent>
-
-                    <div className="px-6 pb-5 pt-0">
-                      <div className="p-2 rounded-lg bg-muted/30 border border-border/50 text-[10px] text-muted-foreground flex items-center gap-1.5">
-                        <Shield className="h-3 w-3 text-emerald-500 shrink-0" />
-                        <span>Audited State Machine Mutation</span>
-                      </div>
-                    </div>
-                  </Card>
-                ))}
+                    </Card>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -825,42 +913,54 @@ export default function LandingPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {(featuresContent.items || []).map((feat, idx) => (
-                  <div
-                    key={idx}
-                    className="group p-6 rounded-2xl border border-border/80 bg-card hover:bg-card/90 hover:border-primary/40 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between"
-                  >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="p-3 rounded-2xl bg-primary/10 text-primary border border-primary/20 group-hover:scale-110 transition-transform">
-                          <DynamicIcon name={feat.icon} className="h-6 w-6" />
+                {(featuresContent.items || []).map((feat, idx) => {
+                  const featThemes = [
+                    { border: "border-indigo-500/40 hover:border-indigo-500/80 hover:shadow-indigo-500/10", bg: "bg-gradient-to-b from-indigo-500/10 via-card to-card", icon: "bg-indigo-500/20 text-indigo-500 border-indigo-500/30", tag: "border-indigo-500/30 text-indigo-600 dark:text-indigo-400 bg-indigo-500/5" },
+                    { border: "border-amber-500/40 hover:border-amber-500/80 hover:shadow-amber-500/10", bg: "bg-gradient-to-b from-amber-500/10 via-card to-card", icon: "bg-amber-500/20 text-amber-500 border-amber-500/30", tag: "border-amber-500/30 text-amber-600 dark:text-amber-400 bg-amber-500/5" },
+                    { border: "border-emerald-500/40 hover:border-emerald-500/80 hover:shadow-emerald-500/10", bg: "bg-gradient-to-b from-emerald-500/10 via-card to-card", icon: "bg-emerald-500/20 text-emerald-500 border-emerald-500/30", tag: "border-emerald-500/30 text-emerald-600 dark:text-emerald-400 bg-emerald-500/5" },
+                    { border: "border-cyan-500/40 hover:border-cyan-500/80 hover:shadow-cyan-500/10", bg: "bg-gradient-to-b from-cyan-500/10 via-card to-card", icon: "bg-cyan-500/20 text-cyan-500 border-cyan-500/30", tag: "border-cyan-500/30 text-cyan-600 dark:text-cyan-400 bg-cyan-500/5" },
+                    { border: "border-purple-500/40 hover:border-purple-500/80 hover:shadow-purple-500/10", bg: "bg-gradient-to-b from-purple-500/10 via-card to-card", icon: "bg-purple-500/20 text-purple-500 border-purple-500/30", tag: "border-purple-500/30 text-purple-600 dark:text-purple-400 bg-purple-500/5" },
+                    { border: "border-rose-500/40 hover:border-rose-500/80 hover:shadow-rose-500/10", bg: "bg-gradient-to-b from-rose-500/10 via-card to-card", icon: "bg-rose-500/20 text-rose-500 border-rose-500/30", tag: "border-rose-500/30 text-rose-600 dark:text-rose-400 bg-rose-500/5" },
+                  ];
+                  const ft = featThemes[idx % featThemes.length];
+
+                  return (
+                    <div
+                      key={idx}
+                      className={`group p-6 rounded-2xl border transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between ${ft.border} ${ft.bg}`}
+                    >
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <div className={`p-3 rounded-2xl border transition-transform group-hover:scale-110 shadow-sm ${ft.icon}`}>
+                            <DynamicIcon name={feat.icon} className="h-6 w-6" />
+                          </div>
+                          {feat.tag && (
+                            <Badge
+                              variant="outline"
+                              className={`text-[10px] font-mono border ${ft.tag}`}
+                            >
+                              {feat.tag}
+                            </Badge>
+                          )}
                         </div>
-                        {feat.tag && (
-                          <Badge
-                            variant="outline"
-                            className="text-[10px] font-mono border-primary/30 text-primary bg-primary/5"
-                          >
-                            {feat.tag}
-                          </Badge>
-                        )}
+
+                        <div className="space-y-2">
+                          <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
+                            {feat.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                            {feat.description}
+                          </p>
+                        </div>
                       </div>
 
-                      <div className="space-y-2">
-                        <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
-                          {feat.title}
-                        </h3>
-                        <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                          {feat.description}
-                        </p>
+                      <div className="pt-4 mt-2 border-t border-border/40 flex items-center text-xs font-semibold text-primary gap-1 group-hover:translate-x-1 transition-transform">
+                        <span>Learn more about {feat.tag || "feature"}</span>
+                        <ArrowRight className="h-3.5 w-3.5" />
                       </div>
                     </div>
-
-                    <div className="pt-4 mt-2 border-t border-border/40 flex items-center text-xs font-semibold text-primary gap-1 group-hover:translate-x-1 transition-transform">
-                      <span>Learn more about {feat.tag || "feature"}</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -888,57 +988,67 @@ export default function LandingPage() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {(rolesContent.roles || []).map((item, idx) => (
-                  <Card
-                    key={idx}
-                    className="border border-border/80 hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 bg-card/90 backdrop-blur-sm flex flex-col justify-between rounded-2xl overflow-hidden"
-                  >
-                    <CardHeader className="pb-3 space-y-2.5">
-                      <div className="flex items-center justify-between">
-                        <Badge
-                          variant="default"
-                          className="w-fit text-xs font-bold px-3 py-0.5 rounded-lg"
-                        >
-                          {item.role}
-                        </Badge>
-                        <span className="text-xs font-mono text-muted-foreground">Portal</span>
-                      </div>
-                      <CardTitle className="text-base font-bold text-foreground">
-                        {item.tagline}
-                      </CardTitle>
-                      {item.description && (
-                        <CardDescription className="text-xs leading-relaxed">
-                          {item.description}
-                        </CardDescription>
-                      )}
-                    </CardHeader>
+                {(rolesContent.roles || []).map((item, idx) => {
+                  const roleThemes = [
+                    { border: "border-cyan-500/40 hover:border-cyan-500/80 shadow-cyan-500/5", bg: "bg-gradient-to-b from-cyan-500/15 via-card to-card", badge: "bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border-cyan-500/30", btn: "hover:bg-cyan-600 hover:text-white border-cyan-500/40 text-cyan-600 dark:text-cyan-400" },
+                    { border: "border-amber-500/40 hover:border-amber-500/80 shadow-amber-500/5", bg: "bg-gradient-to-b from-amber-500/15 via-card to-card", badge: "bg-amber-500/15 text-amber-700 dark:text-amber-300 border-amber-500/30", btn: "hover:bg-amber-600 hover:text-white border-amber-500/40 text-amber-600 dark:text-amber-400" },
+                    { border: "border-indigo-500/40 hover:border-indigo-500/80 shadow-indigo-500/5", bg: "bg-gradient-to-b from-indigo-500/15 via-card to-card", badge: "bg-indigo-500/15 text-indigo-700 dark:text-indigo-300 border-indigo-500/30", btn: "hover:bg-indigo-600 hover:text-white border-indigo-500/40 text-indigo-600 dark:text-indigo-400" },
+                    { border: "border-emerald-500/40 hover:border-emerald-500/80 shadow-emerald-500/5", bg: "bg-gradient-to-b from-emerald-500/15 via-card to-card", badge: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30", btn: "hover:bg-emerald-600 hover:text-white border-emerald-500/40 text-emerald-600 dark:text-emerald-400" },
+                  ];
+                  const rt = roleThemes[idx % roleThemes.length];
 
-                    <CardContent className="space-y-4 pt-1 flex-1 flex flex-col justify-between">
-                      <ul className="space-y-2.5 text-xs text-muted-foreground">
-                        {item.bullets.map((b, i) => (
-                          <li key={i} className="flex items-start gap-2">
-                            <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
+                  return (
+                    <Card
+                      key={idx}
+                      className={`border transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 backdrop-blur-sm flex flex-col justify-between rounded-2xl overflow-hidden ${rt.border} ${rt.bg}`}
+                    >
+                      <CardHeader className="pb-3 space-y-2.5">
+                        <div className="flex items-center justify-between">
+                          <Badge
+                            variant="outline"
+                            className={`w-fit text-xs font-bold px-3 py-1 rounded-xl border ${rt.badge}`}
+                          >
+                            {item.role} Portal
+                          </Badge>
+                          <span className="text-xs font-mono text-muted-foreground font-semibold">RBAC Verified</span>
+                        </div>
+                        <CardTitle className="text-base font-bold text-foreground">
+                          {item.tagline}
+                        </CardTitle>
+                        {item.description && (
+                          <CardDescription className="text-xs leading-relaxed">
+                            {item.description}
+                          </CardDescription>
+                        )}
+                      </CardHeader>
 
-                      <div className="pt-4 border-t border-border/50">
-                        <Button
-                          asChild
-                          variant="outline"
-                          size="sm"
-                          className="w-full text-xs font-semibold rounded-xl hover:bg-primary hover:text-white transition-all group"
-                        >
-                          <Link href="/login">
-                            Access {item.role} Portal
-                            <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-                          </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      <CardContent className="space-y-4 pt-1 flex-1 flex flex-col justify-between">
+                        <ul className="space-y-2.5 text-xs text-muted-foreground">
+                          {item.bullets.map((b, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="pt-4 border-t border-border/50">
+                          <Button
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className={`w-full text-xs font-semibold rounded-xl transition-all group ${rt.btn}`}
+                          >
+                            <Link href="/login">
+                              Access {item.role} Portal
+                              <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             </div>
           </section>
@@ -1203,11 +1313,11 @@ export default function LandingPage() {
             />
 
             <div className="container max-w-4xl relative z-10">
-              <div className="p-8 sm:p-14 rounded-3xl border border-primary/30 bg-card/85 backdrop-blur-2xl shadow-2xl text-center space-y-6 relative overflow-hidden">
+              <div className="p-8 sm:p-14 rounded-3xl border-2 border-indigo-500/30 bg-gradient-to-r from-blue-600/15 via-indigo-600/20 to-purple-600/15 backdrop-blur-2xl shadow-2xl text-center space-y-6 relative overflow-hidden">
                 {/* Floating ambient glow in corner */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-br from-indigo-500/20 to-pink-500/20 rounded-full blur-3xl pointer-events-none" />
 
-                <Badge variant="default" className="text-xs px-3.5 py-1 font-semibold">
+                <Badge variant="default" className="text-xs px-3.5 py-1 font-semibold bg-gradient-to-r from-primary to-indigo-600 text-white shadow-md">
                   Get Started Today
                 </Badge>
 
@@ -1224,7 +1334,7 @@ export default function LandingPage() {
                   <Button
                     asChild
                     size="lg"
-                    className="w-full sm:w-auto shadow-xl shadow-primary/25 font-semibold h-13 px-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground group"
+                    className="w-full sm:w-auto shadow-xl shadow-primary/30 font-semibold h-13 px-8 rounded-xl bg-gradient-to-r from-primary via-indigo-600 to-purple-600 hover:opacity-95 text-white group"
                   >
                     <Link href={ctaContent.primaryButtonLink || "/register"}>
                       {ctaContent.primaryButtonText || "Book a Service Now"}
@@ -1235,7 +1345,7 @@ export default function LandingPage() {
                     asChild
                     variant="outline"
                     size="lg"
-                    className="w-full sm:w-auto h-13 px-8 rounded-xl backdrop-blur-md bg-background/60 hover:bg-background/90 border-border/80 font-semibold"
+                    className="w-full sm:w-auto h-13 px-8 rounded-xl backdrop-blur-md bg-background/70 hover:bg-background border-border/80 font-semibold"
                   >
                     <Link href={ctaContent.secondaryButtonLink || "/login"}>
                       {ctaContent.secondaryButtonText || "Sign In to Portal"}
