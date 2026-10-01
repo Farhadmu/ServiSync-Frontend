@@ -234,48 +234,42 @@ export default function LandingPage() {
           <section
             id="hero"
             aria-label="Introduction and Overview"
-            className="relative overflow-hidden pt-12 pb-20 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32 border-b border-border/60"
+            className="relative isolate overflow-hidden pt-12 pb-20 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32 border-b border-border/60"
           >
             {/* ── Dual Mode Project-Related Background Images ── */}
-            <div className="absolute inset-0 pointer-events-none select-none -z-20 overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
               {/* Light Mode Hero Image: Real certified technician servicing smart AC & electrical system */}
-              <div className="block dark:hidden relative w-full h-full opacity-90 transition-opacity duration-700">
-                <Image
+              <div className="block dark:hidden absolute inset-0">
+                <img
                   src="/images/hero-light.jpg"
                   alt="ServiSync Field Service Operations - Certified Technician Servicing AC"
-                  fill
-                  priority
-                  className="object-cover object-[75%_center] lg:object-right-center"
+                  className="w-full h-full object-cover object-[75%_center] lg:object-right-center opacity-85"
                 />
-                {/* Targeted gradient mask: guarantees high contrast text on left, preserves clear image on right */}
-                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent sm:via-background/70 lg:w-3/5" />
-                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-background to-transparent" />
-                <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-background/60 to-transparent" />
+                {/* Soft gradient mask for readability */}
+                <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/65 to-background/20" />
+                <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-background to-transparent" />
               </div>
 
               {/* Night / Dark Mode Hero Image: Emergency night field service technician working on HVAC */}
-              <div className="hidden dark:block relative w-full h-full opacity-90 transition-opacity duration-700">
-                <Image
+              <div className="hidden dark:block absolute inset-0">
+                <img
                   src="/images/hero-dark.jpg"
                   alt="ServiSync Night Field Service Operations - HVAC & Diagnostic Telemetry"
-                  fill
-                  priority
-                  className="object-cover object-[75%_center] lg:object-right-center"
+                  className="w-full h-full object-cover object-[75%_center] lg:object-right-center opacity-90"
                 />
-                {/* Cinematic night gradient mask: protects text while keeping neon lighting vibrant */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19] via-[#0b0f19]/85 to-transparent sm:via-[#0b0f19]/70 lg:w-3/5" />
-                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-[#0b0f19] to-transparent" />
-                <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-[#0b0f19]/60 to-transparent" />
+                {/* Cinematic night gradient mask */}
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0b0f19]/95 via-[#0b0f19]/65 to-[#0b0f19]/20" />
+                <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#0b0f19] to-transparent" />
               </div>
             </div>
 
             {/* Glowing Ambient Light Orbs */}
             <div
-              className="absolute -top-32 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none -z-10 animate-pulse-glow"
+              className="absolute -top-32 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[120px] pointer-events-none z-0 animate-pulse-glow"
               aria-hidden="true"
             />
             <div
-              className="absolute top-1/3 -right-20 w-80 h-80 bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none -z-10 animate-float-slow"
+              className="absolute top-1/3 -right-20 w-80 h-80 bg-indigo-500/15 rounded-full blur-[100px] pointer-events-none z-0 animate-float-slow"
               aria-hidden="true"
             />
 
@@ -388,7 +382,7 @@ export default function LandingPage() {
                   <div className="relative mx-auto max-w-md lg:max-w-none">
                     <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-primary/30 via-indigo-500/20 to-purple-500/30 opacity-70 blur-2xl -z-10" />
 
-                    <Card className="border border-border/80 shadow-2xl bg-card/90 backdrop-blur-2xl rounded-2xl overflow-hidden transition-all duration-300">
+                    <Card className="border border-border/80 shadow-2xl bg-card/75 dark:bg-card/70 backdrop-blur-xl rounded-2xl overflow-hidden transition-all duration-300">
                       {/* Terminal-Style Header */}
                       <div className="px-5 py-3.5 bg-muted/60 border-b border-border/70 flex items-center justify-between">
                         <div className="flex items-center gap-2">
