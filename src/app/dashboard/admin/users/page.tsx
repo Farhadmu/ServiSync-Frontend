@@ -33,9 +33,11 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { User, UserRole } from "@/types";
 import { formatDate } from "@/lib/utils";
+import { useAuthStore } from "@/store/auth-store";
 import { toast } from "sonner";
 
 export default function AdminUsersPage() {
+  const { user: currentUser } = useAuthStore();
   const queryClient = useQueryClient();
   const [page, setPage] = useState(1);
   const [roleFilter, setRoleFilter] = useState("");
@@ -178,76 +180,92 @@ export default function AdminUsersPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {users.map((u) => (
-                  <tr key={u.id} className="hover:bg-muted/30 transition-colors">
-                    <td className="p-3 font-bold text-foreground">
-                      <div className="flex items-center gap-2">
-                        <div className="h-7 w-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px]">
-                          {u.name.slice(0, 2).toUpperCase()}
+                {users.map((u) => {
+                  const isSelf = currentUser?.id === u.id;
+                  return (
+                    <tr key={u.id} className="hover:bg-muted/30 transition-colors">
+                      <td className="p-3 font-bold text-foreground">
+                        <div className="flex items-center gap-2">
+                          <div className="h-7 w-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-[10px]">
+                            {u.name.slice(0, 2).toUpperCase()}
+                          </div>
+                          <span className="flex items-center gap-1.5">
+                            {u.name}
+                            {isSelf && (
+                              <Badge variant="outline" className="text-[10px] text-primary border-primary/30">
+                                You
+                              </Badge>
+                            )}
+                          </span>
                         </div>
-                        <span>{u.name}</span>
-                      </div>
-                    </td>
-                    <td className="p-3 text-muted-foreground font-mono">{u.email}</td>
-                    <td className="p-3">
-                      <Badge
-                        variant={
-                          u.role === "ADMIN"
-                            ? "destructive"
-                            : u.role === "MANAGER"
-                            ? "secondary"
-                            : u.role === "TECHNICIAN"
-                            ? "warning"
-                            : "default"
-                        }
-                        className="text-[10px]"
-                      >
-                        {u.role}
-                      </Badge>
-                    </td>
-                    <td className="p-3">
-                      <Badge
-                        variant={u.isActive ? "success" : "outline"}
-                        className="text-[10px]"
-                      >
-                        {u.isActive ? "Active" : "Deactivated"}
-                      </Badge>
-                    </td>
-                    <td className="p-3 text-muted-foreground">{formatDate(u.createdAt)}</td>
-                    <td className="p-3 text-right">
-                      <div className="flex items-center justify-end gap-1.5">
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="h-7 text-xs"
-                          onClick={() => {
-                            setSelectedUser(u);
-                            setNewRole(u.role);
-                            setRoleModalOpen(true);
-                          }}
-                        >
-                          Change Role
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className={`h-7 text-xs ${
-                            u.isActive ? "text-destructive hover:text-destructive" : "text-emerald-600"
-                          }`}
-                          onClick={() =>
-                            statusMutation.mutate({
-                              userId: u.id,
-                              isActive: !u.isActive,
-                            })
+                      </td>
+                      <td className="p-3 text-muted-foreground font-mono">{u.email}</td>
+                      <td className="p-3">
+                        <Badge
+                          variant={
+                            u.role === "ADMIN"
+                              ? "destructive"
+                              : u.role === "MANAGER"
+                              ? "secondary"
+                              : u.role === "TECHNICIAN"
+                              ? "warning"
+                              : "default"
                           }
-                          isLoading={statusMutation.isPending}
+                          className="text-[10px]"
                         >
-                          {u.isActive ? "Deactivate" : "Activate"}
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                          {u.role}
+                        </Badge>
+                      </td>
+                      <td className="p-3">
+                        <Badge
+                          variant={u.isActive ? "success" : "outline"}
+                          className="text-[10px]"
+                        >
+                          {u.isActive ? "Active" : "Deactivated"}
+                        </Badge>
+                      </td>
+                      <td className="p-3 text-muted-foreground">{formatDate(u.createdAt)}</td>
+                      <td className="p-3 text-right">
+                        <div className="flex items-center justify-end gap-1.5">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="h-7 text-xs"
+                            onClick={() => {
+                              setSelectedUser(u);
+                              setNewRole(u.role);
+                              setRoleModalOpen(true);
+                            }}
+                          >
+                            Change Role
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            disabled={isSelf}
+                            title={isSelf ? "You cannot deactivate your own account" : undefined}
+                            className={`h-7 text-xs ${
+                              isSelf
+                                ? "opacity-40 cursor-not-allowed text-muted-foreground"
+                                : u.isActive
+                                ? "text-destructive hover:text-destructive"
+                                : "text-emerald-600"
+                            }`}
+                            onClick={() =>
+                              statusMutation.mutate({
+                                userId: u.id,
+                                isActive: !u.isActive,
+                              })
+                            }
+                            isLoading={statusMutation.isPending}
+                          >
+                            {u.isActive ? "Deactivate" : "Activate"}
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
@@ -296,6 +314,15 @@ export default function AdminUsersPage() {
               <p className="text-muted-foreground font-mono">{selectedUser?.email}</p>
             </div>
 
+            {selectedUser?.id === currentUser?.id && (
+              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-700 dark:text-amber-400 text-xs flex items-start gap-2">
+                <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>
+                  You are editing your own administrator account. Removing the ADMIN role from yourself is prohibited to prevent platform lockout.
+                </span>
+              </div>
+            )}
+
             <div className="space-y-1.5">
               <Label htmlFor="roleSelect">Select New System Role</Label>
               <select
@@ -318,6 +345,7 @@ export default function AdminUsersPage() {
             </Button>
             <Button
               variant="default"
+              disabled={selectedUser?.id === currentUser?.id && newRole !== "ADMIN"}
               onClick={() => roleMutation.mutate()}
               isLoading={roleMutation.isPending}
             >
