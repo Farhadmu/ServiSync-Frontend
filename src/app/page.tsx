@@ -26,6 +26,14 @@ import {
   FooterContent,
 } from "@/types";
 import { formatCurrency } from "@/lib/utils";
+import { SmartServiceFinder } from "@/components/homepage/smart-service-finder";
+import { InstantBookingChecker } from "@/components/homepage/instant-booking-checker";
+import { FeaturedTechniciansSection } from "@/components/homepage/featured-technicians-section";
+import { ServiceTrackingWidget } from "@/components/homepage/service-tracking-widget";
+import { SeasonalServicesSection } from "@/components/homepage/seasonal-services-section";
+import { EstimateQuotePreview } from "@/components/homepage/estimate-quote-preview";
+import { TechnicianOpportunityHub } from "@/components/homepage/technician-opportunity-hub";
+import { TrustQualityCenter } from "@/components/homepage/trust-quality-center";
 import {
   Wrench,
   ShieldCheck,
@@ -321,6 +329,11 @@ export default function LandingPage() {
                     {heroSection.subtitle ||
                       "ServiSync streamlines the complete field service lifecycle — from customer request submission and conflict-free dispatching to real-time status transitions, on-site service reports, and automated Stripe billing."}
                   </p>
+
+                  {/* FEATURE 1: Smart Service Finder */}
+                  <div className="pt-2 pb-1 text-left">
+                    <SmartServiceFinder categories={categories} />
+                  </div>
 
                   {/* Action CTAs */}
                   <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
@@ -781,6 +794,12 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ── FEATURE 2: INSTANT BOOKING & AVAILABILITY CHECKER ───────── */}
+        <InstantBookingChecker categories={categories} />
+
+        {/* ── FEATURE 3: MEET OUR TECHNICIANS ───────────────────────── */}
+        <FeaturedTechniciansSection />
+
         {/* ── 3. WORKFLOW LIFECYCLE PIPELINE SECTION ─────────────────── */}
         {workflowSection.isVisible && (
           <section
@@ -891,6 +910,18 @@ export default function LandingPage() {
           </section>
         )}
 
+        {/* ── FEATURE 4: TRACK YOUR SERVICE IN REAL-TIME ─────────────── */}
+        <ServiceTrackingWidget />
+
+        {/* ── FEATURE 6: RECOMMENDED & SEASONAL SERVICES ─────────────── */}
+        <SeasonalServicesSection categories={categories} />
+
+        {/* ── FEATURE 7: ESTIMATE & QUOTE PREVIEW ────────────────────── */}
+        <EstimateQuotePreview categories={categories} />
+
+        {/* ── FEATURE 5: TECHNICIAN OPPORTUNITY HUB ─────────────────── */}
+        <TechnicianOpportunityHub />
+
         {/* ── 4. CORE PLATFORM CAPABILITIES (BENTO GRID) ─────────────── */}
         {featuresSection.isVisible && (
           <section
@@ -965,6 +996,9 @@ export default function LandingPage() {
             </div>
           </section>
         )}
+
+        {/* ── FEATURE 8: TRUST & QUALITY CENTER ─────────────────────── */}
+        <TrustQualityCenter />
 
         {/* ── 5. ROLE-SPECIFIC BENEFIT TILES ─────────────────────────── */}
         {rolesSection.isVisible && (

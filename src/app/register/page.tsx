@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterFormData } from "@/lib/validations";
@@ -17,8 +17,10 @@ import { toast } from "sonner";
 import { ServiSyncLogo } from "@/components/common/servisync-logo";
 import { AuthTokens } from "@/types";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialRole = searchParams.get("role");
   const setAuth = useAuthStore((state) => state.setAuth);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,11 +37,17 @@ export default function RegisterPage() {
       name: "",
       email: "",
       password: "",
-      role: "CUSTOMER",
+      role: initialRole === "TECHNICIAN" ? "TECHNICIAN" : "CUSTOMER",
       phone: "",
       address: "",
     },
   });
+
+  useEffect(() => {
+    if (initialRole === "TECHNICIAN" || initialRole === "CUSTOMER") {
+      setValue("role", initialRole);
+    }
+  }, [initialRole, setValue]);
 
   const selectedRole = watch("role");
 
@@ -206,3 +214,18 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center p-4">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+        </div>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
+  );
+}
+

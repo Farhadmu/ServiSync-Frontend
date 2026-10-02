@@ -544,7 +544,8 @@ export interface AppointmentSlot {
   startTime: string;
   endTime: string;
   available: boolean;
-  remainingSlots: number;
+  remainingSlots?: number;
+  capacityRemaining?: number;
   reason?: string;
 }
 

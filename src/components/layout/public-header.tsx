@@ -19,43 +19,49 @@ export function PublicHeader() {
         <ServiSyncLogo href="/" size="md" />
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
+        <nav className="hidden lg:flex items-center gap-5 text-xs font-semibold text-muted-foreground">
           <a href="#services" className="hover:text-foreground transition-colors">
             Services
           </a>
-          <a href="#how-it-works" className="hover:text-foreground transition-colors">
-            Workflow
+          <a href="#instant-booking" className="hover:text-foreground transition-colors text-primary font-bold">
+            Live Booking
           </a>
-          <a href="#features" className="hover:text-foreground transition-colors">
-            Features
+          <a href="#technicians" className="hover:text-foreground transition-colors">
+            Technicians
           </a>
-          <a href="#roles" className="hover:text-foreground transition-colors">
-            Roles
+          <a href="#track-service" className="hover:text-foreground transition-colors">
+            Track Order
           </a>
-          <a href="#showcase" className="hover:text-foreground transition-colors">
-            Portals
+          <a href="#seasonal" className="hover:text-foreground transition-colors">
+            Seasonal Care
           </a>
-          <a href="#faq" className="hover:text-foreground transition-colors">
-            FAQ
+          <a href="#pricing-quotes" className="hover:text-foreground transition-colors">
+            Quotes
+          </a>
+          <a href="#technician-hub" className="hover:text-foreground transition-colors">
+            For Technicians
+          </a>
+          <a href="#trust-quality" className="hover:text-foreground transition-colors">
+            Trust & FAQs
           </a>
         </nav>
 
         {/* Auth CTAs */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2.5">
           <ThemeToggle className="h-9 w-9" />
           {isAuthenticated && user ? (
-            <Button asChild variant="default" size="sm" className="shadow-sm">
+            <Button asChild variant="default" size="sm" className="shadow-xs font-bold text-xs">
               <Link href="/dashboard">
-                <LayoutDashboard className="mr-2 h-4 w-4" />
+                <LayoutDashboard className="mr-1.5 h-3.5 w-3.5" />
                 Dashboard ({role})
               </Link>
             </Button>
           ) : (
             <>
-              <Button asChild variant="ghost" size="sm">
+              <Button asChild variant="ghost" size="sm" className="text-xs font-semibold">
                 <Link href="/login">Sign In</Link>
               </Button>
-              <Button asChild variant="default" size="sm" className="shadow-sm">
+              <Button asChild variant="default" size="sm" className="shadow-xs font-bold text-xs">
                 <Link href="/register">
                   Get Started
                   <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -68,7 +74,7 @@ export function PublicHeader() {
         {/* Mobile menu button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted"
+          className="lg:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -77,60 +83,74 @@ export function PublicHeader() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-border bg-background p-4 space-y-3 animate-in slide-in-from-top-2">
+        <div className="lg:hidden border-b border-border bg-background/95 backdrop-blur-xl p-4 space-y-2.5 animate-in slide-in-from-top-2">
           <a
             href="#services"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
           >
-            Services
+            Services Catalog
           </a>
           <a
-            href="#how-it-works"
+            href="#instant-booking"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+            className="block text-xs font-bold py-1.5 text-primary"
           >
-            Workflow
+            ⚡ Live Booking & Availability
           </a>
           <a
-            href="#features"
+            href="#technicians"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
           >
-            Features
+            Meet Our Technicians
           </a>
           <a
-            href="#roles"
+            href="#track-service"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
           >
-            Roles
+            Track Service Order
           </a>
           <a
-            href="#showcase"
+            href="#seasonal"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
           >
-            Portals
+            Seasonal Collections
           </a>
           <a
-            href="#faq"
+            href="#pricing-quotes"
             onClick={() => setMobileMenuOpen(false)}
-            className="block text-sm font-medium py-1.5 text-muted-foreground hover:text-foreground"
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
           >
-            FAQ
+            Transparent Quotes & Pricing
+          </a>
+          <a
+            href="#technician-hub"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
+          >
+            Technician Opportunity Hub
+          </a>
+          <a
+            href="#trust-quality"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block text-xs font-semibold py-1.5 text-muted-foreground hover:text-foreground"
+          >
+            Trust, Reviews & FAQs
           </a>
           <div className="pt-2 border-t border-border flex flex-col gap-2">
             {isAuthenticated ? (
-              <Button asChild variant="default" size="sm">
+              <Button asChild variant="default" size="sm" className="font-bold text-xs">
                 <Link href="/dashboard">Dashboard ({role})</Link>
               </Button>
             ) : (
               <>
-                <Button asChild variant="outline" size="sm">
+                <Button asChild variant="outline" size="sm" className="text-xs">
                   <Link href="/login">Sign In</Link>
                 </Button>
-                <Button asChild variant="default" size="sm">
+                <Button asChild variant="default" size="sm" className="font-bold text-xs">
                   <Link href="/register">Register</Link>
                 </Button>
               </>
