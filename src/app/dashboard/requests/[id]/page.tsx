@@ -345,6 +345,16 @@ export default function ServiceRequestDetailPage() {
 
   const latestQuote = quotes[0];
 
+  // 30-Day Service Warranty
+  const isCompleted =
+    ["COMPLETED", "INVOICED", "PAID", "CLOSED"].includes(request.status) ||
+    activeAssignment?.workOrder?.status === "COMPLETED";
+  const completedDate = request.updatedAt ? new Date(request.updatedAt) : new Date(request.createdAt);
+  const daysSinceCompletion = Math.floor((Date.now() - completedDate.getTime()) / (1000 * 60 * 60 * 24));
+  const warrantyDaysTotal = 30;
+  const warrantyDaysRemaining = Math.max(0, warrantyDaysTotal - daysSinceCompletion);
+  const isWarrantyActive = isCompleted && warrantyDaysRemaining > 0;
+
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-16">
       {/* Header */}
@@ -546,6 +556,63 @@ export default function ServiceRequestDetailPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Customer 30-Day Service Warranty Banner */}
+      {isCompleted && (
+        <Card
+          className={`border ${
+            isWarrantyActive
+              ? "border-emerald-500/40 bg-emerald-500/10 dark:bg-emerald-950/20"
+              : "border-slate-300 dark:border-slate-800 bg-muted/40"
+          }`}
+        >
+          <CardContent className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5">
+              <div
+                className={`p-2.5 rounded-xl ${
+                  isWarrantyActive
+                    ? "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400"
+                    : "bg-muted text-muted-foreground"
+                }`}
+              >
+                <ShieldCheck className="h-6 w-6" />
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h4 className="font-bold text-sm text-foreground">
+                    ServiSync 30-Day Labor & Service Warranty
+                  </h4>
+                  <Badge variant={isWarrantyActive ? "success" : "outline"} className="text-[10px]">
+                    {isWarrantyActive ? `${warrantyDaysRemaining} Days Remaining` : "Warranty Expired"}
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  {isWarrantyActive
+                    ? `Covers defect recurrence and parts replacement till ${new Date(
+                        completedDate.getTime() + warrantyDaysTotal * 86400000
+                      ).toLocaleDateString()}.`
+                    : "The 30-day labor guarantee period for this job has concluded."}
+                </p>
+              </div>
+            </div>
+
+            {isWarrantyActive && isCustomer && (
+              <Button asChild size="sm" variant="default" className="bg-emerald-600 hover:bg-emerald-700 text-white shrink-0">
+                <Link
+                  href={`/dashboard/requests/new?category=${encodeURIComponent(
+                    request.serviceType?.category?.name || "General"
+                  )}&description=${encodeURIComponent(
+                    `Warranty follow-up request regarding Request #${request.id.slice(0, 8)}. Please dispatch technician for inspection.`
+                  )}`}
+                >
+                  <ShieldCheck className="mr-1.5 h-3.5 w-3.5" />
+                  Request Warranty Follow-up
+                </Link>
+              </Button>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* PHASE 8: Estimate & Service Quotes Section */}
       {latestQuote && (
