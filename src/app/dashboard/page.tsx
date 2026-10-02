@@ -119,11 +119,11 @@ function AdminDashboardView() {
       <DashboardHero
         userName={user?.name || "System Admin"}
         roleTitle="ADMIN"
-        description="Here is your real-time operational overview as ADMIN. Keep your system running smoothly and efficiently."
+        description="Here is your real-time operational overview as ADMIN. Manage accounts, service categories, and platform governance."
         heroImage="/images/admin-hero.jpg"
-        healthBadge="All Systems Normal"
-        healthTitle="Platform Health"
-        healthSubtitle="95.8% uptime • Last 24 hours"
+        healthBadge="All Systems Operational"
+        healthTitle="Platform Core Infrastructure"
+        healthSubtitle="PostgreSQL & Express API Connected"
         actionLabel="User Control Matrix →"
         actionHref="/dashboard/admin/users"
       />
@@ -136,7 +136,6 @@ function AdminDashboardView() {
           icon={Users}
           description="Customer user records"
           variant="blue"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Certified Technicians"
@@ -144,7 +143,6 @@ function AdminDashboardView() {
           icon={Wrench}
           description="Active field technicians"
           variant="cyan"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Total Service Requests"
@@ -152,7 +150,6 @@ function AdminDashboardView() {
           icon={ClipboardList}
           description="Lifetime system requests"
           variant="amber"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Total Revenue Collected"
@@ -160,7 +157,6 @@ function AdminDashboardView() {
           icon={TrendingUp}
           description="Verified settled payments"
           variant="purple"
-          trend={{ value: "+0%", positive: true }}
         />
       </div>
 
@@ -426,11 +422,11 @@ function ManagerDashboardView() {
       <DashboardHero
         userName={user?.name || "Operations Manager"}
         roleTitle="MANAGER"
-        description="Here is your real-time operational overview as MANAGER. Triage incoming requests, dispatch field technicians, and monitor SLA compliance."
+        description="Here is your real-time operational overview as MANAGER. Triage incoming requests, dispatch field technicians, and monitor work orders."
         heroImage="/images/manager-hero.jpg"
-        healthBadge="All Systems Normal"
+        healthBadge="Operations Online"
         healthTitle="Dispatch Operations Health"
-        healthSubtitle="99.4% on-time dispatch • Last 24 hours"
+        healthSubtitle="Real-time triage & dispatch active"
         actionLabel="Launch Dispatch Board →"
         actionHref="/dashboard/dispatch"
       />
@@ -443,15 +439,13 @@ function ManagerDashboardView() {
           icon={ClipboardList}
           description="Total customer requests logged"
           variant="blue"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Pending Triage Queue"
           value={stats?.pendingRequests ?? reviewQueue.length}
           icon={Clock}
-          description="Awaiting manager sign-off"
+          description="Awaiting manager review"
           variant="cyan"
-          trend={{ value: `${reviewQueue.length} items`, positive: reviewQueue.length === 0 }}
         />
         <StatCard
           title="Active Field Work Orders"
@@ -459,15 +453,13 @@ function ManagerDashboardView() {
           icon={Wrench}
           description="Technicians currently on-site"
           variant="amber"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Completed Missions"
           value={completedJobs}
           icon={CheckCircle2}
-          description="Successfully settled & archived"
+          description="Successfully completed & archived"
           variant="purple"
-          trend={{ value: "+0%", positive: true }}
         />
       </div>
 
@@ -491,8 +483,8 @@ function ManagerDashboardView() {
 
         <SettlementCard
           badgeTitle="OPERATIONAL EXCELLENCE"
-          badgeTag="SLA 99.4%"
-          title="Field SLA Fulfillment Health"
+          badgeTag="Field Execution"
+          title="Field Work Order Completion Health"
           description="Ratio of completed missions settled on-schedule against active assignments"
           rate={completedJobs + activeJobs > 0 ? Math.round((completedJobs / (completedJobs + activeJobs)) * 100) : 100}
           rateLabel="Fulfillment Rate"
@@ -652,7 +644,7 @@ function TechnicianDashboardView() {
         heroImage="/images/technician-hero.jpg"
         healthBadge={isAvailable ? "Dispatch Ready" : "Off Duty"}
         healthTitle="Field Mission Readiness"
-        healthSubtitle="100% SLA compliance • Field verified"
+        healthSubtitle="Live dispatch queue connected"
         actionLabel="My Assigned Jobs →"
         actionHref="/dashboard/jobs"
       />
@@ -701,7 +693,6 @@ function TechnicianDashboardView() {
           icon={Briefcase}
           description="Assigned job tickets"
           variant="blue"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Current Mission"
@@ -709,7 +700,6 @@ function TechnicianDashboardView() {
           icon={Wrench}
           description={activeJob ? "On-site diagnostic active" : "Ready for next dispatch"}
           variant="cyan"
-          trend={{ value: activeJob ? "Active" : "Idle", positive: true }}
         />
         <StatCard
           title="Completed Jobs"
@@ -717,7 +707,6 @@ function TechnicianDashboardView() {
           icon={CheckCircle2}
           description="Successfully finished & signed"
           variant="amber"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Hourly Labor Rate"
@@ -725,7 +714,6 @@ function TechnicianDashboardView() {
           icon={DollarSign}
           description="Field dispatch billing rate"
           variant="purple"
-          trend={{ value: "Standard", positive: true }}
         />
       </div>
 
@@ -950,8 +938,8 @@ function CustomerDashboardView() {
         description="Here is your real-time operational overview as CLIENT. Request certified technicians, track active field visits, and settle invoices seamlessly."
         heroImage="/images/customer-hero.jpg"
         healthBadge="Support Online 24/7"
-        healthTitle="Concierge Service Health"
-        healthSubtitle="4.9★ Average Rating • Verified Technicians"
+        healthTitle="Concierge Service Desk"
+        healthSubtitle="Certified Trade Specialists Available"
         actionLabel="New Service Request →"
         actionHref="/dashboard/requests/new"
       />
@@ -1038,7 +1026,6 @@ function CustomerDashboardView() {
           icon={ClipboardList}
           description="Lifetime submitted tickets"
           variant="blue"
-          trend={{ value: "+0%", positive: true }}
         />
         <StatCard
           title="Active Field Jobs"
@@ -1046,7 +1033,6 @@ function CustomerDashboardView() {
           icon={Wrench}
           description="Assigned or in progress"
           variant="cyan"
-          trend={{ value: activeCount > 0 ? "In Progress" : "None", positive: true }}
         />
         <StatCard
           title="Pending Review"
@@ -1054,7 +1040,6 @@ function CustomerDashboardView() {
           icon={Clock}
           description="Manager triage in progress"
           variant="amber"
-          trend={{ value: pendingCount > 0 ? "Evaluating" : "Clear", positive: true }}
         />
         <StatCard
           title="Unpaid Invoices"
@@ -1062,7 +1047,6 @@ function CustomerDashboardView() {
           icon={CreditCard}
           description={unpaidInvoices.length > 0 ? "Requires settlement" : "All invoices cleared"}
           variant="purple"
-          trend={{ value: unpaidInvoices.length > 0 ? "Action needed" : "Settled", positive: unpaidInvoices.length === 0 }}
         />
       </div>
 

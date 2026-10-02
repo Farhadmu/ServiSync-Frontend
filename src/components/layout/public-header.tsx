@@ -7,6 +7,8 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Wrench, Shield, ArrowRight, Menu, X, LayoutDashboard } from "lucide-react";
 import { useState } from "react";
 
+import { ServiSyncLogo } from "@/components/common/servisync-logo";
+
 export function PublicHeader() {
   const { isAuthenticated, user, role } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -14,19 +16,7 @@ export function PublicHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/70 bg-background/80 backdrop-blur-md transition-all">
       <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-indigo-600 text-white shadow-md shadow-primary/20 group-hover:scale-105 transition-transform">
-            <Wrench className="h-5 w-5" />
-          </div>
-          <div>
-            <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-foreground via-foreground to-primary bg-clip-text text-transparent">
-              ServiSync
-            </span>
-            <span className="hidden sm:inline-block ml-2 text-[10px] uppercase tracking-widest font-semibold text-primary px-1.5 py-0.5 rounded bg-primary/10">
-              FSM
-            </span>
-          </div>
-        </Link>
+        <ServiSyncLogo href="/" size="md" />
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">

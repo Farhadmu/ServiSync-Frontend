@@ -1,7 +1,7 @@
-# ServiSync — Evaluator Video / Demo Walkthrough Script
+# ServiSync — Product Video & Walkthrough Script
 
 > **Target Duration:** 5–10 Minutes  
-> **Audience:** Programming Hero B7A7 Evaluators & Technical Reviewers  
+> **Audience:** Technical Reviewers & Product Stakeholders  
 > **Project:** ServiSync Field Service Management System (Next.js 15 App Router + Express Backend)
 
 ---
@@ -25,9 +25,9 @@
 ### 1. Introduction & Public Experience (0:00 - 1:15)
 - **Action:** Open `http://localhost:3000` (or production Vercel URL).
 - **Speaker Script:**
-  > "Hello! Welcome to the presentation of ServiSync — a Field Service Management System engineered for the Programming Hero B7A7 assignment. ServiSync smartly connects Customers, Field Technicians, and Service Operations.
+  > "Hello! Welcome to ServiSync — an enterprise-grade Field Service Management System. ServiSync smartly connects Customers, Field Technicians, and Operations Managers into a synchronized, real-time workflow.
   > 
-  > Notice the public landing page: designed with a clean light theme, deep navy/indigo accents, and an interactive operational preview card. As we scroll down, we see the end-to-end 4-step workflow lifecycle, core system architecture highlights, real service categories fetched from our backend database (such as Electrical, Plumbing, and HVAC), and an Evaluator Quick Access section featuring one-click demo credentials for all 4 roles."
+  > Notice the public landing page: designed with a clean, high-performance UI, deep indigo/violet accents, and an interactive operational preview. As we scroll down, we see the end-to-end 4-step workflow lifecycle, core system architecture highlights, real service categories fetched from our backend database (such as Electrical, Plumbing, and HVAC), and quick access demo credentials for all 4 roles."
 
 ---
 

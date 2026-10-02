@@ -43,7 +43,7 @@ export function ErrorPanel({
 
             {isSuspendedOrOffline && (
               <div className="mt-3 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 dark:bg-amber-950/30 dark:border-amber-900/40 dark:text-amber-300 text-xs space-y-1">
-                <p className="font-semibold">Evaluator Tip:</p>
+                <p className="font-semibold">Troubleshooting Note:</p>
                 <p>
                   The remote Render backend (<code>servisync-backend.onrender.com</code>) might be spinning up from sleep (takes up to 50s on free tiers) or temporarily suspended. You can run the backend locally on port 5000 and set <code>NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1</code> in <code>.env.local</code>.
                 </p>

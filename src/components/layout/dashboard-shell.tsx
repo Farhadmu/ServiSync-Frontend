@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { CommandPalette } from "@/components/common/command-palette";
+import { ServiSyncLogo } from "@/components/common/servisync-logo";
 import { Badge } from "@/components/ui/badge";
 import {
   Wrench,
@@ -167,19 +168,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex flex-col w-64 border-r border-slate-200/80 dark:border-slate-800/80 bg-white/95 dark:bg-[#091021]/95 backdrop-blur-xl shrink-0 z-20">
         {/* Brand Logo Header */}
         <div className="h-20 flex items-center px-6 border-b border-slate-200/80 dark:border-slate-800/80">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-all">
-              <Wrench className="h-5 w-5" />
-            </div>
-            <div>
-              <span className="font-black text-xl tracking-tight text-slate-900 dark:text-white block">
-                ServiSync
-              </span>
-              <span className="block text-[9px] uppercase tracking-widest font-extrabold text-blue-600 dark:text-cyan-400">
-                FIELD OPERATIONS
-              </span>
-            </div>
-          </Link>
+          <ServiSyncLogo href="/" size="md" />
         </div>
 
         {/* Navigation list */}
@@ -402,15 +391,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
             />
             <div className="relative w-72 max-w-[80vw] bg-card h-full flex flex-col z-10 shadow-2xl">
               <div className="h-16 flex items-center justify-between px-4 border-b border-border">
-                <div className="flex items-center gap-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-white">
-                    <Wrench className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-base">ServiSync</span>
-                    <span className="block text-[8px] font-mono text-primary uppercase">FIELD OPERATIONS</span>
-                  </div>
-                </div>
+                <ServiSyncLogo href="/" size="sm" />
                 <button
                   onClick={() => setMobileOpen(false)}
                   className="p-1.5 rounded-lg text-muted-foreground hover:bg-muted"

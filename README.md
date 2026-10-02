@@ -1,8 +1,6 @@
 # ServiSync — Field Service Management System
 
 > **Tagline:** Smartly Connecting Customers, Field Technicians, and Service Operations.  
-> **Course Assignment:** Programming Hero B7A7 Frontend Project  
-> **Due Date:** October 10, 2026 at 11:59 PM  
 > **Backend Repository:** [Farhadmu/ServiSync-Backend-](https://github.com/Farhadmu/ServiSync-Backend-)  
 > **Live Backend Base URL:** `https://servisync-backend.onrender.com/api/v1`  
 > **Postman API Documentation:** [ServiSync API Collection](https://documenter.getpostman.com/view/56403424/2sBYAvwqwU)

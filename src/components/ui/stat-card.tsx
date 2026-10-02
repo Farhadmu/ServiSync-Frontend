@@ -23,7 +23,7 @@ export function StatCard({
   value,
   description,
   icon: Icon,
-  trend = { value: "+0%", positive: true },
+  trend,
   variant = "blue",
   className,
 }: StatCardProps) {
@@ -103,18 +103,24 @@ export function StatCard({
           </p>
         )}
 
-        {/* Bottom row: Trend badge & mini sparkline wave */}
+        {/* Bottom row: Trend badge or Live Record indicator & mini sparkline wave */}
         <div className="mt-4 pt-2 border-t border-border/40 flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-xs">
-            <span
-              className={cn(
-                "inline-flex items-center gap-0.5 font-bold text-[11px]",
-                trend.positive ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
-              )}
-            >
-              {trend.positive ? "↑" : "↓"} {trend.value}
-            </span>
-            <span className="text-[11px] text-muted-foreground">vs. last 7 days</span>
+            {trend ? (
+              <span
+                className={cn(
+                  "inline-flex items-center gap-0.5 font-bold text-[11px]",
+                  trend.positive ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"
+                )}
+              >
+                {trend.positive ? "↑" : "↓"} {trend.value}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                Live Database
+              </span>
+            )}
           </div>
 
           {/* Glowing mini sparkline SVG */}

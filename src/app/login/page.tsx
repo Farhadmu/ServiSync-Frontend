@@ -12,8 +12,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Wrench, Shield, ArrowRight, AlertCircle, Sparkles, CheckCircle2, Lock } from "lucide-react";
+import { Lock, AlertCircle, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { ServiSyncLogo } from "@/components/common/servisync-logo";
 import { AuthTokens } from "@/types";
 
 const DEMO_ACCOUNTS = [
@@ -50,18 +51,17 @@ function LoginForm() {
   });
 
   // Handle demo role autofill from URL or click
-  const autofillDemo = useCallback((email: string, pass: string, roleName: string) => {
+  const autofillDemo = useCallback((email: string, pass: string) => {
     setValue("email", email, { shouldValidate: true });
     setValue("password", pass, { shouldValidate: true });
     setErrorMessage(null);
-    toast.info(`Filled credentials for ${roleName}`);
   }, [setValue]);
 
   useEffect(() => {
     if (demoRoleParam) {
       const match = DEMO_ACCOUNTS.find((d) => d.role.toUpperCase() === demoRoleParam.toUpperCase());
       if (match) {
-        autofillDemo(match.email, match.pass, match.role);
+        autofillDemo(match.email, match.pass);
       }
     }
   }, [demoRoleParam, autofillDemo]);
@@ -146,7 +146,7 @@ function LoginForm() {
             </Button>
           </form>
 
-          {/* Quick Evaluator One-Click Logins */}
+          {/* One-Click Demo Access */}
           <div className="pt-2">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -154,7 +154,7 @@ function LoginForm() {
               </div>
               <div className="relative flex justify-center text-[11px] uppercase">
                 <span className="bg-card px-2 text-muted-foreground font-semibold">
-                  Evaluator Demo Autofill
+                  One-Click Demo Roles
                 </span>
               </div>
             </div>
@@ -164,7 +164,7 @@ function LoginForm() {
                 <button
                   key={acc.role}
                   type="button"
-                  onClick={() => autofillDemo(acc.email, acc.pass, acc.role)}
+                  onClick={() => autofillDemo(acc.email, acc.pass)}
                   className="p-2 text-left rounded-lg border border-border/70 hover:border-primary/50 hover:bg-primary/5 transition-all text-xs group"
                 >
                   <div className="font-semibold text-foreground group-hover:text-primary transition-colors flex items-center justify-between">
@@ -200,14 +200,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-b from-primary/5 via-background to-background">
       <div className="mb-6 text-center">
-        <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-md group-hover:scale-105 transition-transform">
-            <Wrench className="h-5 w-5" />
-          </div>
-          <span className="text-2xl font-black tracking-tight text-foreground">
-            ServiSync
-          </span>
-        </Link>
+        <ServiSyncLogo href="/" size="xl" />
       </div>
 
       <Suspense fallback={<div className="text-sm text-muted-foreground">Loading login form...</div>}>

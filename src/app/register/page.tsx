@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Wrench, AlertCircle, UserPlus, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { ServiSyncLogo } from "@/components/common/servisync-logo";
 import { AuthTokens } from "@/types";
 
 export default function RegisterPage() {
@@ -66,14 +67,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center p-4 bg-gradient-to-b from-primary/5 via-background to-background">
       <div className="mb-6 text-center">
-        <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-md group-hover:scale-105 transition-transform">
-            <Wrench className="h-5 w-5" />
-          </div>
-          <span className="text-2xl font-black tracking-tight text-foreground">
-            ServiSync
-          </span>
-        </Link>
+        <ServiSyncLogo href="/" size="xl" />
       </div>
 
       <div className="w-full max-w-lg space-y-6">
