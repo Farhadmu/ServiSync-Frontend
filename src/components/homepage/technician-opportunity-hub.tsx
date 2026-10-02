@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -30,11 +31,25 @@ export function TechnicianOpportunityHub() {
     <section
       id="technician-hub"
       aria-label="Technician Opportunity Hub"
-      className="py-16 md:py-24 bg-card border-b border-border/60 relative overflow-hidden"
+      className="py-16 md:py-24 border-b border-border/60 relative overflow-hidden isolate"
     >
-      {/* Background glow accents */}
-      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+      {/* ── Background Visual Layer: Professional technician working in field ── */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1920&q=80"
+          alt="Professional field technician working on equipment"
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+        />
+        {/* Multi-layer gradient mask with deep subtle navy accents */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/90 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+      </div>
+
+      {/* Ambient background glow accents */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">

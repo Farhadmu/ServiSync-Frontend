@@ -580,8 +580,22 @@ export default function LandingPage() {
         <section
           id="services"
           aria-label="Supported Service Categories"
-          className="py-20 md:py-28 bg-muted/30 border-b border-border/50 relative"
+          className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
         >
+          {/* ── Background Visual Layer: Elegant modern home interior with subtle maintenance details ── */}
+          <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+            <Image
+              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
+              alt="Bright elegant modern home interior"
+              fill
+              sizes="100vw"
+              className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+            />
+            {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+          </div>
+
           <div className="container relative z-10">
             <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
               <Badge variant="default" className="text-xs px-3 py-1 font-semibold">
@@ -805,8 +819,22 @@ export default function LandingPage() {
           <section
             id="how-it-works"
             aria-label="How the System Works"
-            className="py-20 md:py-28 border-b border-border/50 bg-background relative overflow-hidden"
+            className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
           >
+            {/* ── Background Visual Layer: Subtle modern architectural workspace ── */}
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80"
+                alt="Subtle modern architecture and minimalist workspace"
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+              />
+              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+            </div>
+
             {/* Ambient Background Gradient Glow */}
             <div
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-primary/10 rounded-full blur-[140px] pointer-events-none -z-10"
@@ -927,8 +955,22 @@ export default function LandingPage() {
           <section
             id="features"
             aria-label="Platform Features"
-            className="py-20 md:py-28 bg-muted/20 border-b border-border/50 relative"
+            className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
           >
+            {/* ── Background Visual Layer: Smart residential IoT & modern automation hub ── */}
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1920&q=80"
+                alt="Smart home technology and precision telemetry architecture"
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+              />
+              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+            </div>
+
             <div className="container relative z-10">
               <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
                 <Badge variant="secondary" className="text-xs px-3 py-1 font-semibold">
@@ -1005,8 +1047,22 @@ export default function LandingPage() {
           <section
             id="roles"
             aria-label="Multi-Role Architecture"
-            className="py-20 md:py-28 border-b border-border/50 bg-background relative"
+            className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
           >
+            {/* ── Background Visual Layer: Multi-role operations & collaborative control workspace ── */}
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80"
+                alt="Multi-stakeholder field operations collaboration hub"
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+              />
+              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+            </div>
+
             <div className="container relative z-10">
               <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
                 <Badge variant="secondary" className="text-xs px-3 py-1 font-semibold">
@@ -1093,8 +1149,22 @@ export default function LandingPage() {
           <section
             id="showcase"
             aria-label="Product Showcase"
-            className="py-20 md:py-28 bg-muted/20 border-b border-border/50 relative overflow-hidden"
+            className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
           >
+            {/* ── Background Visual Layer: Digital operations control workspace ── */}
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1920&q=80"
+                alt="Modern digital operations console workspace"
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+              />
+              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+            </div>
+
             <div className="container relative z-10">
               <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
                 <Badge variant="default" className="text-xs px-3 py-1 font-semibold">
@@ -1252,8 +1322,22 @@ export default function LandingPage() {
           <section
             id="faq"
             aria-label="Frequently Asked Questions"
-            className="py-20 md:py-28 border-b border-border/50 bg-background relative"
+            className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
           >
+            {/* ── Background Visual Layer: Subtle bright minimal interior preserving 100% text readability ── */}
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80"
+                alt="Subtle clean modern interior space"
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-20 dark:opacity-10 filter saturate-50"
+              />
+              {/* Extra dense gradient mask for optimal accordion contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/94 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+            </div>
+
             <div className="container max-w-4xl relative z-10">
               <div className="text-center space-y-4 mb-12">
                 <Badge variant="secondary" className="text-xs px-3 py-1 font-semibold">
@@ -1337,8 +1421,22 @@ export default function LandingPage() {
           <section
             id="cta"
             aria-label="Call to Action"
-            className="py-20 md:py-28 relative overflow-hidden"
+            className="py-20 md:py-28 relative overflow-hidden isolate"
           >
+            {/* ── Background Visual Layer: Inspiring modern residential architectural residence ── */}
+            <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+              <Image
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80"
+                alt="Inspiring modern residential property with ambient illumination"
+                fill
+                sizes="100vw"
+                className="object-cover object-center opacity-30 dark:opacity-20 filter saturate-75"
+              />
+              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+            </div>
+
             {/* Ambient Background Gradient Glow */}
             <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background -z-10" />
             <div

@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -102,9 +103,23 @@ export function ServiceTrackingWidget() {
     <section
       id="track-service"
       aria-label="Track Your Field Service"
-      className="py-16 md:py-24 bg-gradient-to-b from-background via-muted/20 to-background border-b border-border/60"
+      className="py-16 md:py-24 border-b border-border/60 relative overflow-hidden isolate"
     >
-      <div className="container max-w-5xl mx-auto px-4 sm:px-6">
+      {/* ── Background Visual Layer: Modern residential interior & arrival telemetry ── */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1920&q=80"
+          alt="Modern residential scheduled service arrival"
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+        />
+        {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+      </div>
+
+      <div className="container max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
           <Badge variant="outline" className="px-3 py-1 text-xs gap-1.5 bg-primary/5 text-primary border-primary/20">

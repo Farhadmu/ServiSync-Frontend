@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -129,9 +130,23 @@ export function SeasonalServicesSection({
     <section
       id="seasonal"
       aria-label="Recommended and Seasonal Services"
-      className="py-16 md:py-24 bg-gradient-to-b from-muted/30 via-background to-card border-b border-border/60"
+      className="py-16 md:py-24 border-b border-border/60 relative overflow-hidden isolate"
     >
-      <div className="container max-w-6xl mx-auto px-4 sm:px-6">
+      {/* ── Background Visual Layer: Home utility & AC cooling infrastructure ── */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?auto=format&fit=crop&w=1920&q=80"
+          alt="Home utility and AC cooling infrastructure maintenance"
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+        />
+        {/* Subtle multi-layer gradient mask for guaranteed contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+      </div>
+
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="space-y-3 max-w-xl">
