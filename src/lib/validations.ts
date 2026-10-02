@@ -14,14 +14,25 @@ export const registerSchema = z.object({
   address: z.string().optional(),
 });
 
-export const serviceRequestSchema = z.object({
-  categoryId: z.string().min(1, "Please select a service category"),
-  serviceTypeId: z.string().min(1, "Please select a service type"),
-  title: z.string().min(3, "Title must be at least 3 characters"),
-  description: z.string().optional(),
-  location: z.string().min(2, "Location is required"),
-  preferredDateTime: z.string().min(1, "Preferred date & time is required"),
-});
+export const serviceRequestSchema = z
+  .object({
+    categoryId: z.string().min(1, "Please select a service category"),
+    serviceTypeId: z.string().optional(),
+    customServiceTypeName: z.string().optional(),
+    title: z.string().min(3, "Title must be at least 3 characters"),
+    description: z.string().optional(),
+    location: z.string().min(2, "Location is required"),
+    preferredDateTime: z.string().min(1, "Preferred date & time is required"),
+  })
+  .refine(
+    (data) =>
+      Boolean(data.serviceTypeId) ||
+      Boolean(data.customServiceTypeName && data.customServiceTypeName.trim().length >= 2),
+    {
+      message: "Please select a service type or type your specific service requirement",
+      path: ["serviceTypeId"],
+    }
+  );
 
 export const reviewRequestSchema = z.object({
   action: z.enum(["APPROVE", "REJECT"]),

@@ -148,10 +148,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
     CUSTOMER: "Verified Client",
   };
 
-  const switchRole = (newRole: UserRole) => {
-    updateUser({ role: newRole });
-    toast.success(`Switched active view to ${newRole} dashboard`);
-  };
+
 
   const initials = user.name
     ? user.name
@@ -340,29 +337,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
                 <DropdownMenuSeparator />
 
-                {/* Quick Dashboard Preview Switcher */}
-                <div className="px-2 py-1.5">
-                  <span className="text-[10px] font-bold uppercase text-muted-foreground tracking-wider block mb-1.5">
-                    Switch Dashboard View
-                  </span>
-                  <div className="grid grid-cols-2 gap-1">
-                    {(["ADMIN", "MANAGER", "TECHNICIAN", "CUSTOMER"] as UserRole[]).map((r) => (
-                      <button
-                        key={r}
-                        onClick={() => switchRole(r)}
-                        className={`px-2 py-1 rounded-lg text-[10px] font-bold text-left transition-colors ${
-                          role === r
-                            ? "bg-primary text-primary-foreground font-black"
-                            : "hover:bg-muted text-muted-foreground hover:text-foreground"
-                        }`}
-                      >
-                        {r}
-                      </button>
-                    ))}
-                  </div>
-                </div>
 
-                <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/profile" className="cursor-pointer text-xs">Profile Settings</Link>
                 </DropdownMenuItem>

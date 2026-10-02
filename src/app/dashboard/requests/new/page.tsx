@@ -50,11 +50,76 @@ const QUICK_ISSUES = [
   "Power outlet loose connection",
 ];
 
+function getCategorySuggestions(categoryName: string): string[] {
+  const name = (categoryName || "").toLowerCase();
+  if (name.includes("pest")) {
+    return [
+      "Termite Inspection & Treatment",
+      "Cockroach Extermination",
+      "Bed Bug Eradication",
+      "General Fumigation",
+      "Rodent & Rat Control",
+      "Mosquito & Fly Spray",
+    ];
+  }
+  if (name.includes("clean")) {
+    return [
+      "Full House Deep Cleaning",
+      "Sofa & Carpet Shampooing",
+      "Kitchen Deep Scrub",
+      "Bathroom Sanitization & Descaling",
+      "Window & Glass Facade Cleaning",
+    ];
+  }
+  if (name.includes("paint")) {
+    return [
+      "Interior Wall Painting",
+      "Waterproofing & Damp Repair",
+      "Ceiling Painting & Touch-up",
+      "Exterior Weatherproof Paint",
+    ];
+  }
+  if (name.includes("carpent") || name.includes("wood")) {
+    return [
+      "Door & Lock Repair",
+      "Cabinet & Drawer Fitting",
+      "Furniture Assembly & Repair",
+      "Custom Shelving Installation",
+    ];
+  }
+  if (name.includes("plumb")) {
+    return [
+      "Water Pipe Leak Repair",
+      "Faucet & Sink Replacement",
+      "Water Heater Geyser Service",
+      "Drain Unclogging",
+    ];
+  }
+  if (name.includes("electric") || name.includes("hvac") || name.includes("ac")) {
+    return [
+      "AC Gas Refill & Cooling Service",
+      "Circuit Breaker / Short Circuit Fix",
+      "Ceiling Fan Installation & Repair",
+      "Switchboard & Wiring Repair",
+    ];
+  }
+  return [
+    "General Inspection & Diagnostics",
+    "Emergency Repair Service",
+    "Installation & Setup",
+    "Preventative Maintenance",
+  ];
+}
+
 export default function NewServiceRequestPage() {
   const router = useRouter();
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
   const [selectedServiceType, setSelectedServiceType] = useState<ServiceType | null>(null);
   const [isEmergency, setIsEmergency] = useState(false);
+
+  // Custom service type typing support
+  const [isCustomTypeMode, setIsCustomTypeMode] = useState(false);
+  const [customTypeInput, setCustomTypeInput] = useState("");
 
   // Address selection state
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
@@ -76,6 +141,7 @@ export default function NewServiceRequestPage() {
     defaultValues: {
       categoryId: "",
       serviceTypeId: "",
+      customServiceTypeName: "",
       title: "",
       description: "",
       location: "",
@@ -104,6 +170,17 @@ export default function NewServiceRequestPage() {
   });
 
   const availableTypes = categoryDetails?.serviceTypes || [];
+
+  // When category changes, auto-enable custom type mode if 0 service types available
+  useEffect(() => {
+    if (!categoryDetails) return;
+    const types = categoryDetails.serviceTypes || [];
+    if (types.length === 0) {
+      setIsCustomTypeMode(true);
+    } else {
+      setIsCustomTypeMode(false);
+    }
+  }, [categoryDetails]);
 
   // Fetch customer's saved addresses
   const { data: savedAddresses = [] } = useQuery<CustomerAddress[]>({
@@ -150,14 +227,40 @@ export default function NewServiceRequestPage() {
     setSelectedCategoryId(catId);
     setValue("categoryId", catId, { shouldValidate: true });
     setValue("serviceTypeId", "", { shouldValidate: true });
+    setValue("customServiceTypeName", "", { shouldValidate: true });
     setSelectedServiceType(null);
+    setCustomTypeInput("");
+    setIsCustomTypeMode(false);
+  };
+
+  const handleCustomTypeInput = (text: string) => {
+    setCustomTypeInput(text);
+    setValue("customServiceTypeName", text, { shouldValidate: true });
+    setValue("serviceTypeId", "", { shouldValidate: true });
+    setSelectedServiceType(null);
+    const currentTitle = watch("title");
+    if (!currentTitle || currentTitle.trim().length === 0) {
+      setValue("title", text, { shouldValidate: true });
+    }
   };
 
   const handleServiceTypeChange = (typeId: string) => {
+    if (typeId === "__CUSTOM__") {
+      setIsCustomTypeMode(true);
+      setValue("serviceTypeId", "", { shouldValidate: true });
+      setSelectedServiceType(null);
+      return;
+    }
+    setIsCustomTypeMode(false);
     setValue("serviceTypeId", typeId, { shouldValidate: true });
+    setValue("customServiceTypeName", "", { shouldValidate: true });
+    setCustomTypeInput("");
     const match = availableTypes.find((t) => t.id === typeId) || null;
     setSelectedServiceType(match);
   };
+
+  const selectedCategory = categories?.find((c) => c.id === selectedCategoryId);
+  const categorySuggestions = getCategorySuggestions(selectedCategory?.name || "");
 
   const handleSelectSavedAddress = (addr: CustomerAddress) => {
     setSelectedAddressId(addr.id);
@@ -184,7 +287,8 @@ export default function NewServiceRequestPage() {
 
       return api.post("/service-requests", {
         categoryId: data.categoryId,
-        serviceTypeId: data.serviceTypeId,
+        serviceTypeId: isCustomTypeMode ? undefined : (data.serviceTypeId || undefined),
+        customServiceTypeName: (isCustomTypeMode || !data.serviceTypeId) ? (customTypeInput.trim() || undefined) : undefined,
         title: data.title,
         description: payloadDescription,
         location: data.location,
@@ -206,6 +310,18 @@ export default function NewServiceRequestPage() {
   });
 
   const onSubmit = (data: ServiceRequestFormData) => {
+    if (isCustomTypeMode || availableTypes.length === 0) {
+      if (!customTypeInput.trim()) {
+        toast.error("Please type your specific service requirement");
+        return;
+      }
+    } else {
+      if (!data.serviceTypeId) {
+        toast.error("Please select a service type or type your requirement");
+        return;
+      }
+    }
+
     if (!data.preferredDateTime) {
       toast.error("Please select an available appointment slot");
       return;
@@ -213,7 +329,8 @@ export default function NewServiceRequestPage() {
     createMutation.mutate(data);
   };
 
-  const basePrice = selectedServiceType ? Number(selectedServiceType.basePrice) : 0;
+  const isCustomSpec = isCustomTypeMode || (availableTypes.length === 0 && Boolean(customTypeInput.trim()));
+  const basePrice = selectedServiceType ? Number(selectedServiceType.basePrice) : isCustomSpec ? 500 : 0;
   const emergencySurcharge = isEmergency ? 25 : 0;
   const totalPrice = basePrice + emergencySurcharge;
 
@@ -325,18 +442,84 @@ export default function NewServiceRequestPage() {
                   </p>
                 )}
 
-                {/* Service Type Dropdown */}
+                {/* Service Type Selection or Custom Typing */}
                 {selectedCategoryId && (
-                  <div className="pt-2 border-t border-border/60 space-y-1.5">
-                    <Label htmlFor="serviceType" className="text-xs font-semibold">
-                      Specific Service Type *
-                    </Label>
+                  <div className="pt-2 border-t border-border/60 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <Label htmlFor="serviceType" className="text-xs font-semibold">
+                        Specific Service Type *
+                      </Label>
+                      {availableTypes.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (!isCustomTypeMode) {
+                              setIsCustomTypeMode(true);
+                              setValue("serviceTypeId", "");
+                              setSelectedServiceType(null);
+                            } else {
+                              setIsCustomTypeMode(false);
+                              setValue("customServiceTypeName", "");
+                              setCustomTypeInput("");
+                            }
+                          }}
+                          className="text-xs text-primary hover:underline font-medium"
+                        >
+                          {isCustomTypeMode
+                            ? "← Choose from standard service list"
+                            : "+ Type custom / other requirement"}
+                        </button>
+                      )}
+                    </div>
+
                     {loadingTypes ? (
-                      <Skeleton className="h-9 w-full" />
-                    ) : availableTypes.length === 0 ? (
-                      <p className="text-xs text-muted-foreground p-3 rounded-lg bg-muted">
-                        No service types available under this category.
-                      </p>
+                      <Skeleton className="h-10 w-full" />
+                    ) : availableTypes.length === 0 || isCustomTypeMode ? (
+                      <div className="p-3.5 rounded-xl border border-primary/20 bg-primary/5 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+                            <Sparkles className="h-3.5 w-3.5 text-primary" />
+                            Specify Your Service Requirement
+                          </p>
+                          <Badge variant="outline" className="text-[10px] text-primary border-primary/30">
+                            {availableTypes.length === 0 ? "Custom Requirement" : "Manual Input"}
+                          </Badge>
+                        </div>
+
+                        <Input
+                          placeholder={`Type specific need (e.g. ${categorySuggestions[0] || "Inspection & maintenance"})...`}
+                          value={customTypeInput}
+                          onChange={(e) => handleCustomTypeInput(e.target.value)}
+                          className="bg-card font-medium text-sm border-primary/30 focus-visible:ring-primary shadow-xs"
+                        />
+
+                        {categorySuggestions.length > 0 && (
+                          <div className="space-y-1.5 pt-0.5">
+                            <p className="text-[11px] font-medium text-muted-foreground flex items-center gap-1">
+                              <Tag className="h-3 w-3 text-primary" /> Popular Suggestions (Click to apply):
+                            </p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {categorySuggestions.map((suggestion) => {
+                                const isChosen = customTypeInput.toLowerCase() === suggestion.toLowerCase();
+                                return (
+                                  <button
+                                    key={suggestion}
+                                    type="button"
+                                    onClick={() => handleCustomTypeInput(suggestion)}
+                                    className={`text-[11px] px-2.5 py-1 rounded-full border transition-all text-left ${
+                                      isChosen
+                                        ? "bg-primary text-primary-foreground border-primary font-semibold shadow-xs"
+                                        : "bg-card hover:bg-primary/10 hover:border-primary/40 border-border text-foreground"
+                                    }`}
+                                  >
+                                    + {suggestion}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     ) : (
                       <select
                         id="serviceType"
@@ -350,6 +533,7 @@ export default function NewServiceRequestPage() {
                             {t.name} (Base Fee: ৳{t.basePrice} • ~{t.durationMinutes} mins)
                           </option>
                         ))}
+                        <option value="__CUSTOM__">✏️ + Other / Type specific requirement...</option>
                       </select>
                     )}
                     {errors.serviceTypeId && (
@@ -652,14 +836,23 @@ export default function NewServiceRequestPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4 text-xs">
-                {selectedServiceType ? (
+                {selectedServiceType || customTypeInput.trim() ? (
                   <>
                     <div className="p-3 rounded-xl bg-card border border-border/80">
-                      <p className="font-bold text-foreground text-sm">
-                        {selectedServiceType.name}
-                      </p>
-                      <p className="text-muted-foreground mt-0.5 text-[11px]">
-                        {selectedServiceType.description || "Certified field diagnostic and repair."}
+                      <div className="flex items-center justify-between mb-0.5">
+                        <p className="font-bold text-foreground text-sm">
+                          {selectedServiceType ? selectedServiceType.name : customTypeInput.trim()}
+                        </p>
+                        {!selectedServiceType && (
+                          <Badge variant="outline" className="text-[10px] text-primary border-primary/30">
+                            Custom
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-muted-foreground text-[11px]">
+                        {selectedServiceType
+                          ? selectedServiceType.description || "Certified field diagnostic and repair."
+                          : `Customer-specified requirement under ${selectedCategory?.name || "selected category"}.`}
                       </p>
                     </div>
 
@@ -687,7 +880,7 @@ export default function NewServiceRequestPage() {
                           <Clock className="h-3.5 w-3.5 text-primary" /> Estimated Duration:
                         </span>
                         <span className="font-semibold text-foreground">
-                          ~{selectedServiceType.durationMinutes} mins
+                          ~{selectedServiceType?.durationMinutes || 60} mins
                         </span>
                       </div>
 
@@ -737,7 +930,7 @@ export default function NewServiceRequestPage() {
                   <div className="py-6 text-center text-muted-foreground">
                     <Wrench className="h-8 w-8 mx-auto text-muted-foreground/40 mb-2" />
                     <p className="italic">
-                      Select a category and service type above to calculate standard pricing and arrival windows.
+                      Select a category and choose or type your service requirement above to calculate standard pricing and arrival windows.
                     </p>
                   </div>
                 )}
