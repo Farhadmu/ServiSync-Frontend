@@ -119,11 +119,11 @@ export function InstantBookingChecker({
         <img
           src="/images/bg-booking.jpg"
           alt="Clean modern home-service inspection workspace"
-          className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
+          className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
         />
         {/* Soft elegant gradient mask that lets the real photography shine through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
       </div>
 
       <div className="container max-w-6xl mx-auto px-4 sm:px-6 relative z-10">

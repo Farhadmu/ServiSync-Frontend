@@ -587,11 +587,11 @@ export default function LandingPage() {
             <img
               src="/images/bg-categories.jpg"
               alt="Bright elegant modern home interior"
-              className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
+              className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
             />
             {/* Soft elegant gradient mask that lets the real photography shine through */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+            <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
           </div>
 
           <div className="container relative z-10">
@@ -824,11 +824,11 @@ export default function LandingPage() {
               <img
                 src="/images/bg-how-it-works.jpg"
                 alt="Subtle modern architecture and minimalist workspace"
-                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
+                className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
               />
               {/* Soft elegant gradient mask that lets the real photography shine through */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
             </div>
 
             {/* Ambient Background Gradient Glow */}
@@ -958,11 +958,11 @@ export default function LandingPage() {
               <img
                 src="/images/bg-features.jpg"
                 alt="Smart home technology and precision telemetry architecture"
-                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
+                className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
               />
               {/* Soft elegant gradient mask that lets the real photography shine through */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
             </div>
 
             <div className="container relative z-10">
@@ -1048,11 +1048,11 @@ export default function LandingPage() {
               <img
                 src="/images/bg-roles.jpg"
                 alt="Multi-stakeholder field operations collaboration hub"
-                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
+                className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
               />
               {/* Soft elegant gradient mask that lets the real photography shine through */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
             </div>
 
             <div className="container relative z-10">
@@ -1148,11 +1148,11 @@ export default function LandingPage() {
               <img
                 src="/images/bg-showcase.jpg"
                 alt="Modern digital operations console workspace"
-                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
+                className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
               />
               {/* Soft elegant gradient mask that lets the real photography shine through */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
             </div>
 
             <div className="container relative z-10">
@@ -1319,11 +1319,11 @@ export default function LandingPage() {
               <img
                 src="/images/bg-faq.jpg"
                 alt="Subtle clean modern interior space"
-                className="w-full h-full object-cover object-center opacity-65 dark:opacity-30"
+                className="w-full h-full object-cover object-center opacity-80 dark:opacity-85 dark:brightness-110 dark:contrast-105 filter saturate-105"
               />
               {/* Soft gradient mask for optimal accordion contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/45 to-background/85 dark:from-[#0b0f19]/90 dark:via-[#0b0f19]/60 dark:to-[#0b0f19]/90" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60 dark:from-[#0b0f19]/60 dark:to-[#0b0f19]/60" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/25 to-background/70 dark:from-[#0b0f19]/65 dark:via-[#0b0f19]/20 dark:to-[#0b0f19]/65" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
             </div>
 
             <div className="container max-w-4xl relative z-10">
@@ -1416,11 +1416,11 @@ export default function LandingPage() {
               <img
                 src="/images/bg-cta.jpg"
                 alt="Inspiring modern residential property with ambient illumination"
-                className="w-full h-full object-cover object-center opacity-80 dark:opacity-40"
+                className="w-full h-full object-cover object-center opacity-85 dark:opacity-90 dark:brightness-110 dark:contrast-105 filter saturate-105"
               />
               {/* Soft gradient mask that lets the real photography shine through */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/35 to-background/75 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
+              <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/20 to-background/70 dark:from-[#0b0f19]/60 dark:via-[#0b0f19]/15 dark:to-[#0b0f19]/60" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/40 via-transparent to-background/40 dark:from-[#0b0f19]/30 dark:via-transparent dark:to-[#0b0f19]/30" />
             </div>
 
             {/* Ambient Background Gradient Glow */}
