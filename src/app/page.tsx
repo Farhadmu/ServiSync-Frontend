@@ -584,16 +584,14 @@ export default function LandingPage() {
         >
           {/* ── Background Visual Layer: Elegant modern home interior with subtle maintenance details ── */}
           <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-            <Image
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80"
+            <img
+              src="/images/bg-categories.jpg"
               alt="Bright elegant modern home interior"
-              fill
-              sizes="100vw"
-              className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+              className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
             />
-            {/* Subtle multi-layer gradient mask for guaranteed contrast */}
-            <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+            {/* Soft elegant gradient mask that lets the real photography shine through */}
+            <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
           </div>
 
           <div className="container relative z-10">
@@ -823,16 +821,14 @@ export default function LandingPage() {
           >
             {/* ── Background Visual Layer: Subtle modern architectural workspace ── */}
             <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80"
+              <img
+                src="/images/bg-how-it-works.jpg"
                 alt="Subtle modern architecture and minimalist workspace"
-                fill
-                sizes="100vw"
-                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
               />
-              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+              {/* Soft elegant gradient mask that lets the real photography shine through */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
             </div>
 
             {/* Ambient Background Gradient Glow */}
@@ -959,16 +955,14 @@ export default function LandingPage() {
           >
             {/* ── Background Visual Layer: Smart residential IoT & modern automation hub ── */}
             <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=1920&q=80"
+              <img
+                src="/images/bg-features.jpg"
                 alt="Smart home technology and precision telemetry architecture"
-                fill
-                sizes="100vw"
-                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
               />
-              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+              {/* Soft elegant gradient mask that lets the real photography shine through */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
             </div>
 
             <div className="container relative z-10">
@@ -1051,16 +1045,14 @@ export default function LandingPage() {
           >
             {/* ── Background Visual Layer: Multi-role operations & collaborative control workspace ── */}
             <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80"
+              <img
+                src="/images/bg-roles.jpg"
                 alt="Multi-stakeholder field operations collaboration hub"
-                fill
-                sizes="100vw"
-                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
               />
-              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+              {/* Soft elegant gradient mask that lets the real photography shine through */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
             </div>
 
             <div className="container relative z-10">
@@ -1153,16 +1145,14 @@ export default function LandingPage() {
           >
             {/* ── Background Visual Layer: Digital operations control workspace ── */}
             <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1920&q=80"
+              <img
+                src="/images/bg-showcase.jpg"
                 alt="Modern digital operations console workspace"
-                fill
-                sizes="100vw"
-                className="object-cover object-center opacity-25 dark:opacity-15 filter saturate-75"
+                className="w-full h-full object-cover object-center opacity-75 dark:opacity-35"
               />
-              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/88 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+              {/* Soft elegant gradient mask that lets the real photography shine through */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-background/80 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
             </div>
 
             <div className="container relative z-10">
@@ -1324,18 +1314,16 @@ export default function LandingPage() {
             aria-label="Frequently Asked Questions"
             className="py-20 md:py-28 border-b border-border/50 relative overflow-hidden isolate"
           >
-            {/* ── Background Visual Layer: Subtle bright minimal interior preserving 100% text readability ── */}
+            {/* ── Background Visual Layer: Subtle bright minimal interior ── */}
             <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1920&q=80"
+              <img
+                src="/images/bg-faq.jpg"
                 alt="Subtle clean modern interior space"
-                fill
-                sizes="100vw"
-                className="object-cover object-center opacity-20 dark:opacity-10 filter saturate-50"
+                className="w-full h-full object-cover object-center opacity-65 dark:opacity-30"
               />
-              {/* Extra dense gradient mask for optimal accordion contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/94 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-transparent to-background/80" />
+              {/* Soft gradient mask for optimal accordion contrast */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/45 to-background/85 dark:from-[#0b0f19]/90 dark:via-[#0b0f19]/60 dark:to-[#0b0f19]/90" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/60 via-transparent to-background/60 dark:from-[#0b0f19]/60 dark:to-[#0b0f19]/60" />
             </div>
 
             <div className="container max-w-4xl relative z-10">
@@ -1425,16 +1413,14 @@ export default function LandingPage() {
           >
             {/* ── Background Visual Layer: Inspiring modern residential architectural residence ── */}
             <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
-              <Image
-                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1920&q=80"
+              <img
+                src="/images/bg-cta.jpg"
                 alt="Inspiring modern residential property with ambient illumination"
-                fill
-                sizes="100vw"
-                className="object-cover object-center opacity-30 dark:opacity-20 filter saturate-75"
+                className="w-full h-full object-cover object-center opacity-80 dark:opacity-40"
               />
-              {/* Subtle multi-layer gradient mask for guaranteed contrast */}
-              <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-r from-background/70 via-transparent to-background/70" />
+              {/* Soft gradient mask that lets the real photography shine through */}
+              <div className="absolute inset-0 bg-gradient-to-b from-background/75 via-background/35 to-background/75 dark:from-[#0b0f19]/85 dark:via-[#0b0f19]/50 dark:to-[#0b0f19]/85" />
+              <div className="absolute inset-0 bg-gradient-to-r from-background/50 via-transparent to-background/50 dark:from-[#0b0f19]/50 dark:to-[#0b0f19]/50" />
             </div>
 
             {/* Ambient Background Gradient Glow */}
