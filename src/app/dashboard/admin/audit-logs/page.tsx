@@ -8,11 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/empty-state";
 import { ErrorPanel } from "@/components/ui/error-panel";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ShieldAlert, Clock, ChevronLeft, ChevronRight, Activity } from "lucide-react";
+import { ShieldAlert, Clock, ChevronLeft, ChevronRight, Activity, Download } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { AuditLog } from "@/types";
 import { formatDate } from "@/lib/utils";
+import { exportToCsv } from "@/lib/export";
 
 export default function AdminAuditLogsPage() {
   const [page, setPage] = useState(1);
@@ -38,7 +39,31 @@ export default function AdminAuditLogsPage() {
       <PageHeader
         title="Security Audit & Activity Logs"
         description="Comprehensive audit trail recording user logins, status transitions, role modifications, and payment operations."
-      />
+      >
+        {logs.length > 0 && (
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={() =>
+              exportToCsv(
+                "servisync-audit-logs",
+                logs.map((l) => ({
+                  Timestamp: l.createdAt,
+                  Action: l.action,
+                  Entity: l.entityType,
+                  EntityId: l.entityId || "",
+                  User: l.user?.name || l.userId || "System",
+                  UserEmail: l.user?.email || "",
+                  IPAddress: l.ipAddress || "",
+                }))
+              )
+            }
+          >
+            <Download className="mr-1.5 h-3.5 w-3.5" />
+            Export CSV
+          </Button>
+        )}
+      </PageHeader>
 
       {isLoading ? (
         <div className="space-y-3">

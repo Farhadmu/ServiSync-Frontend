@@ -212,6 +212,7 @@ export default function WorkOrderDetailPage() {
                 <Button
                   size="sm"
                   variant="default"
+                  disabled={statusMutation.isPending}
                   onClick={() => statusMutation.mutate("ARRIVED")}
                   isLoading={statusMutation.isPending}
                 >
@@ -223,6 +224,7 @@ export default function WorkOrderDetailPage() {
                 <Button
                   size="sm"
                   variant="default"
+                  disabled={statusMutation.isPending}
                   onClick={() => statusMutation.mutate("IN_PROGRESS")}
                   isLoading={statusMutation.isPending}
                 >
@@ -234,8 +236,17 @@ export default function WorkOrderDetailPage() {
                 <Button
                   size="sm"
                   variant="default"
+                  disabled={statusMutation.isPending}
                   className="bg-emerald-600 hover:bg-emerald-700"
-                  onClick={() => statusMutation.mutate("COMPLETED")}
+                  onClick={() => {
+                    if (
+                      confirm(
+                        "Are you sure you want to mark this work order as COMPLETED? This will finalize the service timeline and notify the customer."
+                      )
+                    ) {
+                      statusMutation.mutate("COMPLETED");
+                    }
+                  }}
                   isLoading={statusMutation.isPending}
                 >
                   <CheckCircle2 className="mr-1.5 h-3.5 w-3.5" />

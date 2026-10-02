@@ -139,13 +139,28 @@ export default function TechnicianJobsPage() {
                       {req?.customer && (
                         <span>
                           Customer: <strong className="text-foreground">{req.customer.name}</strong>
+                          {req.customer.phone && (
+                            <a
+                              href={`tel:${req.customer.phone}`}
+                              className="ml-2 text-primary hover:underline font-mono inline-flex items-center gap-1"
+                              title="Call customer"
+                            >
+                              📞 {req.customer.phone}
+                            </a>
+                          )}
                         </span>
                       )}
                       {req?.location && (
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
-                          {req.location}
-                        </span>
+                        <a
+                          href={`https://maps.google.com/?q=${encodeURIComponent(req.location)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-primary transition-colors hover:underline"
+                          title="View on Google Maps"
+                        >
+                          <MapPin className="h-3.5 w-3.5 text-muted-foreground text-primary" />
+                          <span>{req.location}</span>
+                        </a>
                       )}
                       {job.scheduledStartAt && (
                         <span className="flex items-center gap-1 text-primary font-medium">
@@ -169,6 +184,7 @@ export default function TechnicianJobsPage() {
                         <Button
                           size="sm"
                           variant="default"
+                          disabled={respondMutation.isPending}
                           className="bg-emerald-600 hover:bg-emerald-700 font-semibold"
                           onClick={() =>
                             respondMutation.mutate({
@@ -184,6 +200,7 @@ export default function TechnicianJobsPage() {
                         <Button
                           size="sm"
                           variant="destructive"
+                          disabled={respondMutation.isPending}
                           onClick={() => {
                             setRejectAssignmentId(job.id);
                             setRejectModalOpen(true);

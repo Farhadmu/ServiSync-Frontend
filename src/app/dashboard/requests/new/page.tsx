@@ -310,6 +310,7 @@ export default function NewServiceRequestPage() {
   });
 
   const onSubmit = (data: ServiceRequestFormData) => {
+    if (createMutation.isPending) return;
     if (isCustomTypeMode || availableTypes.length === 0) {
       if (!customTypeInput.trim()) {
         toast.error("Please type your specific service requirement");
@@ -816,6 +817,7 @@ export default function NewServiceRequestPage() {
                 type="submit"
                 size="lg"
                 className="shadow-md shadow-primary/20 font-semibold"
+                disabled={createMutation.isPending}
                 isLoading={createMutation.isPending}
               >
                 Confirm & Submit Service Request

@@ -374,6 +374,7 @@ function DispatchConsole() {
               <div className="pt-2 flex justify-end">
                 <Button
                   onClick={() => assignMutation.mutate()}
+                  disabled={assignMutation.isPending || !selectedRequestId || !selectedTechId}
                   isLoading={assignMutation.isPending}
                   size="lg"
                   className="shadow-md shadow-primary/20 font-semibold"
