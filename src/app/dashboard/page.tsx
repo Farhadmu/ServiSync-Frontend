@@ -39,6 +39,8 @@ import {
   FolderTree,
   ChevronRight,
   ShieldAlert,
+  Sliders,
+  Settings,
 } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
@@ -304,7 +306,7 @@ function AdminDashboardView() {
       </div>
 
       {/* Admin Quick Control Hub */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-all p-4 space-y-3">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500">
@@ -332,6 +334,21 @@ function AdminDashboardView() {
           </div>
           <Button asChild size="sm" variant="outline" className="w-full text-xs rounded-xl h-8">
             <Link href="/dashboard/admin/categories">Edit Categories</Link>
+          </Button>
+        </Card>
+
+        <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-all p-4 space-y-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-500">
+              <Sliders className="h-5 w-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-bold text-foreground">Business Rules</h4>
+              <p className="text-[10px] text-muted-foreground">SLA & scheduling policies</p>
+            </div>
+          </div>
+          <Button asChild size="sm" variant="outline" className="w-full text-xs rounded-xl h-8 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10">
+            <Link href="/dashboard/admin/business-rules">Configure Rules</Link>
           </Button>
         </Card>
 
@@ -380,13 +397,15 @@ function ManagerDashboardView() {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["manager", "overview"],
     queryFn: async () => {
-      const [reqRes, statsRes] = await Promise.all([
+      const [reqRes, statsRes, techRes] = await Promise.all([
         api.get<ServiceRequest[]>("/service-requests", { params: { limit: 12 } }),
         api.get<DashboardStats>("/admin/dashboard-stats"),
+        api.get<any[]>("/technicians", { params: { limit: 8 } }).catch(() => ({ data: [] })),
       ]);
       return {
         requests: reqRes.data || [],
         stats: statsRes.data,
+        technicians: techRes.data || [],
       };
     },
   });
@@ -409,12 +428,33 @@ function ManagerDashboardView() {
 
   const requests = data?.requests || [];
   const stats = data?.stats;
+  const technicians = data?.technicians || [];
   const reviewQueue = requests.filter((r) => ["PENDING", "UNDER_REVIEW"].includes(r.status));
+
+  // Real-time SLA analysis
+  const breachedRequests = requests.filter(
+    (r) =>
+      ["PENDING", "UNDER_REVIEW"].includes(r.status) &&
+      Date.now() - new Date(r.createdAt).getTime() > 24 * 3600 * 1000
+  );
+  const warningRequests = requests.filter(
+    (r) =>
+      ["PENDING", "UNDER_REVIEW"].includes(r.status) &&
+      Date.now() - new Date(r.createdAt).getTime() > 12 * 3600 * 1000 &&
+      !breachedRequests.includes(r)
+  );
+  const slaComplianceRate =
+    requests.length > 0
+      ? Math.round(((requests.length - breachedRequests.length) / requests.length) * 100)
+      : 100;
 
   const totalRequests = stats?.totalServiceRequests ?? requests.length;
   const activeJobs = stats?.activeJobs ?? 0;
   const completedJobs = stats?.completedJobs ?? 0;
-  const dispatchRate = totalRequests > 0 ? Math.round(((totalRequests - reviewQueue.length) / totalRequests) * 100) : 100;
+  const dispatchRate =
+    totalRequests > 0
+      ? Math.round(((totalRequests - reviewQueue.length) / totalRequests) * 100)
+      : 100;
 
   return (
     <div className="space-y-7">
@@ -430,6 +470,29 @@ function ManagerDashboardView() {
         actionLabel="Launch Dispatch Board →"
         actionHref="/dashboard/dispatch"
       />
+
+      {/* SLA Breach Alert Banner if any ticket is overdue */}
+      {breachedRequests.length > 0 && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-destructive/10 border border-destructive/30 text-destructive flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-destructive text-destructive-foreground shrink-0 animate-bounce">
+              <AlertCircle className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h4 className="font-bold text-sm">Critical SLA Escalation: {breachedRequests.length} Ticket(s) Past 24h Window</h4>
+                <Badge variant="destructive" className="text-[10px]">Immediate Action Required</Badge>
+              </div>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Customer requests have exceeded the standard review SLA. Expedite triage and dispatch technicians.
+              </p>
+            </div>
+          </div>
+          <Button asChild size="sm" variant="destructive" className="rounded-xl text-xs h-8 shrink-0">
+            <Link href="/dashboard/requests?status=PENDING">Triage SLA Tickets</Link>
+          </Button>
+        </div>
+      )}
 
       {/* Manager KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -448,11 +511,11 @@ function ManagerDashboardView() {
           variant="cyan"
         />
         <StatCard
-          title="Active Field Work Orders"
-          value={activeJobs}
-          icon={Wrench}
-          description="Technicians currently on-site"
-          variant="amber"
+          title="SLA Compliance Rate"
+          value={`${slaComplianceRate}%`}
+          icon={ShieldCheck}
+          description={breachedRequests.length > 0 ? `${breachedRequests.length} tickets breached SLA` : "All reviews within 24h target"}
+          variant={slaComplianceRate >= 95 ? "purple" : "amber"}
         />
         <StatCard
           title="Completed Missions"
@@ -498,6 +561,81 @@ function ManagerDashboardView() {
           showChartIcon={true}
         />
       </div>
+
+      {/* Technician Fleet Availability & Capacity Roster */}
+      <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 backdrop-blur-xl shadow-sm">
+        <CardHeader className="pb-3 flex flex-row items-center justify-between">
+          <div>
+            <CardTitle className="text-base font-bold text-foreground">
+              Technician Fleet Availability & Skill Matrix
+            </CardTitle>
+            <CardDescription className="text-xs">
+              Live roster of verified field technicians, duty status, and specialty skills
+            </CardDescription>
+          </div>
+          <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8">
+            <Link href="/dashboard/dispatch">Dispatch Board</Link>
+          </Button>
+        </CardHeader>
+        <CardContent>
+          {technicians.length === 0 ? (
+            <p className="text-xs text-muted-foreground italic p-4 text-center">
+              No technicians currently registered in fleet roster.
+            </p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+              {technicians.slice(0, 6).map((tech: any) => {
+                const isOnline = tech.isAvailable ?? true;
+                const skillsList = tech.skills?.map((s: any) => s.skill?.name || s.name) || [];
+                return (
+                  <div
+                    key={tech.id}
+                    className="p-3.5 rounded-xl border border-border/80 bg-card hover:border-primary/40 transition-all flex flex-col justify-between space-y-3"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-center gap-2.5">
+                        <div className="h-9 w-9 rounded-full bg-primary/10 text-primary font-bold flex items-center justify-center text-xs">
+                          {(tech.user?.name || "Tech").slice(0, 2).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="font-bold text-xs text-foreground truncate">{tech.user?.name || "Technician"}</p>
+                          <p className="text-[10px] text-muted-foreground truncate">{tech.user?.email}</p>
+                        </div>
+                      </div>
+                      <Badge
+                        variant={isOnline ? "success" : "secondary"}
+                        className="text-[9px] font-semibold"
+                      >
+                        {isOnline ? "On Duty" : "Off Duty"}
+                      </Badge>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-1">
+                      {skillsList.length > 0 ? (
+                        skillsList.slice(0, 2).map((skill: string, sIdx: number) => (
+                          <span
+                            key={sIdx}
+                            className="px-1.5 py-0.5 rounded bg-muted text-[9px] font-medium text-muted-foreground"
+                          >
+                            {skill}
+                          </span>
+                        ))
+                      ) : (
+                        <span className="text-[9px] text-muted-foreground italic">General Maintenance</span>
+                      )}
+                      {tech.hourlyRate && (
+                        <span className="text-[9px] font-mono text-primary font-semibold ml-auto">
+                          ৳{tech.hourlyRate}/hr
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       {/* Review Queue with 1-Click Action */}
       <div className="space-y-4">
@@ -978,6 +1116,92 @@ function CustomerDashboardView() {
               </Link>
             </Button>
           </div>
+        </div>
+      </div>
+
+      {/* Preventive Maintenance Plans (Seasonal & Annual Coverage) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+              <ShieldCheck className="h-4 w-4 text-emerald-500" />
+              Preventive Maintenance Packages
+            </h3>
+            <p className="text-xs text-muted-foreground">
+              Proactive scheduled upkeep to prevent breakdowns and extend equipment lifespan.
+            </p>
+          </div>
+          <Badge variant="outline" className="text-[10px] bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
+            30-Day Warranty Included
+          </Badge>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-emerald-500/40 transition-all p-4 space-y-3 flex flex-col justify-between shadow-sm">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="p-2 rounded-xl bg-emerald-500/10 text-emerald-500">
+                  <Wrench className="h-4 w-4" />
+                </span>
+                <span className="font-mono text-sm font-bold text-foreground">৳1,200</span>
+              </div>
+              <h4 className="font-bold text-sm text-foreground">AC Master Overhaul & Coil Wash</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Complete evaporator jet cleaning, refrigerant pressure audit, electrical amp load check, and filter sanitization.
+              </p>
+            </div>
+            <Button asChild size="sm" variant="outline" className="w-full text-xs rounded-xl h-8 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10">
+              <Link
+                href={`/dashboard/requests/new?category=HVAC&title=${encodeURIComponent("AC Master Overhaul & Coil Wash")}&description=${encodeURIComponent("Preventive maintenance plan: Complete evaporator jet wash, refrigerant audit, electrical amp load check, and filter sanitization.")}`}
+              >
+                Book AC Package
+              </Link>
+            </Button>
+          </Card>
+
+          <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-blue-500/40 transition-all p-4 space-y-3 flex flex-col justify-between shadow-sm">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="p-2 rounded-xl bg-amber-500/10 text-amber-500">
+                  <Zap className="h-4 w-4" />
+                </span>
+                <span className="font-mono text-sm font-bold text-foreground">৳950</span>
+              </div>
+              <h4 className="font-bold text-sm text-foreground">Electrical Earthing & DB Panel Audit</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Distribution box thermal inspection, RCCB trip response testing, socket polarity verification, and loose wire fastening.
+              </p>
+            </div>
+            <Button asChild size="sm" variant="outline" className="w-full text-xs rounded-xl h-8 border-amber-500/30 text-amber-600 dark:text-amber-400 hover:bg-amber-500/10">
+              <Link
+                href={`/dashboard/requests/new?category=Electrical&title=${encodeURIComponent("Electrical Earthing & DB Panel Audit")}&description=${encodeURIComponent("Preventive maintenance plan: DB panel thermal inspection, RCCB trip response test, socket polarity check, and wiring maintenance.")}`}
+              >
+                Book Electrical Audit
+              </Link>
+            </Button>
+          </Card>
+
+          <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-cyan-500/40 transition-all p-4 space-y-3 flex flex-col justify-between shadow-sm">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="p-2 rounded-xl bg-blue-500/10 text-blue-500">
+                  <Droplets className="h-4 w-4" />
+                </span>
+                <span className="font-mono text-sm font-bold text-foreground">৳800</span>
+              </div>
+              <h4 className="font-bold text-sm text-foreground">Plumbing Sump & Line Descaling</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">
+                Water pump pressure diagnostics, main line leak test, trap descaling, and float valve inspection.
+              </p>
+            </div>
+            <Button asChild size="sm" variant="outline" className="w-full text-xs rounded-xl h-8 border-blue-500/30 text-blue-600 dark:text-blue-400 hover:bg-blue-500/10">
+              <Link
+                href={`/dashboard/requests/new?category=Plumbing&title=${encodeURIComponent("Plumbing Sump & Line Descaling")}&description=${encodeURIComponent("Preventive maintenance plan: Water pump pressure test, main line leak inspection, trap descaling, and float valve verification.")}`}
+              >
+                Book Plumbing Check
+              </Link>
+            </Button>
+          </Card>
         </div>
       </div>
 

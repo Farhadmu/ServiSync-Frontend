@@ -130,6 +130,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       { title: "System Overview", href: "/dashboard", icon: LayoutDashboard },
       { title: "User Management", href: "/dashboard/admin/users", icon: Users },
       { title: "Service Categories", href: "/dashboard/admin/categories", icon: FolderTree },
+      { title: "Business Rules", href: "/dashboard/admin/business-rules", icon: Sliders },
       { title: "Website Content (CMS)", href: "/dashboard/admin/content", icon: FileText },
       { title: "All Work Orders", href: "/dashboard/work-orders", icon: Briefcase },
       { title: "Invoices & Revenue", href: "/dashboard/invoices", icon: CreditCard },

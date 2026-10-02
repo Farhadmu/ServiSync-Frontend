@@ -81,12 +81,147 @@ export default function TechnicianJobsPage() {
     },
   });
 
+  const [filterTab, setFilterTab] = useState<"ALL" | "ACTION_REQUIRED" | "ACTIVE" | "COMPLETED">("ALL");
+
+  // Calculate daily dispatch assistant metrics
+  const now = new Date();
+  const pendingAcceptanceJobs = jobs?.filter((j) => j.status === "SCHEDULED") || [];
+  const activeJob = jobs?.find(
+    (j) => j.workOrder && ["ARRIVED", "IN_PROGRESS"].includes(j.workOrder.status)
+  );
+  const overdueJobs = jobs?.filter(
+    (j) =>
+      j.scheduledStartAt &&
+      new Date(j.scheduledStartAt) < now &&
+      (!j.workOrder || !["COMPLETED", "CANCELLED"].includes(j.workOrder.status))
+  ) || [];
+  const completedJobs = jobs?.filter((j) => j.workOrder?.status === "COMPLETED") || [];
+
+  // Filtered jobs list
+  const filteredJobs = (jobs || []).filter((j) => {
+    if (filterTab === "ACTION_REQUIRED") return j.status === "SCHEDULED";
+    if (filterTab === "ACTIVE") return j.workOrder && ["ARRIVED", "IN_PROGRESS"].includes(j.workOrder.status);
+    if (filterTab === "COMPLETED") return j.workOrder?.status === "COMPLETED";
+    return true;
+  });
+
   return (
     <div className="space-y-6">
       <PageHeader
         title="My Assigned Field Jobs"
         description="Review new dispatch assignments, accept or decline jobs, and track active field work orders."
       />
+
+      {/* DAILY DISPATCH & SCHEDULE ASSISTANT HUD */}
+      <div className="rounded-2xl border border-primary/20 bg-gradient-to-r from-primary/10 via-background to-card p-5 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-primary text-primary-foreground shadow-md">
+              <Clock className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-bold text-base text-foreground">Daily Dispatch Assistant</h3>
+                <Badge variant="outline" className="text-[10px] bg-background">
+                  Live Operations Feed
+                </Badge>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Automated route coordination, dispatch alerts, and assignment readiness.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 text-xs">
+            <span className="px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-600 font-semibold border border-amber-500/20">
+              {pendingAcceptanceJobs.length} Need Response
+            </span>
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 font-semibold border border-emerald-500/20">
+              {completedJobs.length} Completed
+            </span>
+          </div>
+        </div>
+
+        {/* Overdue Warning Notification if any */}
+        {overdueJobs.length > 0 && (
+          <div className="p-3 rounded-xl bg-destructive/10 border border-destructive/30 text-destructive flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="h-4 w-4 shrink-0" />
+              <span>
+                <strong>SLA Alert:</strong> {overdueJobs.length} assigned job(s) past scheduled arrival time. Please update status.
+              </span>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setFilterTab("ALL")}
+              className="h-7 text-xs border-destructive/30 text-destructive hover:bg-destructive/10"
+            >
+              Review
+            </Button>
+          </div>
+        )}
+
+        {/* Active In-Progress Focus Card */}
+        {activeJob && activeJob.workOrder && (
+          <div className="p-3.5 rounded-xl bg-background/80 border border-border flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="space-y-0.5">
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                <span className="text-[11px] font-mono font-bold text-primary">CURRENT MISSION IN FIELD</span>
+                <Badge variant="default" className="text-[10px]">
+                  {activeJob.workOrder.status}
+                </Badge>
+              </div>
+              <p className="text-sm font-bold text-foreground">{activeJob.serviceRequest?.title}</p>
+              <p className="text-xs text-muted-foreground flex items-center gap-2">
+                <MapPin className="h-3 w-3 text-primary" /> {activeJob.serviceRequest?.location || "Premise"}
+              </p>
+            </div>
+            <Button asChild size="sm" className="h-8 text-xs font-semibold shadow-sm shrink-0">
+              <Link href={`/dashboard/work-orders/${activeJob.workOrder.id}`}>
+                Resume Work Order <ArrowRight className="ml-1 h-3.5 w-3.5" />
+              </Link>
+            </Button>
+          </div>
+        )}
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center gap-2 pt-1 border-b border-border pb-3 text-xs">
+        <Button
+          size="sm"
+          variant={filterTab === "ALL" ? "default" : "outline"}
+          onClick={() => setFilterTab("ALL")}
+          className="rounded-xl h-8"
+        >
+          All Assignments ({jobs?.length || 0})
+        </Button>
+        <Button
+          size="sm"
+          variant={filterTab === "ACTION_REQUIRED" ? "default" : "outline"}
+          onClick={() => setFilterTab("ACTION_REQUIRED")}
+          className="rounded-xl h-8"
+        >
+          Needs Action ({pendingAcceptanceJobs.length})
+        </Button>
+        <Button
+          size="sm"
+          variant={filterTab === "ACTIVE" ? "default" : "outline"}
+          onClick={() => setFilterTab("ACTIVE")}
+          className="rounded-xl h-8"
+        >
+          Active On-Site ({activeJob ? 1 : 0})
+        </Button>
+        <Button
+          size="sm"
+          variant={filterTab === "COMPLETED" ? "default" : "outline"}
+          onClick={() => setFilterTab("COMPLETED")}
+          className="rounded-xl h-8"
+        >
+          Completed History ({completedJobs.length})
+        </Button>
+      </div>
 
       {isLoading ? (
         <div className="space-y-3">
@@ -96,15 +231,15 @@ export default function TechnicianJobsPage() {
         </div>
       ) : error ? (
         <ErrorPanel message={(error as any)?.message} onRetry={() => refetch()} />
-      ) : jobs?.length === 0 ? (
+      ) : filteredJobs.length === 0 ? (
         <EmptyState
           icon={Briefcase}
-          title="No jobs currently assigned"
-          description="When operations managers assign customer tickets to your queue, they will appear here for review."
+          title="No jobs matching this filter"
+          description="Assignments matching your selected criteria will appear here."
         />
       ) : (
         <div className="space-y-4">
-          {jobs?.map((job) => {
+          {filteredJobs.map((job) => {
             const req = job.serviceRequest;
             const isPendingAcceptance = job.status === "SCHEDULED";
 

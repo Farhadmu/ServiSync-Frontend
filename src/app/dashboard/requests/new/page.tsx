@@ -200,6 +200,38 @@ export default function NewServiceRequestPage() {
     }
   }, [savedAddresses, selectedAddressId, setValue, watch]);
 
+  // Support pre-filled parameters from Quick Re-book, Warranty Follow-ups, or Public Services
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const qTitle = params.get("title");
+    const qDesc = params.get("description");
+    const qCategory = params.get("category");
+    const qType = params.get("type");
+
+    if (qTitle && !watch("title")) {
+      setValue("title", qTitle, { shouldValidate: true });
+    }
+    if (qDesc && !watch("description")) {
+      setValue("description", qDesc, { shouldValidate: true });
+    }
+    if (qType) {
+      setIsCustomTypeMode(true);
+      setCustomTypeInput(qType);
+      setValue("customServiceTypeName", qType, { shouldValidate: true });
+    }
+
+    if (qCategory && categories && categories.length > 0 && !selectedCategoryId) {
+      const matched =
+        categories.find((c) => c.name.toLowerCase() === qCategory.toLowerCase()) ||
+        categories.find((c) => c.name.toLowerCase().includes(qCategory.toLowerCase()));
+      if (matched) {
+        setSelectedCategoryId(matched.id);
+        setValue("categoryId", matched.id, { shouldValidate: true });
+      }
+    }
+  }, [categories, selectedCategoryId, setValue, watch]);
+
   // Fetch available slots for selected date & service type
   const { data: slotsData, isLoading: loadingSlots } = useQuery<{
     date: string;

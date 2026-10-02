@@ -30,7 +30,7 @@ import { formatDate, getStatusBadgeVariant } from "@/lib/utils";
 
 const STATUS_FILTERS: { label: string; value: string }[] = [
   { label: "All Statuses", value: "" },
-  { label: "Pending", value: "PENDING" },
+  { label: "Pending Triage", value: "PENDING" },
   { label: "Under Review", value: "UNDER_REVIEW" },
   { label: "Approved", value: "APPROVED" },
   { label: "Assigned", value: "ASSIGNED" },
@@ -163,10 +163,20 @@ export default function ServiceRequestsPage() {
         <div className="space-y-3">
           {requests.map((req) => {
             const badge = getStatusBadgeVariant(req.status);
+
+            // Real-time SLA analysis
+            const createdAtDate = new Date(req.createdAt);
+            const hoursSinceCreation = Math.floor((Date.now() - createdAtDate.getTime()) / (1000 * 60 * 60));
+            const isPendingOrReview = ["PENDING", "UNDER_REVIEW"].includes(req.status);
+            const isSlaBreached = isPendingOrReview && hoursSinceCreation >= 24;
+            const isSlaWarning = isPendingOrReview && hoursSinceCreation >= 12 && !isSlaBreached;
+
             return (
               <Card
                 key={req.id}
-                className="hover:border-primary/50 transition-all hover:shadow-sm"
+                className={`hover:border-primary/50 transition-all hover:shadow-sm ${
+                  isSlaBreached ? "border-destructive/40 bg-destructive/5" : ""
+                }`}
               >
                 <CardContent className="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="space-y-1.5 flex-1 min-w-0">
@@ -177,6 +187,18 @@ export default function ServiceRequestsPage() {
                       <Badge variant={badge.variant} className="text-[10px]">
                         {badge.label}
                       </Badge>
+
+                      {/* SLA Breach or Warning Badges for Operations */}
+                      {isSlaBreached && (
+                        <Badge variant="destructive" className="text-[10px] animate-pulse">
+                          ⚠️ SLA Breached ({hoursSinceCreation}h in queue)
+                        </Badge>
+                      )}
+                      {isSlaWarning && (
+                        <Badge variant="warning" className="text-[10px]">
+                          ⏳ SLA Warning ({hoursSinceCreation}h in queue)
+                        </Badge>
+                      )}
                     </div>
 
                     <p className="text-xs text-muted-foreground line-clamp-1">
@@ -206,11 +228,20 @@ export default function ServiceRequestsPage() {
                   </div>
 
                   <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+                    {/* Quick Re-book for Customer */}
                     {role === "CUSTOMER" &&
-                      ["COMPLETED", "CANCELLED", "CLOSED"].includes(req.status) && (
-                        <Button asChild size="sm" variant="outline" className="text-xs gap-1 border-emerald-500/40 text-emerald-600 hover:bg-emerald-500/10">
-                          <Link href={`/dashboard/requests/${req.id}`}>
-                            Rebook
+                      ["COMPLETED", "CLOSED"].includes(req.status) && (
+                        <Button asChild size="sm" variant="outline" className="text-xs border-emerald-500/40 text-emerald-600 hover:bg-emerald-500/10">
+                          <Link
+                            href={`/dashboard/requests/new?category=${encodeURIComponent(
+                              req.serviceType?.category?.name || "General"
+                            )}&title=${encodeURIComponent(
+                              `Follow-up / Re-book: ${req.title}`
+                            )}&description=${encodeURIComponent(
+                              `Routine follow-up service requested based on ticket #${req.id.slice(0, 8)}.`
+                            )}`}
+                          >
+                            Quick Re-book
                           </Link>
                         </Button>
                       )}
