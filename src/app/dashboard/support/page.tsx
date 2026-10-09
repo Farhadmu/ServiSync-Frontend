@@ -198,7 +198,7 @@ export default function SupportTicketsPage() {
           </p>
         </div>
         {isCustomer && (
-          <Button onClick={() => setIsCreateOpen(true)} className="gap-2 shadow-sm">
+          <Button onClick={() => setIsCreateOpen(true)} className="gap-2 shadow-sm w-full sm:w-auto">
             <Plus className="h-4 w-4" />
             New Support Ticket
           </Button>
@@ -335,8 +335,8 @@ export default function SupportTicketsPage() {
                   </div>
                 </div>
 
-                <div className="shrink-0 flex items-center">
-                  <Button asChild variant="outline" size="sm" className="gap-2">
+                <div className="shrink-0 flex items-center w-full sm:w-auto">
+                  <Button asChild variant="outline" size="sm" className="gap-2 w-full sm:w-auto justify-center">
                     <Link href={`/dashboard/support/${t.id}`}>
                       View Discussion
                       <ArrowRight className="h-3.5 w-3.5" />

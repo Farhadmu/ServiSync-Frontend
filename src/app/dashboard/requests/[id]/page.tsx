@@ -657,10 +657,9 @@ export default function ServiceRequestDetailPage() {
           </CardHeader>
 
           <CardContent className="p-5 space-y-4">
-            {/* Line items if available */}
             {latestQuote.items && (latestQuote.items as any[]).length > 0 && (
-              <div className="rounded-lg border border-border/80 overflow-hidden text-xs">
-                <table className="w-full text-left">
+              <div className="rounded-lg border border-border/80 overflow-x-auto text-xs">
+                <table className="w-full text-left min-w-[380px]">
                   <thead className="bg-muted/50 border-b border-border/80 text-muted-foreground font-semibold">
                     <tr>
                       <th className="p-2.5">Item Description</th>

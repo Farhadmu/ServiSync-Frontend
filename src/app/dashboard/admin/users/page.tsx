@@ -168,7 +168,7 @@ export default function AdminUsersPage() {
       ) : (
         <div className="border border-border rounded-xl overflow-hidden bg-card">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs min-w-[620px]">
               <thead className="bg-muted/50 border-b border-border text-muted-foreground uppercase text-[10px] font-semibold">
                 <tr>
                   <th className="p-3">User</th>
@@ -271,7 +271,7 @@ export default function AdminUsersPage() {
           </div>
 
           {meta && (meta.totalPages ?? 1) > 1 && (
-            <div className="flex items-center justify-between p-4 border-t border-border/60 text-xs text-muted-foreground">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-4 border-t border-border/60 text-xs text-muted-foreground text-center sm:text-left">
               <span>
                 Page {meta.page} of {meta.totalPages ?? 1} ({meta.total} total accounts)
               </span>

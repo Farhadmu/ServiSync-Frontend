@@ -203,7 +203,7 @@ function AdminDashboardView() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Categories Card */}
         <Card className="lg:col-span-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 backdrop-blur-xl shadow-sm">
-          <CardHeader className="pb-3 flex flex-row items-center justify-between">
+          <CardHeader className="pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <div>
               <CardTitle className="text-base font-bold text-foreground">
                 Configured Service Categories ({categories?.length || 0})
@@ -212,7 +212,7 @@ function AdminDashboardView() {
                 Real database-backed service catalogs and pricing structures
               </CardDescription>
             </div>
-            <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8">
+            <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8 w-full sm:w-auto">
               <Link href="/dashboard/admin/categories">Edit Catalog</Link>
             </Button>
           </CardHeader>
@@ -225,20 +225,20 @@ function AdminDashboardView() {
               categories.slice(0, 5).map((cat) => (
                 <div
                   key={cat.id}
-                  className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs hover:border-primary/40 transition-colors group cursor-pointer"
+                  className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs hover:border-primary/40 transition-colors group cursor-pointer gap-2"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-105 transition-transform">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <span className="p-2 rounded-xl bg-blue-500/10 text-blue-500 group-hover:scale-105 transition-transform shrink-0">
                       <FolderTree className="h-4 w-4" />
                     </span>
-                    <div>
-                      <p className="font-bold text-foreground">{cat.name}</p>
-                      <p className="text-[11px] text-muted-foreground">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-bold text-foreground truncate">{cat.name}</p>
+                      <p className="text-[11px] text-muted-foreground truncate">
                         {cat.serviceTypes?.length || 0} active service types
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <Badge variant="outline" className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 border-emerald-500/30 bg-emerald-500/5">
                       Active
                     </Badge>
@@ -252,7 +252,7 @@ function AdminDashboardView() {
 
         {/* Security Audit Events */}
         <Card className="lg:col-span-6 rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 backdrop-blur-xl shadow-sm">
-          <CardHeader className="pb-3 flex flex-row items-center justify-between">
+          <CardHeader className="pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
             <div>
               <CardTitle className="text-base font-bold text-foreground">
                 Recent Security Audit Events
@@ -261,7 +261,7 @@ function AdminDashboardView() {
                 Live cryptographic events logged by backend middleware
               </CardDescription>
             </div>
-            <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8">
+            <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8 w-full sm:w-auto">
               <Link href="/dashboard/admin/audit-logs">View All</Link>
             </Button>
           </CardHeader>
@@ -274,25 +274,25 @@ function AdminDashboardView() {
               auditData.map((log) => (
                 <div
                   key={log.id}
-                  className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 flex items-center justify-between text-xs hover:border-primary/40 transition-colors group cursor-pointer"
+                  className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800/60 flex flex-col xs:flex-row xs:items-center justify-between text-xs hover:border-primary/40 transition-colors group cursor-pointer gap-2"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="p-2 rounded-xl bg-indigo-500/10 text-indigo-500 group-hover:scale-105 transition-transform">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <span className="p-2 rounded-xl bg-indigo-500/10 text-indigo-500 group-hover:scale-105 transition-transform shrink-0">
                       <ShieldCheck className="h-4 w-4" />
                     </span>
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-foreground font-mono text-[11px]">{log.action}</span>
+                    <div className="space-y-0.5 min-w-0 flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="font-bold text-foreground font-mono text-[11px] truncate">{log.action}</span>
                         <Badge variant="outline" className="text-[9px] font-mono">
                           {log.entityType}
                         </Badge>
                       </div>
-                      <p className="text-[10px] text-muted-foreground">
+                      <p className="text-[10px] text-muted-foreground truncate">
                         By: {log.user?.name || "System"} • {formatDate(log.createdAt)}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0 self-end xs:self-auto">
                     <span className="text-[10px] font-mono text-muted-foreground">
                       {log.ipAddress ? `IP: ${log.ipAddress}` : "Internal"}
                     </span>
@@ -306,7 +306,7 @@ function AdminDashboardView() {
       </div>
 
       {/* Admin Quick Control Hub */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
         <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-all p-4 space-y-3">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500">
@@ -564,7 +564,7 @@ function ManagerDashboardView() {
 
       {/* Technician Fleet Availability & Capacity Roster */}
       <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 backdrop-blur-xl shadow-sm">
-        <CardHeader className="pb-3 flex flex-row items-center justify-between">
+        <CardHeader className="pb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <CardTitle className="text-base font-bold text-foreground">
               Technician Fleet Availability & Skill Matrix
@@ -573,7 +573,7 @@ function ManagerDashboardView() {
               Live roster of verified field technicians, duty status, and specialty skills
             </CardDescription>
           </div>
-          <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8">
+          <Button asChild size="sm" variant="outline" className="w-full sm:w-auto rounded-xl text-xs h-8">
             <Link href="/dashboard/dispatch">Dispatch Board</Link>
           </Button>
         </CardHeader>
@@ -639,12 +639,12 @@ function ManagerDashboardView() {
 
       {/* Review Queue with 1-Click Action */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="text-base font-bold text-foreground">Action Required: Pending Service Requests</h3>
             <p className="text-xs text-muted-foreground">Approve requests to verify scope and enable dispatch assignment</p>
           </div>
-          <Button asChild size="sm" variant="outline" className="rounded-xl text-xs h-8">
+          <Button asChild size="sm" variant="outline" className="w-full sm:w-auto rounded-xl text-xs h-8">
             <Link href="/dashboard/requests">View All</Link>
           </Button>
         </div>
@@ -659,29 +659,29 @@ function ManagerDashboardView() {
           <div className="space-y-3">
             {reviewQueue.map((req) => (
               <Card key={req.id} className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-colors">
-                <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <CardContent className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                   <div className="space-y-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-bold text-foreground">{req.title}</p>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-sm font-bold text-foreground break-words">{req.title}</p>
                       <Badge variant="warning" className="text-[10px]">
                         {req.status}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground truncate">
                       Client: {req.customer?.name} ({req.customer?.email}) • Category: {req.serviceType?.category?.name || "General"}
                     </p>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+                    <p className="text-xs text-muted-foreground flex items-center gap-1.5 flex-wrap">
                       <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
-                      {req.location || "N/A"} • Schedule: {formatDate(req.preferredDateTime)}
+                      <span className="truncate">{req.location || "N/A"}</span> • Schedule: {formatDate(req.preferredDateTime)}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex flex-wrap items-center gap-2 shrink-0 w-full md:w-auto justify-start md:justify-end">
                     <Button
                       size="sm"
                       onClick={() => reviewMutation.mutate({ id: req.id, action: "APPROVE" })}
                       isLoading={reviewMutation.isPending}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl h-8"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs rounded-xl h-8 flex-1 sm:flex-initial"
                     >
                       Approve
                     </Button>
@@ -690,11 +690,11 @@ function ManagerDashboardView() {
                       variant="destructive"
                       onClick={() => reviewMutation.mutate({ id: req.id, action: "REJECT" })}
                       isLoading={reviewMutation.isPending}
-                      className="text-xs rounded-xl h-8"
+                      className="text-xs rounded-xl h-8 flex-1 sm:flex-initial"
                     >
                       Reject
                     </Button>
-                    <Button asChild size="sm" variant="outline" className="text-xs rounded-xl h-8">
+                    <Button asChild size="sm" variant="outline" className="text-xs rounded-xl h-8 flex-1 sm:flex-initial">
                       <Link href={`/dashboard/requests/${req.id}`}>Details</Link>
                     </Button>
                   </div>
@@ -793,11 +793,11 @@ function TechnicianDashboardView() {
           ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-950 dark:text-emerald-100"
           : "bg-amber-500/10 border-amber-500/30 text-amber-950 dark:text-amber-100"
       }`}>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className={`h-3.5 w-3.5 rounded-full ${isAvailable ? "bg-emerald-500 animate-ping" : "bg-amber-500"}`} />
-            <div>
-              <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className={`h-3.5 w-3.5 shrink-0 rounded-full ${isAvailable ? "bg-emerald-500 animate-ping" : "bg-amber-500"}`} />
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-muted-foreground">
                   Dispatch Readiness
                 </span>
@@ -816,7 +816,7 @@ function TechnicianDashboardView() {
             variant={isAvailable ? "outline" : "default"}
             onClick={() => availabilityMutation.mutate(!isAvailable)}
             isLoading={availabilityMutation.isPending}
-            className="font-bold shadow-sm rounded-xl text-xs h-9"
+            className="w-full sm:w-auto font-bold shadow-sm rounded-xl text-xs h-9 shrink-0"
           >
             {isAvailable ? "Switch to Off-Duty" : "Go On-Duty (Ready)"}
           </Button>
@@ -907,27 +907,27 @@ function TechnicianDashboardView() {
             </Badge>
           </div>
 
-          <CardContent className="p-6 space-y-5">
+          <CardContent className="p-4 sm:p-6 space-y-5">
             <div>
-              <h3 className="text-xl font-bold text-foreground">{activeJob.serviceRequest?.title}</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-foreground break-words">{activeJob.serviceRequest?.title}</h3>
               <p className="text-xs text-muted-foreground mt-1">
                 {activeJob.serviceRequest?.description || "Diagnostic and repair protocol."}
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-xl bg-card border border-border/80 flex items-center gap-2.5">
+              <div className="p-3 rounded-xl bg-card border border-border/80 flex items-center gap-2.5 min-w-0">
                 <MapPin className="h-4 w-4 text-primary shrink-0" />
-                <div>
+                <div className="min-w-0">
                   <span className="text-muted-foreground block text-[10px]">Site Address:</span>
-                  <span className="font-semibold text-foreground">{activeJob.serviceRequest?.location || "Customer premise"}</span>
+                  <span className="font-semibold text-foreground truncate block">{activeJob.serviceRequest?.location || "Customer premise"}</span>
                 </div>
               </div>
-              <div className="p-3 rounded-xl bg-card border border-border/80 flex items-center gap-2.5">
+              <div className="p-3 rounded-xl bg-card border border-border/80 flex items-center gap-2.5 min-w-0">
                 <Phone className="h-4 w-4 text-emerald-500 shrink-0" />
-                <div>
+                <div className="min-w-0">
                   <span className="text-muted-foreground block text-[10px]">Customer Contact:</span>
-                  <span className="font-semibold text-foreground">{activeJob.serviceRequest?.customer?.name || "Client"}</span>
+                  <span className="font-semibold text-foreground truncate block">{activeJob.serviceRequest?.customer?.name || "Client"}</span>
                 </div>
               </div>
             </div>
@@ -939,7 +939,7 @@ function TechnicianDashboardView() {
                   size="default"
                   onClick={() => statusMutation.mutate({ workOrderId: activeJob.workOrder.id, status: "ARRIVED" })}
                   isLoading={statusMutation.isPending}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-md rounded-xl text-xs h-9"
+                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-md rounded-xl text-xs h-9"
                 >
                   <Navigation className="mr-1.5 h-4 w-4" />
                   Log Arrival on Site
@@ -950,7 +950,7 @@ function TechnicianDashboardView() {
                   size="default"
                   onClick={() => statusMutation.mutate({ workOrderId: activeJob.workOrder.id, status: "IN_PROGRESS" })}
                   isLoading={statusMutation.isPending}
-                  className="bg-amber-600 hover:bg-amber-700 text-white font-bold shadow-md rounded-xl text-xs h-9"
+                  className="w-full sm:w-auto bg-amber-600 hover:bg-amber-700 text-white font-bold shadow-md rounded-xl text-xs h-9"
                 >
                   <Play className="mr-1.5 h-4 w-4" />
                   Begin Diagnostic & Work
@@ -961,14 +961,14 @@ function TechnicianDashboardView() {
                   size="default"
                   onClick={() => statusMutation.mutate({ workOrderId: activeJob.workOrder.id, status: "COMPLETED" })}
                   isLoading={statusMutation.isPending}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md rounded-xl text-xs h-9"
+                  className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md rounded-xl text-xs h-9"
                 >
                   <CheckCircle2 className="mr-1.5 h-4 w-4" />
                   Complete Job & Generate Report
                 </Button>
               )}
 
-              <Button asChild size="default" variant="outline" className="rounded-xl text-xs h-9">
+              <Button asChild size="default" variant="outline" className="w-full sm:w-auto rounded-xl text-xs h-9">
                 <Link href={`/dashboard/work-orders/${activeJob.workOrder.id}`}>
                   <FileText className="mr-1.5 h-4 w-4" />
                   Open Work Order Sheet
@@ -1003,14 +1003,14 @@ function TechnicianDashboardView() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {jobs.map((job) => (
               <Card key={job.id} className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-colors">
-                <CardContent className="p-4 flex items-center justify-between gap-4">
+                <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-1 min-w-0">
                     <p className="text-sm font-bold text-foreground truncate">{job.serviceRequest?.title}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground truncate">
                       Client: {job.serviceRequest?.customer?.name} • Category: {job.serviceRequest?.serviceType?.category?.name || "General"}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
                     <Badge variant={getStatusBadgeVariant(job.status).variant} className="text-[10px]">
                       {job.status}
                     </Badge>
@@ -1084,32 +1084,32 @@ function CustomerDashboardView() {
 
       {/* Quick Trade Booking Bar */}
       <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 border border-blue-500/20 backdrop-blur-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
             <span className="text-xs font-bold text-primary uppercase tracking-wider">Fast-Track Booking</span>
             <h3 className="text-base font-extrabold text-foreground mt-0.5">Need on-site technical assistance?</h3>
             <p className="text-xs text-muted-foreground">Select a trade to request a certified technician with standard inspection fees.</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <Button asChild size="sm" variant="outline" className="border-cyan-500/30 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 text-xs rounded-xl h-8">
+            <Button asChild size="sm" variant="outline" className="border-cyan-500/30 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 text-xs rounded-xl h-8 flex-1 sm:flex-initial">
               <Link href="/dashboard/requests/new">
                 <Zap className="mr-1 h-3.5 w-3.5 text-amber-500" />
                 Electrical
               </Link>
             </Button>
-            <Button asChild size="sm" variant="outline" className="border-blue-500/30 text-blue-600 dark:text-blue-400 hover:bg-blue-500/10 text-xs rounded-xl h-8">
+            <Button asChild size="sm" variant="outline" className="border-blue-500/30 text-blue-600 dark:text-blue-400 hover:bg-blue-500/10 text-xs rounded-xl h-8 flex-1 sm:flex-initial">
               <Link href="/dashboard/requests/new">
                 <Droplets className="mr-1 h-3.5 w-3.5 text-blue-500" />
                 Plumbing
               </Link>
             </Button>
-            <Button asChild size="sm" variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 text-xs rounded-xl h-8">
+            <Button asChild size="sm" variant="outline" className="border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10 text-xs rounded-xl h-8 flex-1 sm:flex-initial">
               <Link href="/dashboard/requests/new">
                 <Wrench className="mr-1 h-3.5 w-3.5 text-emerald-500" />
                 AC / HVAC
               </Link>
             </Button>
-            <Button asChild size="sm" className="bg-primary text-primary-foreground text-xs shadow-sm rounded-xl h-8">
+            <Button asChild size="sm" className="bg-primary text-primary-foreground text-xs shadow-sm rounded-xl h-8 w-full sm:w-auto">
               <Link href="/dashboard/requests/new">
                 <PlusCircle className="mr-1 h-3.5 w-3.5" />
                 Custom Request
@@ -1121,7 +1121,7 @@ function CustomerDashboardView() {
 
       {/* Preventive Maintenance Plans (Seasonal & Annual Coverage) */}
       <div className="space-y-3">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
           <div>
             <h3 className="text-base font-bold text-foreground flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-emerald-500" />
@@ -1131,7 +1131,7 @@ function CustomerDashboardView() {
               Proactive scheduled upkeep to prevent breakdowns and extend equipment lifespan.
             </p>
           </div>
-          <Badge variant="outline" className="text-[10px] bg-emerald-500/10 text-emerald-600 border-emerald-500/20">
+          <Badge variant="outline" className="text-[10px] bg-emerald-500/10 text-emerald-600 border-emerald-500/20 w-fit">
             30-Day Warranty Included
           </Badge>
         </div>
@@ -1341,21 +1341,21 @@ function CustomerDashboardView() {
                 const badge = getStatusBadgeVariant(req.status);
                 return (
                   <Card key={req.id} className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-all hover:shadow-md">
-                    <CardContent className="p-4 flex items-center justify-between gap-4">
+                    <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       <div className="space-y-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="text-sm font-bold text-foreground truncate">{req.title}</p>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="text-sm font-bold text-foreground break-words">{req.title}</p>
                           <Badge variant={badge.variant} className="text-[10px]">
                             {badge.label}
                           </Badge>
                         </div>
-                        <p className="text-xs text-muted-foreground flex items-center gap-2">
+                        <p className="text-xs text-muted-foreground flex items-center gap-2 flex-wrap">
                           <span>{req.serviceType?.name || "Standard Inspection"}</span>
                           <span>•</span>
                           <span>{formatDate(req.createdAt)}</span>
                         </p>
                       </div>
-                      <Button asChild size="sm" variant="outline" className="shrink-0 rounded-xl text-xs h-8">
+                      <Button asChild size="sm" variant="outline" className="shrink-0 rounded-xl text-xs h-8 w-full sm:w-auto">
                         <Link href={`/dashboard/requests/${req.id}`}>Details</Link>
                       </Button>
                     </CardContent>
@@ -1390,9 +1390,9 @@ function CustomerDashboardView() {
             <div className="space-y-3">
               {invoices.map((inv) => (
                 <Card key={inv.id} className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 hover:border-primary/40 transition-colors">
-                  <CardContent className="p-4 flex items-center justify-between gap-3">
-                    <div className="space-y-1">
-                      <p className="text-xs font-mono font-bold text-foreground">{inv.invoiceNumber}</p>
+                  <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="space-y-1 min-w-0">
+                      <p className="text-xs font-mono font-bold text-foreground truncate">{inv.invoiceNumber}</p>
                       <p className="text-base font-extrabold text-foreground font-mono">
                         {formatCurrency(inv.dueAmount, inv.currency)}
                       </p>
@@ -1404,7 +1404,7 @@ function CustomerDashboardView() {
                       </Badge>
                     </div>
                     {inv.status === "PENDING" && (
-                      <Button asChild size="sm" className="shadow-md bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs h-8">
+                      <Button asChild size="sm" className="shadow-md bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-xs h-8 w-full sm:w-auto text-center shrink-0">
                         <Link href={`/dashboard/invoices/${inv.id}`}>Pay with Stripe</Link>
                       </Button>
                     )}

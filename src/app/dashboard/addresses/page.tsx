@@ -217,7 +217,7 @@ export default function AddressesPage() {
             resetForm();
             setIsAddOpen(true);
           }}
-          className="gap-2 shadow-sm"
+          className="gap-2 shadow-sm w-full sm:w-auto"
         >
           <Plus className="h-4 w-4" />
           Add New Address
@@ -421,7 +421,7 @@ export default function AddressesPage() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="area-field">Area / Neighborhood</Label>
                 <Input

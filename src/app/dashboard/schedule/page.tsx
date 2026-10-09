@@ -165,7 +165,7 @@ export default function TechnicianSchedulePage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-2 self-end md:self-center shrink-0">
+                  <div className="flex flex-wrap items-center gap-2 self-start md:self-center shrink-0 w-full md:w-auto justify-start md:justify-end">
                     {/* Maps Route Button */}
                     {req?.location && (
                       <Button asChild size="sm" variant="outline" className="h-8 text-xs">
@@ -193,7 +193,7 @@ export default function TechnicianSchedulePage() {
 
                     {/* Work Order Direct Link */}
                     {item.workOrder && (
-                      <Button asChild size="sm" variant="default" className="h-8 text-xs shadow-sm">
+                      <Button asChild size="sm" variant="default" className="h-8 text-xs shadow-sm flex-1 sm:flex-initial">
                         <Link href={`/dashboard/work-orders/${item.workOrder.id}`}>
                           Open Work Order
                           <ArrowRight className="ml-1 h-3.5 w-3.5" />

@@ -87,10 +87,10 @@ export default function NotificationsPage() {
                 !n.isRead ? "border-primary/40 bg-primary/5" : "border-border/70"
               }`}
             >
-              <CardContent className="p-4 flex items-center justify-between gap-4">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-sm text-foreground">{n.title}</h4>
+              <CardContent className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="space-y-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <h4 className="font-bold text-sm text-foreground break-words">{n.title}</h4>
                     {!n.isRead && (
                       <Badge variant="default" className="text-[9px]">
                         NEW
@@ -110,7 +110,7 @@ export default function NotificationsPage() {
                     variant="ghost"
                     onClick={() => markReadMutation.mutate(n.id)}
                     isLoading={markReadMutation.isPending}
-                    className="h-8 text-xs shrink-0"
+                    className="h-8 text-xs shrink-0 self-end sm:self-auto w-full sm:w-auto"
                   >
                     <Check className="h-3.5 w-3.5 mr-1" /> Mark read
                   </Button>

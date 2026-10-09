@@ -110,13 +110,13 @@ export default function WorkOrdersPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+                  <div className="flex flex-wrap items-center gap-2 self-start md:self-center shrink-0 w-full md:w-auto justify-start md:justify-end">
                     {wo.invoice && (
                       <Badge variant={wo.invoice.status === "PAID" ? "success" : "default"}>
                         Invoice: {wo.invoice.status}
                       </Badge>
                     )}
-                    <Button asChild size="sm" variant="default" className="shadow-sm">
+                    <Button asChild size="sm" variant="default" className="w-full sm:w-auto shadow-sm">
                       <Link href={`/dashboard/work-orders/${wo.id}`}>
                         View Order
                         <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -129,7 +129,7 @@ export default function WorkOrdersPage() {
           })}
 
           {meta && (meta.totalPages ?? 1) > 1 && (
-            <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs text-muted-foreground">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-border/60 text-xs text-muted-foreground text-center sm:text-left">
               <span>
                 Showing page {meta.page} of {meta.totalPages ?? 1} ({meta.total} total items)
               </span>

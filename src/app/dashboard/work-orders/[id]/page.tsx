@@ -836,10 +836,10 @@ export default function WorkOrderDetailPage() {
               ) : (
                 <div className="space-y-2">
                   {spareParts.map((part, idx) => (
-                    <div key={part.id} className="flex items-center gap-2">
+                    <div key={part.id} className="flex flex-col sm:flex-row sm:items-center gap-2 p-2.5 sm:p-0 rounded-xl bg-muted/40 sm:bg-transparent border sm:border-0 border-border/50">
                       <Input
                         placeholder="Part name (e.g. Capacitor 45uF)"
-                        className="flex-1 text-xs h-8"
+                        className="w-full sm:flex-1 text-xs h-8"
                         value={part.name}
                         onChange={(e) => {
                           const updated = [...spareParts];
@@ -847,39 +847,41 @@ export default function WorkOrderDetailPage() {
                           setSpareParts(updated);
                         }}
                       />
-                      <Input
-                        type="number"
-                        min="1"
-                        placeholder="Qty"
-                        className="w-16 text-xs h-8"
-                        value={part.quantity}
-                        onChange={(e) => {
-                          const updated = [...spareParts];
-                          updated[idx].quantity = Number(e.target.value);
-                          setSpareParts(updated);
-                        }}
-                      />
-                      <Input
-                        type="number"
-                        min="0"
-                        placeholder="Cost (৳)"
-                        className="w-24 text-xs h-8"
-                        value={part.unitPrice}
-                        onChange={(e) => {
-                          const updated = [...spareParts];
-                          updated[idx].unitPrice = Number(e.target.value);
-                          setSpareParts(updated);
-                        }}
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setSpareParts(spareParts.filter((_, i) => i !== idx))}
-                        className="text-destructive h-8 w-8"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </Button>
+                      <div className="flex items-center gap-2 w-full sm:w-auto">
+                        <Input
+                          type="number"
+                          min="1"
+                          placeholder="Qty"
+                          className="w-20 sm:w-16 text-xs h-8"
+                          value={part.quantity}
+                          onChange={(e) => {
+                            const updated = [...spareParts];
+                            updated[idx].quantity = Number(e.target.value);
+                            setSpareParts(updated);
+                          }}
+                        />
+                        <Input
+                          type="number"
+                          min="0"
+                          placeholder="Cost (৳)"
+                          className="flex-1 sm:w-24 text-xs h-8"
+                          value={part.unitPrice}
+                          onChange={(e) => {
+                            const updated = [...spareParts];
+                            updated[idx].unitPrice = Number(e.target.value);
+                            setSpareParts(updated);
+                          }}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => setSpareParts(spareParts.filter((_, i) => i !== idx))}
+                          className="text-destructive h-8 w-8 shrink-0"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      </div>
                     </div>
                   ))}
                   <div className="text-right text-xs font-bold text-foreground pt-1">
@@ -922,7 +924,7 @@ export default function WorkOrderDetailPage() {
           <div className="space-y-4 py-2 text-xs">
             {/* Auto-import technician recorded parts button */}
             {partsRecorded.length > 0 && (
-              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-between">
+              <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div>
                   <p className="font-bold text-blue-700 dark:text-blue-300">Technician Logged Spare Parts</p>
                   <p className="text-[11px] text-muted-foreground">
@@ -934,7 +936,7 @@ export default function WorkOrderDetailPage() {
                   size="sm"
                   variant="outline"
                   onClick={handleImportPartsToInvoice}
-                  className="h-8 text-xs border-blue-500/30 text-blue-700 dark:text-blue-300 hover:bg-blue-500/20"
+                  className="h-8 text-xs border-blue-500/30 text-blue-700 dark:text-blue-300 hover:bg-blue-500/20 shrink-0 w-full sm:w-auto"
                 >
                   <DownloadCloud className="mr-1 h-3.5 w-3.5" /> Import Parts
                 </Button>
@@ -944,10 +946,10 @@ export default function WorkOrderDetailPage() {
             <div className="space-y-2">
               <Label>Itemized Billing Lines *</Label>
               {invoiceItems.map((item, idx) => (
-                <div key={idx} className="flex items-center gap-2">
+                <div key={idx} className="flex flex-col sm:flex-row sm:items-center gap-2 p-2.5 sm:p-0 rounded-xl bg-muted/40 sm:bg-transparent border sm:border-0 border-border/50">
                   <Input
                     placeholder="Item description"
-                    className="flex-1 text-xs"
+                    className="w-full sm:flex-1 text-xs"
                     value={item.description}
                     onChange={(e) => {
                       const updated = [...invoiceItems];
@@ -955,41 +957,43 @@ export default function WorkOrderDetailPage() {
                       setInvoiceItems(updated);
                     }}
                   />
-                  <Input
-                    type="number"
-                    min="1"
-                    placeholder="Qty"
-                    className="w-16 text-xs"
-                    value={item.quantity}
-                    onChange={(e) => {
-                      const updated = [...invoiceItems];
-                      updated[idx].quantity = Number(e.target.value);
-                      setInvoiceItems(updated);
-                    }}
-                  />
-                  <Input
-                    type="number"
-                    min="0"
-                    placeholder="Price"
-                    className="w-24 text-xs"
-                    value={item.unitPrice}
-                    onChange={(e) => {
-                      const updated = [...invoiceItems];
-                      updated[idx].unitPrice = Number(e.target.value);
-                      setInvoiceItems(updated);
-                    }}
-                  />
-                  {invoiceItems.length > 1 && (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => setInvoiceItems(invoiceItems.filter((_, i) => i !== idx))}
-                      className="text-destructive h-8 w-8"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  )}
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <Input
+                      type="number"
+                      min="1"
+                      placeholder="Qty"
+                      className="w-20 sm:w-16 text-xs"
+                      value={item.quantity}
+                      onChange={(e) => {
+                        const updated = [...invoiceItems];
+                        updated[idx].quantity = Number(e.target.value);
+                        setInvoiceItems(updated);
+                      }}
+                    />
+                    <Input
+                      type="number"
+                      min="0"
+                      placeholder="Price"
+                      className="flex-1 sm:w-24 text-xs"
+                      value={item.unitPrice}
+                      onChange={(e) => {
+                        const updated = [...invoiceItems];
+                        updated[idx].unitPrice = Number(e.target.value);
+                        setInvoiceItems(updated);
+                      }}
+                    />
+                    {invoiceItems.length > 1 && (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setInvoiceItems(invoiceItems.filter((_, i) => i !== idx))}
+                        className="text-destructive h-8 w-8 shrink-0"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               ))}
 

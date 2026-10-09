@@ -227,11 +227,11 @@ export default function ServiceRequestsPage() {
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 self-end md:self-center shrink-0">
+                  <div className="flex flex-wrap items-center gap-2 self-start md:self-center shrink-0 w-full md:w-auto justify-start md:justify-end">
                     {/* Quick Re-book for Customer */}
                     {role === "CUSTOMER" &&
                       ["COMPLETED", "CLOSED"].includes(req.status) && (
-                        <Button asChild size="sm" variant="outline" className="text-xs border-emerald-500/40 text-emerald-600 hover:bg-emerald-500/10">
+                        <Button asChild size="sm" variant="outline" className="text-xs border-emerald-500/40 text-emerald-600 hover:bg-emerald-500/10 flex-1 sm:flex-initial">
                           <Link
                             href={`/dashboard/requests/new?category=${encodeURIComponent(
                               req.serviceType?.category?.name || "General"
@@ -245,7 +245,7 @@ export default function ServiceRequestsPage() {
                           </Link>
                         </Button>
                       )}
-                    <Button asChild size="sm" variant="default" className="shadow-sm">
+                    <Button asChild size="sm" variant="default" className="shadow-sm flex-1 sm:flex-initial">
                       <Link href={`/dashboard/requests/${req.id}`}>
                         View Details
                         <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -259,7 +259,7 @@ export default function ServiceRequestsPage() {
 
           {/* Pagination Controls */}
           {meta && (meta.totalPages ?? 1) > 1 && (
-            <div className="flex items-center justify-between pt-4 border-t border-border/60 text-xs text-muted-foreground">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-border/60 text-xs text-muted-foreground text-center sm:text-left">
               <span>
                 Showing page {meta.page} of {meta.totalPages ?? 1} ({meta.total} total items)
               </span>

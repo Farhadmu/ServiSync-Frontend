@@ -202,7 +202,7 @@ function DispatchConsole() {
         <div className="lg:col-span-7 space-y-6">
           <Card className="border border-border/80 shadow-sm">
             <CardHeader className="pb-3 border-b border-border/40">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div>
                   <CardTitle className="text-base font-bold flex items-center gap-2">
                     <Calendar className="h-5 w-5 text-primary" />
@@ -213,7 +213,7 @@ function DispatchConsole() {
                   </CardDescription>
                 </div>
                 {selectedRequestId && (
-                  <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/30">
+                  <Badge variant="outline" className="text-xs bg-primary/5 text-primary border-primary/30 w-fit">
                     <Sparkles className="w-3 h-3 mr-1 text-primary animate-pulse" />
                     Smart Match Active
                   </Badge>
@@ -377,7 +377,7 @@ function DispatchConsole() {
                   disabled={assignMutation.isPending || !selectedRequestId || !selectedTechId}
                   isLoading={assignMutation.isPending}
                   size="lg"
-                  className="shadow-md shadow-primary/20 font-semibold"
+                  className="w-full sm:w-auto shadow-md shadow-primary/20 font-semibold"
                 >
                   <CheckCircle className="w-4 h-4 mr-2" />
                   Confirm & Dispatch Technician
@@ -391,7 +391,7 @@ function DispatchConsole() {
         <div className="lg:col-span-5 space-y-4">
           <Card className="border border-border/80 shadow-sm">
             <CardHeader className="pb-3 border-b border-border/40">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                   <CardTitle className="text-sm font-bold flex items-center gap-1.5">
                     <Sparkles className="h-4 w-4 text-primary" />
@@ -402,7 +402,7 @@ function DispatchConsole() {
                   </CardDescription>
                 </div>
                 {recommendations && (
-                  <Badge variant="outline" className="text-[10px]">
+                  <Badge variant="outline" className="text-[10px] w-fit">
                     {recommendations.totalEligible} Eligible / {recommendations.totalCandidates} Total
                   </Badge>
                 )}

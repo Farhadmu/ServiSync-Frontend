@@ -71,10 +71,10 @@ export function SettlementCard({
 
       <CardContent className="space-y-4 pt-1">
         {/* Metric Rate Gauge row */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             {/* Circular Ring Gauge */}
-            <div className="relative flex items-center justify-center h-12 w-12 rounded-full border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 shadow-inner">
+            <div className="relative flex items-center justify-center h-12 w-12 rounded-full border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 shadow-inner shrink-0">
               <svg className="w-12 h-12 -rotate-90" viewBox="0 0 36 36">
                 <path
                   className="text-slate-200 dark:text-slate-800"
@@ -108,8 +108,8 @@ export function SettlementCard({
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="text-right text-xs">
+          <div className="flex items-center gap-2 sm:gap-3 justify-between xs:justify-end">
+            <div className="text-left xs:text-right text-xs">
               <span className="font-bold text-emerald-600 dark:text-emerald-400">
                 {primaryCount} {primaryLabel}
               </span>{" "}
@@ -152,15 +152,15 @@ export function SettlementCard({
         </div>
 
         {/* Legend */}
-        <div className="flex justify-between items-center text-[11px] text-muted-foreground pt-0.5">
-          <span className="flex items-center gap-1.5 font-medium">
-            <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50" />
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1.5 text-[11px] text-muted-foreground pt-0.5">
+          <span className="flex items-center gap-1.5 font-medium truncate">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50 shrink-0" />
             {legendPrimary}
           </span>
-          <span className="flex items-center gap-1.5 font-medium">
+          <span className="flex items-center gap-1.5 font-medium truncate">
             <span
               className={cn(
-                "h-2 w-2 rounded-full shadow-sm",
+                "h-2 w-2 rounded-full shadow-sm shrink-0",
                 secondaryColor === "amber"
                   ? "bg-amber-500 shadow-amber-500/50"
                   : "bg-slate-400 dark:bg-slate-500"

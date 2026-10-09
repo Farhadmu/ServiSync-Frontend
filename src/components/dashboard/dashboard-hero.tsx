@@ -31,30 +31,30 @@ export function DashboardHero({
   actionHref = "/dashboard/admin/users",
 }: DashboardHeroProps) {
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-[#0c1427]/85 backdrop-blur-2xl shadow-xl p-6 sm:p-8 transition-all">
+    <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 dark:border-slate-800/80 bg-white/70 dark:bg-[#0c1427]/85 backdrop-blur-2xl shadow-xl p-4 sm:p-8 transition-all">
       {/* Ambient background glows */}
       <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-blue-500/10 dark:bg-blue-600/15 blur-3xl pointer-events-none" />
       <div className="absolute -bottom-24 right-1/4 w-80 h-80 rounded-full bg-indigo-500/10 dark:bg-purple-600/15 blur-3xl pointer-events-none" />
 
-      <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-8">
+      <div className="relative z-10 flex flex-col xl:flex-row xl:items-center justify-between gap-6 sm:gap-8">
         {/* Left Column: Welcome text, gradient title, badges */}
-        <div className="max-w-xl space-y-4">
+        <div className="max-w-xl space-y-3 sm:space-y-4 min-w-0">
           <div>
-            <span className="text-xs font-semibold text-muted-foreground uppercase tracking-widest block">
+            <span className="text-[11px] sm:text-xs font-semibold text-muted-foreground uppercase tracking-widest block">
               Welcome back,
             </span>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mt-1">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight mt-1 break-words">
               <span className="bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-blue-400 dark:via-cyan-300 dark:to-purple-400 bg-clip-text text-transparent">
                 {userName}
               </span>
             </h1>
-            <p className="mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
+            <p className="mt-2 sm:mt-3 text-xs sm:text-sm text-muted-foreground leading-relaxed">
               {description}
             </p>
           </div>
 
           {/* Glowing Status Pills */}
-          <div className="flex flex-wrap items-center gap-2.5 pt-1">
+          <div className="flex flex-wrap items-center gap-2 pt-1">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-bold shadow-sm shadow-emerald-500/10">
               <ShieldCheck className="h-3.5 w-3.5" />
               <span>Secure</span>

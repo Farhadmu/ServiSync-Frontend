@@ -118,6 +118,7 @@ export default function TechnicianAvailabilityPage() {
             variant={isAvailable ? "outline" : "default"}
             onClick={() => availabilityMutation.mutate(!isAvailable)}
             isLoading={availabilityMutation.isPending}
+            className="w-full sm:w-auto shrink-0"
           >
             {isAvailable ? "Go Off Duty" : "Mark Available"}
           </Button>
@@ -190,7 +191,7 @@ export default function TechnicianAvailabilityPage() {
               onClick={() => profileMutation.mutate()}
               isLoading={profileMutation.isPending}
               size="sm"
-              className="font-semibold"
+              className="w-full sm:w-auto font-semibold"
             >
               Save Profile Updates
             </Button>

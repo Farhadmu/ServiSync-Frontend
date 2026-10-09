@@ -170,7 +170,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="flex justify-end pt-2">
-                  <Button type="submit" size="sm" isLoading={profileSaving}>
+                  <Button type="submit" size="sm" isLoading={profileSaving} className="w-full sm:w-auto">
                     Save Profile Changes
                   </Button>
                 </div>
@@ -205,10 +205,10 @@ export default function ProfilePage() {
                   <div className="space-y-1.5">
                     <Label htmlFor="newPassword">New Password</Label>
                     <Input
-                      id="newPassword"
-                      type="password"
-                      error={passErrors.newPassword?.message}
-                      {...regPass("newPassword")}
+                    id="newPassword"
+                    type="password"
+                    error={passErrors.newPassword?.message}
+                    {...regPass("newPassword")}
                     />
                   </div>
 
@@ -224,7 +224,7 @@ export default function ProfilePage() {
                 </div>
 
                 <div className="flex justify-end pt-2">
-                  <Button type="submit" size="sm" variant="outline" isLoading={passwordSaving}>
+                  <Button type="submit" size="sm" variant="outline" isLoading={passwordSaving} className="w-full sm:w-auto">
                     Update Password
                   </Button>
                 </div>

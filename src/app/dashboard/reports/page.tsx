@@ -91,7 +91,7 @@ export default function ServiceReportsPage() {
       />
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="border border-border/80 bg-card">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
@@ -147,11 +147,11 @@ export default function ServiceReportsPage() {
 
       {/* Tabs and Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">
-        <div className="flex items-center gap-1.5 p-1 bg-muted rounded-xl border border-border/80 text-xs">
+        <div className="flex items-center gap-1.5 p-1 bg-muted rounded-xl border border-border/80 text-xs overflow-x-auto no-scrollbar max-w-full">
           <button
             type="button"
             onClick={() => setActiveTab("ALL")}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-all shrink-0 ${
               activeTab === "ALL"
                 ? "bg-card text-foreground shadow-sm font-semibold"
                 : "text-muted-foreground hover:text-foreground"
@@ -162,7 +162,7 @@ export default function ServiceReportsPage() {
           <button
             type="button"
             onClick={() => setActiveTab("FILED")}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-all shrink-0 ${
               activeTab === "FILED"
                 ? "bg-card text-emerald-600 dark:text-emerald-400 shadow-sm font-semibold"
                 : "text-muted-foreground hover:text-foreground"
@@ -173,7 +173,7 @@ export default function ServiceReportsPage() {
           <button
             type="button"
             onClick={() => setActiveTab("PENDING")}
-            className={`px-3 py-1.5 rounded-lg font-medium transition-all ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-all shrink-0 ${
               activeTab === "PENDING"
                 ? "bg-card text-amber-600 dark:text-amber-400 shadow-sm font-semibold"
                 : "text-muted-foreground hover:text-foreground"
@@ -183,7 +183,7 @@ export default function ServiceReportsPage() {
           </button>
         </div>
 
-        <div className="relative max-w-xs w-full">
+        <div className="relative w-full sm:max-w-xs">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
           <Input
             placeholder="Search report, title or customer..."

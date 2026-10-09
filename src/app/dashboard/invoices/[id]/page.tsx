@@ -145,7 +145,7 @@ export default function InvoiceDetailPage() {
 
             <CardContent className="p-6 space-y-6">
               {/* Customer & Ticket Info */}
-              <div className="grid grid-cols-2 gap-4 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <span className="text-muted-foreground block font-medium">Billed To:</span>
                   <span className="font-bold text-foreground text-sm">{customer?.name || user?.name}</span>
@@ -161,8 +161,8 @@ export default function InvoiceDetailPage() {
               </div>
 
               {/* Items Table */}
-              <div className="border border-border rounded-xl overflow-hidden">
-                <table className="w-full text-left text-xs">
+              <div className="border border-border rounded-xl overflow-x-auto">
+                <table className="w-full text-left text-xs min-w-[380px]">
                   <thead className="bg-muted/50 border-b border-border text-muted-foreground uppercase text-[10px] font-semibold">
                     <tr>
                       <th className="p-3">Description</th>

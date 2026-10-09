@@ -190,7 +190,7 @@ export default function FeedbackPage() {
                       <Button
                         size="sm"
                         onClick={() => handleOpenReview(wo)}
-                        className="gap-1.5 shadow-sm"
+                        className="gap-1.5 shadow-sm w-full sm:w-auto"
                       >
                         <Star className="h-3.5 w-3.5 fill-current" />
                         Rate Experience

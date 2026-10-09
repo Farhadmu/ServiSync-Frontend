@@ -302,8 +302,8 @@ export default function WebsiteContentManagementPage() {
       {/* Main CMS Layout Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Sidebar: Section Navigation Tabs */}
-        <div className="lg:col-span-3 space-y-1.5 bg-card p-3 rounded-2xl border border-border/80 shadow-sm sticky top-20">
-          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground px-3 py-1.5">
+        <div className="lg:col-span-3 flex lg:flex-col overflow-x-auto lg:overflow-visible gap-1.5 bg-card p-2 sm:p-3 rounded-2xl border border-border/80 shadow-sm static lg:sticky lg:top-20 no-scrollbar max-w-full">
+          <p className="hidden lg:block text-xs font-bold uppercase tracking-wider text-muted-foreground px-3 py-1.5">
             Homepage Sections
           </p>
 
@@ -326,17 +326,17 @@ export default function WebsiteContentManagementPage() {
                 key={item.id}
                 type="button"
                 onClick={() => setActiveTab(item.id as any)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                className={`shrink-0 lg:w-full flex items-center justify-between px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
                     ? "bg-primary text-white shadow-sm font-bold"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 }`}
               >
-                <div className="flex items-center gap-2.5">
+                <div className="flex items-center gap-2 sm:gap-2.5">
                   <IconComp className="h-4 w-4 shrink-0" />
                   <span>{item.label}</span>
                 </div>
-                {isActive && <ChevronDown className="h-3.5 w-3.5 -rotate-90" />}
+                {isActive && <ChevronDown className="hidden lg:block h-3.5 w-3.5 -rotate-90 ml-2" />}
               </button>
             );
           })}

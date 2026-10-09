@@ -133,12 +133,12 @@ export default function AdminBusinessRulesPage() {
           {/* Section 1: SLA & Triage Windows */}
           <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 shadow-sm">
             <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <CardTitle className="text-base font-bold flex items-center gap-2">
                   <Clock className="h-4 w-4 text-blue-500" />
                   Service Level Agreement (SLA) Targets
                 </CardTitle>
-                <Badge variant="outline" className="text-[10px]">
+                <Badge variant="outline" className="text-[10px] w-fit">
                   Enforced in Manager Dashboard
                 </Badge>
               </div>
@@ -202,12 +202,12 @@ export default function AdminBusinessRulesPage() {
           {/* Section 2: Scheduling & Dispatch Policy */}
           <Card className="rounded-2xl border border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-[#0c1427]/85 shadow-sm">
             <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <CardTitle className="text-base font-bold flex items-center gap-2">
                   <Calendar className="h-4 w-4 text-emerald-500" />
                   Field Scheduling & Technician Dispatch Policy
                 </CardTitle>
-                <Badge variant="outline" className="text-[10px]">
+                <Badge variant="outline" className="text-[10px] w-fit">
                   Dispatch Assistant
                 </Badge>
               </div>
